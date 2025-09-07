@@ -31,9 +31,9 @@
 #include <cstdlib>
 #include <initializer_list>
 #include <mat4.h>
-#include <math_config.h>
 #include <random>
 #include <type_traits>
+#include <xMath/config/math_config.h>
 #include <xMath/includes/constants.h>
 #include <xMath/includes/quat.h>
 #include <xMath/includes/vector.h>

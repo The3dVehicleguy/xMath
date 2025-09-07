@@ -25,7 +25,6 @@
 * -------------------
 */
 #include <cmath>
-#include <math_config.h>
 #include <xmath.hpp> // umbrella ensures ordering (renamed)
 #include <xMath/includes/math_utils.h>
 #include <xMath/includes/matrix.h>

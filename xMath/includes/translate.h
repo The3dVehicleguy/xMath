@@ -25,9 +25,9 @@
 * -------------------------------------------------------
 */
 #pragma once
-#include <mat3.h>
-#include <mat4.h>
-#include <math_config.h>
+#include <xMath/config/math_config.h>
+#include <xMath/includes/mat3.h>
+#include <xMath/includes/mat4.h>
 #include <xMath/includes/vector.h>
 
 /// -------------------------------------------------------

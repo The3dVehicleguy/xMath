@@ -25,9 +25,8 @@
 * -------------------------------------------------------
 */
 #pragma once
-#include <cmath>
-#include <math_config.h>
 #include <ostream>
+#include <xMath/config/math_config.h>
 #include <xMath/includes/vector.h>
 
 /// -----------------------------------------------------

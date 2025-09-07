@@ -25,7 +25,7 @@
 * -------------------------------------------------------
 */
 #pragma once
-#include <math_config.h>
+#include <xMath/config/math_config.h>
 #include <xMath/includes/math_utils.h>
 
 /// -----------------------------------------------------

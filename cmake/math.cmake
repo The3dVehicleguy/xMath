@@ -11,8 +11,8 @@ option(XMATH_WITH_TRACY "Enable Tracy profiling in xMath" OFF)
 SET (PROJECT_CONFIG_FILES
 	${CMAKE_SOURCE_DIR}/.clang-format
 	${CMAKE_SOURCE_DIR}/.editorconfig
-	resource.h
-	math_config.h
+	${CMAKE_SOURCE_DIR}/xMath/config/resource.h
+	${CMAKE_SOURCE_DIR}/xMath/config/math_config.h
 )
 FILE(GLOB MATH_HEADER_DIR
     ${CMAKE_SOURCE_DIR}/xMath/includes
@@ -35,7 +35,7 @@ ADD_LIBRARY(xMath
     ${MATH_HEADER_FILES}
 	${PROJECT_CONFIG_FILES}
 	${MATH_DOCUMENTATION_FILES}
-    xMath.rc
+    ${CMAKE_SOURCE_DIR}/xMath/config/xMath.rc
 )
 
 # Use project-wide C++20 standard (required for <format> etc.)
@@ -77,9 +77,10 @@ SOURCE_GROUP("Matrix"
 )
 SOURCE_GROUP("Resource"
 	FILES
-	    resource.h
-	    xMath.rc
-		math_config.h
+	    ${CMAKE_SOURCE_DIR}/xMath/config/resource.h
+		${CMAKE_SOURCE_DIR}/xMath/config/math_config.h
+		${CMAKE_SOURCE_DIR}/xMath/config/version.h
+		${CMAKE_SOURCE_DIR}/xMath/config/xMath.rc
 )
 SOURCE_GROUP("Transforms"
 	FILES

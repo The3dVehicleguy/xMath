@@ -25,7 +25,7 @@
 * -------------------------------------------------------
 */
 #pragma once
-#include <math_config.h>
+#include <xMath/config/math_config.h>
 #include <xMath/includes/vec2.h>
 #include <xMath/includes/vec3.h>
 #include <xMath/includes/vec4.h>

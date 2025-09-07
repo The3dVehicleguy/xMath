@@ -27,8 +27,8 @@
 #pragma once
 #include <cstdint>
 #include <initializer_list>
-#include <math_config.h>
 #include <string>
+#include <xMath/config/math_config.h>
 #include <xMath/includes/vector.h>
 
 /// -----------------------------------------------------

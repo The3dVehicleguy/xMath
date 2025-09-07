@@ -25,7 +25,7 @@
 * -------------------------------------------------------
 */
 #pragma once
-#include <math_config.h>
+#include <xMath/config/math_config.h>
 // Provide engine alias types (Vec2/Vec3/etc.) expected by legacy tests.
 
 // Public module includes
