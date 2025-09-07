@@ -1,0 +1,55 @@
+﻿/**
+* -------------------------------------------------------
+* Copyright (c) 2025 Thomas Ray
+*
+* Permission is hereby granted, free of charge, to any person obtaining a copy
+* of this software and associated documentation files (the "Software"), to deal
+* in the Software without restriction, including without limitation the rights
+* to use, copy, modify, merge, publish, distribute, sublicense, and / or sell
+* copies of the Software, and to permit persons to whom the Software is furnished
+* to do so, subject to the following conditions :
+*
+* The above copyright notice and this permission notice shall be included in
+* all copies or substantial portions of the Software.
+*
+* THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+* IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS
+* FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.IN NO EVENT SHALL THE AUTHORS OR
+* COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER
+* IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
+* CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+* -------------------------------------------------------
+* plane.h
+* -------------------------------------------------------
+* Created: 7/9/2025
+* -------------------------------------------------------
+*/
+#pragma once
+#include <xMath/includes/vector.h>
+
+/// -------------------------------------------------------
+
+namespace xMath
+{
+    class XMATH_API Plane
+    {
+    public:
+        Plane();
+        Plane(const Vec3& normal, float d);
+        Plane(const Vec3 &normal, const Vec3 &point); // Construct from a normal vector and a point on the plane
+        Plane(const Vec3& a, const Vec3& b, const Vec3& c); // Construct from 3 vertices
+        ~Plane();
+
+        void Normalize();
+        static Plane Normalize(const Plane &plane);
+
+        [[nodiscard]] float Dot(const Vec3& v) const;
+        static float Dot(const Plane &p, const Vec3 &v);
+
+        Vec3 normal = Vec3::Zero<float>;
+        float d = 0.0f; // distance from origin
+    };
+
+}
+
+/// -------------------------------------------------------

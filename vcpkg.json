@@ -1,0 +1,6 @@
+{
+    "dependencies": [
+        "stb",
+		"tracy"
+    ]
+  }
