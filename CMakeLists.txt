@@ -111,7 +111,6 @@ ENDIF()
 # Only set platform-specific globals and VS startup when top-level
 IF(PROJECT_IS_TOP_LEVEL)
 	SET_PROPERTY(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR} PROPERTY VS_STARTUP_PROJECT xMath)
-  	SET_TARGET_PROPERTIES(${PROJECT_NAME} PROPERTIES VS_DEBUGGER_WORKING_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/")
 	# --------------------------------
   	IF(NOT CMAKE_BUILD_TYPE OR CMAKE_BUILD_TYPE STREQUAL "")
     	SET(CMAKE_BUILD_TYPE "Debug" CACHE STRING "" FORCE)
@@ -184,20 +183,6 @@ ENDIF()
 # --------------------------------
 INCLUDE(cmake/math.cmake)
 
-# Public includes for consumers (build and install) and namespaced alias
-IF(TARGET xMath)
-	INCLUDE(GNUInstallDirs)
-	TARGET_INCLUDE_DIRECTORIES(xMath
-	  PUBLIC
-	    $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/xMath/includes;${CMAKE_CURRENT_SOURCE_DIR}>
-	    $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>
-	)
-	IF(NOT TARGET xMath::xMath)
-		ADD_LIBRARY(xMath::xMath ALIAS xMath)
-	ENDIF()
-ENDIF()
-
-
 # --------------------------------
 # Platform compile definitions for xMath
 # --------------------------------
@@ -209,6 +194,9 @@ IF(TARGET xMath)
 	    $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/xMath/includes;${CMAKE_CURRENT_SOURCE_DIR}>
 	    $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>
 	)
+	# Ensure no absolute source paths leak into INTERFACE includes
+	SET_PROPERTY(TARGET xMath PROPERTY INTERFACE_INCLUDE_DIRECTORIES
+	  "$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/xMath/includes;${CMAKE_CURRENT_SOURCE_DIR}>;$<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>")
 	# Provide a namespaced alias for consumers
 	IF(NOT TARGET xMath::xMath)
 		ADD_LIBRARY(xMath::xMath ALIAS xMath)
@@ -292,6 +280,11 @@ IF(XMATH_INSTALL)
 	INSTALL(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/xMath/includes/
 	        DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/xMath)
 
+	# Also install configuration headers used by consumers (e.g., xMath/config/math_config.h)
+	INSTALL(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/xMath/config/
+	        DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/xMath/config
+	        FILES_MATCHING PATTERN "*.h")
+
 	INSTALL(EXPORT xMathTargets
 	        NAMESPACE xMath::
 	        DESTINATION ${XMATH_INSTALL_CONFIG_DIR})
@@ -337,58 +330,6 @@ IF(NOT TARGET uninstall)
 	  COMMAND ${CMAKE_COMMAND} -P "${_XMATH_UNINSTALL_SCRIPT}"
 	  COMMENT "Uninstalling xMath..."
 	)
-ENDIF()
-
-# --------------------------------
-## Install/export for package consumption
-# --------------------------------
-IF(XMATH_INSTALL)
-	INCLUDE(GNUInstallDirs)
-	INCLUDE(CMakePackageConfigHelpers)
-
-	SET(XMATH_INSTALL_CONFIG_DIR "${CMAKE_INSTALL_LIBDIR}/cmake/xMath")
-
-	# Install the library target and headers
-	INSTALL(TARGETS xMath
-	  EXPORT xMathTargets
-	  ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
-	  LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
-	  RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
-	  INCLUDES DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}
-	)
-
-  	# Install headers (assumes public headers under xMath/includes)
-  	INSTALL(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/xMath/includes/
-  	        DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/xMath)
-
-  	# Export targets
-  	INSTALL(EXPORT xMathTargets
-  	        NAMESPACE xMath::
-  	        DESTINATION ${XMATH_INSTALL_CONFIG_DIR})
-
-  	# Generate Config template on-the-fly, then produce Config and Version files
-  	SET(PACKAGE_INCLUDE_INSTALL_DIR "${CMAKE_INSTALL_INCLUDEDIR}")
-  	SET(XMATH_CONFIG_IN "${CMAKE_CURRENT_BINARY_DIR}/_xmath_config.cmake.in")
-  	FILE(WRITE "${XMATH_CONFIG_IN}" "@PACKAGE_INIT@\n\ninclude(\"${CMAKE_CURRENT_LIST_DIR}/xMathTargets.cmake\")\n\n# Convenience variables\nset(xMath_INCLUDE_DIR \"@PACKAGE_INCLUDE_INSTALL_DIR@/xMath\")\nset(xMath_NAMESPACE \"xMath::\")\n")
-
-  	CONFIGURE_PACKAGE_CONFIG_FILE(
-  	  "${XMATH_CONFIG_IN}"
-  	  ${CMAKE_CURRENT_BINARY_DIR}/xMathConfig.cmake
-  	  INSTALL_DESTINATION ${XMATH_INSTALL_CONFIG_DIR}
-  	  PATH_VARS PACKAGE_INCLUDE_INSTALL_DIR
-  	)
-
-  	PACKAGE_VERSION_FILE(
-  	  ${CMAKE_CURRENT_BINARY_DIR}/xMathConfigVersion.cmake
-  	  VERSION ${PROJECT_VERSION}
-  	  COMPATIBILITY SameMajorVersion
-  	)
-
-  	INSTALL(FILES
-  	    ${CMAKE_CURRENT_BINARY_DIR}/xMathConfig.cmake
-  	    ${CMAKE_CURRENT_BINARY_DIR}/xMathConfigVersion.cmake
-  	  DESTINATION ${XMATH_INSTALL_CONFIG_DIR}
-  	)
 ENDIF()
 
 # --------------------------------
