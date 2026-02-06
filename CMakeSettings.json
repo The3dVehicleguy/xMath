@@ -7,27 +7,106 @@
     },
     "configurations": [
         {
-          "name": "x64-Debug",
-          "generator": "Ninja",
-          "configurationType": "Debug",
-          "inheritEnvironments": [ "msvc_x64_x64" ],
-          "buildRoot": "${projectDir}\\out\\build\\${name}",
-          "installRoot": "${projectDir}\\out\\install\\${name}",
-          "cmakeCommandArgs": "",
-          "buildCommandArgs": "",
-          "ctestCommandArgs": ""
+            "name": "VS2022-x64-Debug",
+            "displayName": "Visual Studio 2022 x64 Debug",
+            "description": "Debug build using Visual Studio 2022 (recommended)",
+            "generator": "Visual Studio 17 2022",
+            "configurationType": "Debug",
+            "inheritEnvironments": [ "msvc_x64_x64" ],
+            "buildRoot": "${projectDir}\\build\\vs2022\\${name}",
+            "installRoot": "${projectDir}\\install\\${name}",
+            "cmakeCommandArgs": "-A x64",
+            "buildCommandArgs": "",
+            "ctestCommandArgs": "",
+            "variables": [
+                {
+                    "name": "CMAKE_TOOLCHAIN_FILE",
+                    "value": "${projectDir}\\dependency\\vcpkg\\scripts\\buildsystems\\vcpkg.cmake"
+                }
+            ]
         },
         {
-          "name": "x64-Release",
-          "generator": "Ninja",
-          "configurationType": "Release",
-          "buildRoot": "${projectDir}\\out\\build\\${name}",
-          "installRoot": "${projectDir}\\out\\install\\${name}",
-          "cmakeCommandArgs": "",
-          "buildCommandArgs": "",
-          "ctestCommandArgs": "",
-          "inheritEnvironments": [ "msvc_x64_x64" ],
-          "variables": []
+            "name": "VS2022-x64-Release",
+            "displayName": "Visual Studio 2022 x64 Release",
+            "description": "Release build using Visual Studio 2022 (recommended)",
+            "generator": "Visual Studio 17 2022",
+            "configurationType": "Release",
+            "inheritEnvironments": [ "msvc_x64_x64" ],
+            "buildRoot": "${projectDir}\\build\\vs2022\\${name}",
+            "installRoot": "${projectDir}\\install\\${name}",
+            "cmakeCommandArgs": "-A x64",
+            "buildCommandArgs": "",
+            "ctestCommandArgs": "",
+            "variables": [
+                {
+                    "name": "CMAKE_TOOLCHAIN_FILE",
+                    "value": "${projectDir}\\dependency\\vcpkg\\scripts\\buildsystems\\vcpkg.cmake"
+                }
+            ]
+        },
+        {
+            "name": "VS2019-x64-Debug",
+            "displayName": "Visual Studio 2019 x64 Debug",
+            "description": "Debug build using Visual Studio 2019",
+            "generator": "Visual Studio 16 2019",
+            "configurationType": "Debug",
+            "inheritEnvironments": [ "msvc_x64_x64" ],
+            "buildRoot": "${projectDir}\\build\\vs2019\\${name}",
+            "installRoot": "${projectDir}\\install\\${name}",
+            "cmakeCommandArgs": "-A x64",
+            "buildCommandArgs": "",
+            "ctestCommandArgs": ""
+        },
+        {
+            "name": "VS2019-x64-Release",
+            "displayName": "Visual Studio 2019 x64 Release",
+            "description": "Release build using Visual Studio 2019",
+            "generator": "Visual Studio 16 2019",
+            "configurationType": "Release",
+            "inheritEnvironments": [ "msvc_x64_x64" ],
+            "buildRoot": "${projectDir}\\build\\vs2019\\${name}",
+            "installRoot": "${projectDir}\\install\\${name}",
+            "cmakeCommandArgs": "-A x64",
+            "buildCommandArgs": "",
+            "ctestCommandArgs": ""
+        },
+        {
+            "name": "Ninja-Debug",
+            "displayName": "Ninja Debug (Fast Build)",
+            "description": "Debug build using Ninja generator for fastest compilation",
+            "generator": "Ninja",
+            "configurationType": "Debug",
+            "inheritEnvironments": [ "msvc_x64_x64" ],
+            "buildRoot": "${projectDir}\\build\\ninja\\${name}",
+            "installRoot": "${projectDir}\\install\\${name}",
+            "cmakeCommandArgs": "",
+            "buildCommandArgs": "",
+            "ctestCommandArgs": "",
+            "variables": [
+                {
+                    "name": "CMAKE_TOOLCHAIN_FILE",
+                    "value": "${projectDir}\\dependency\\vcpkg\\scripts\\buildsystems\\vcpkg.cmake"
+                }
+            ]
+        },
+        {
+            "name": "Ninja-Release",
+            "displayName": "Ninja Release (Fast Build)",
+            "description": "Release build using Ninja generator for fastest compilation",
+            "generator": "Ninja",
+            "configurationType": "Release",
+            "inheritEnvironments": [ "msvc_x64_x64" ],
+            "buildRoot": "${projectDir}\\build\\ninja\\${name}",
+            "installRoot": "${projectDir}\\install\\${name}",
+            "cmakeCommandArgs": "",
+            "buildCommandArgs": "",
+            "ctestCommandArgs": "",
+            "variables": [
+                {
+                    "name": "CMAKE_TOOLCHAIN_FILE",
+                    "value": "${projectDir}\\dependency\\vcpkg\\scripts\\buildsystems\\vcpkg.cmake"
+                }
+            ]
         }
     ]
 }

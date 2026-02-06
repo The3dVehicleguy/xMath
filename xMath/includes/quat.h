@@ -28,6 +28,9 @@
 #include <xMath/config/math_config.h>
 #include <xMath/includes/vector.h>
 
+/// Forward declarations
+namespace xMath { class Mat4; }
+
 /// -----------------------------------------------------
 
 namespace xMath

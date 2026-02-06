@@ -73,8 +73,8 @@ namespace xMath
         ~TVector2() = default;
 
 		// Basic arithmetic (all pure, mark [[nodiscard]])
-		//[[nodiscard]] constexpr TVector2 operator+(const TVector2& r) const noexcept { return {x + r.x, y + r.y}; }
-		//[[nodiscard]] constexpr TVector2 operator-(const TVector2& r) const noexcept { return {x - r.x, y - r.y}; }
+		[[nodiscard]] constexpr TVector2 operator+(const TVector2& r) const noexcept { return {x + r.x, y + r.y}; }
+		[[nodiscard]] constexpr TVector2 operator-(const TVector2& r) const noexcept { return {x - r.x, y - r.y}; }
 		//[[nodiscard]] constexpr TVector2 operator*(T s) const noexcept { return {x * s, y * s}; }
 		//[[nodiscard]] constexpr TVector2 operator/(T s) const noexcept { return {x / s, y / s}; }
 	    TVector2 operator-() const { return TVector2(-x, -y); }

@@ -16,6 +16,52 @@ IF(NOT DEFINED CMAKE_TOOLCHAIN_FILE AND XMATH_TOPLEVEL_EARLY)
 	ENDIF()
 ENDIF()
 
+# --------------------------------
+# Visual Studio Generator Selection
+# --------------------------------
+# Auto-detect the best Visual Studio version if using VS generator
+# Users can override this by setting CMAKE_GENERATOR or CMAKE_GENERATOR_TOOLSET
+
+IF(WIN32 AND NOT DEFINED CMAKE_GENERATOR)
+    # List of Visual Studio versions in order of preference (newest first)
+    SET(VS_GENERATORS
+        "Visual Studio 17 2022"  # VS 2022
+        "Visual Studio 16 2019"  # VS 2019
+        "Visual Studio 15 2017"  # VS 2017
+    )
+
+    # Try to find the highest available Visual Studio version
+    FOREACH(VS_GEN ${VS_GENERATORS})
+        # Test if this generator is available
+        EXECUTE_PROCESS(
+            COMMAND ${CMAKE_COMMAND} -G "${VS_GEN}" -S . -B "${CMAKE_BINARY_DIR}/vs_test" -DCMAKE_TOOLCHAIN_FILE=${CMAKE_TOOLCHAIN_FILE}
+            WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
+            OUTPUT_QUIET
+            ERROR_QUIET
+            RESULT_VARIABLE VS_TEST_RESULT
+        )
+
+        IF(VS_TEST_RESULT EQUAL 0)
+            SET(CMAKE_GENERATOR "${VS_GEN}" CACHE STRING "CMake generator" FORCE)
+            MESSAGE(STATUS "Auto-detected and using Visual Studio generator: ${VS_GEN}")
+            FILE(REMOVE_RECURSE "${CMAKE_BINARY_DIR}/vs_test")
+            BREAK()
+        ENDIF()
+    ENDFOREACH()
+
+    # Clean up any test directories
+    FILE(REMOVE_RECURSE "${CMAKE_BINARY_DIR}/vs_test")
+
+    # If no VS generator found, provide helpful message
+    IF(NOT CMAKE_GENERATOR)
+        MESSAGE(STATUS "No Visual Studio installation detected. Consider using Ninja or installing Visual Studio.")
+        MESSAGE(STATUS "Available generators on this system:")
+        EXECUTE_PROCESS(COMMAND ${CMAKE_COMMAND} --help OUTPUT_VARIABLE CMAKE_HELP_OUTPUT)
+        STRING(REGEX MATCH "Generators[^:]*:([^\\*]*)" _ "${CMAKE_HELP_OUTPUT}")
+        MESSAGE(STATUS "${CMAKE_MATCH_1}")
+    ENDIF()
+ENDIF()
+
 SET(CMAKE_CONFIGURATION_TYPES Debug Release CACHE STRING INTERNAL FORCE)
 SET(CMAKE_SUPPRESS_DEVELOPER_WARNINGS 1 CACHE INTERNAL "No dev warnings")
 SET(VCPKG_INSTALL_OPTIONS --no-print-usage)
@@ -52,20 +98,26 @@ ENDIF()
 SET(CMAKE_CXX_STANDARD 20)
 SET(CMAKE_CXX_STANDARD_REQUIRED ON)
 SET(CMAKE_EXPORT_COMPILE_COMMANDS ON)
-SET(CMAKE_CXX_FLAGS
-  "${CMAKE_CXX_FLAGS}
-   /EHsc
-   /Zc:preprocessor
-   -DNOMINMAX
-   -D_USE_MATH_DEFINES"
-)
-ADD_DEFINITIONS(-D_CRT_SECURE_NO_WARNINGS -DCMAKE_GENERATOR_PLATFORM=x64)
+
+# Set compiler flags properly for both Visual Studio and Ninja generators
+IF(MSVC)
+    SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /EHsc /Zc:preprocessor")
+    ADD_COMPILE_DEFINITIONS(NOMINMAX _USE_MATH_DEFINES _CRT_SECURE_NO_WARNINGS)
+ENDIF()
+
+# Don't set CMAKE_GENERATOR_PLATFORM in definitions - it's a CMake variable
+ADD_DEFINITIONS(-D_CRT_SECURE_NO_WARNINGS)
 MESSAGE(VCPKG_ROOT = " ${CMAKE_TOOLCHAIN_FILE} ")
 
 # --------------------------------
 
 IF(CMAKE_GENERATOR MATCHES "Visual Studio")
-	ADD_COMPILE_OPTIONS(${COMMON_COMPILE_OPTIONS})
+    # Define common compile options for Visual Studio
+    SET(COMMON_COMPILE_OPTIONS "")
+    SET(COMMON_COMPILE_FLAGS "")
+    SET(COMMON_COMPILE_DEF "")
+
+    ADD_COMPILE_OPTIONS(${COMMON_COMPILE_OPTIONS})
     SET(COMPILE_FLAGS ${COMMON_COMPILE_FLAGS})
     SET(CMAKE_CXX_SCAN_FOR_MODULES OFF)
     SET(CMAKE_INCREMENTAL_LINKING ON)

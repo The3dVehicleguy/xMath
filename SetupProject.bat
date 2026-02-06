@@ -5,8 +5,38 @@ for /F "tokens=1,2 delims=#" %%a in ('"prompt #$H#$E# & echo on & for %%b in (1)
   set "ESC=%%b"
 )
 
-set log_file=%~dp0CMake_Gen.log
 echo %ESC%[92m-----------------------------------%ESC%[0m
+echo %ESC%[92mxMath Project Setup%ESC%[0m
+echo %ESC%[92m-----------------------------------%ESC%[0m
+echo.
+echo This script will help you configure the xMath project.
+echo.
+echo %ESC%[93mNOTE: For the best experience, use the new PowerShell configuration script:%ESC%[0m
+echo %ESC%[96m  .\ConfigureProject.ps1%ESC%[0m
+echo.
+choice /m "Do you want to use the new PowerShell script (recommended)?"
+if errorlevel 2 (
+    echo.
+    echo %ESC%[93mContinuing with legacy batch setup...%ESC%[0m
+    echo.
+) else (
+    echo.
+    echo %ESC%[92mLaunching PowerShell configuration script...%ESC%[0m
+    powershell -ExecutionPolicy Bypass -File "%~dp0ConfigureProject.ps1"
+    if errorlevel 1 (
+        echo.
+        echo %ESC%[91mPowerShell script failed. Falling back to legacy setup.%ESC%[0m
+        echo.
+    ) else (
+        echo.
+        echo %ESC%[92mProject configuration complete!%ESC%[0m
+        echo %ESC%[92mPress any key to exit...%ESC%[0m
+        pause >nul
+        exit /b 0
+    )
+)
+
+set log_file=%~dp0CMake_Gen.log
 echo %ESC%[92mRunning CMake Project Generation%ESC%[0m
 echo %ESC%[92m-----------------------------------%ESC%[0m
 

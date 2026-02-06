@@ -26,6 +26,7 @@
 */
 // ReSharper disable IdentifierTypo
 #include <algorithm>
+#include <xMath/includes/constants.h>
 #include <xMath/includes/math_utils.h>
 #include <xMath/includes/quat.h>
 // Optional Tracy profiling: only enabled if both XMATH_ALLOW_TRACY and TRACY_ENABLE are defined by build system
@@ -1293,14 +1294,14 @@ namespace xMath
 		if (test > 0.499 * unit)
 		{ ///< Singularity at north pole
 			euler.y = 2 * atan2(x, w);
-			euler.x = M_PI / 2;
+			euler.x = PI / 2;
 			euler.z = 0;
 			return euler;
 		}
 		if (test < -0.499 * unit)
 		{ ///< Singularity at south pole
 			euler.y = -2 * atan2(x, w);
-			euler.x = -M_PI / 2;
+			euler.x = -PI / 2;
 			euler.z = 0;
 			return euler;
 		}

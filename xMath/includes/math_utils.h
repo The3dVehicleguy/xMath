@@ -188,23 +188,23 @@ namespace xMath
     XMATH_API double Cos(double v);
     XMATH_API float  Tan(float v);
     XMATH_API double Tan(double v);
-    
+
     /// TRS (translation, rotation, scale) helpers using native math types
     XMATH_API bool DecomposeTransform(const Mat4 &mat, Vec3 &translation, Quat &rotation, Vec3 &scale);
     XMATH_API Mat4 ComposeTransform(const Vec3 &translation, const Quat &rotation, const Vec3 &scale);
-    
+
     /// Absolute value overloads
     XMATH_API float   Abs(float v);
     XMATH_API double  Abs(double v);
     XMATH_API int32_t Abs(int32_t v);
     XMATH_API int64_t Abs(int64_t v);
-    
+
     /// Root and power
     XMATH_API float Sqrt(float v);
 
     template<typename T1, typename T2>
     static auto Pow(T1 base, T2 power) { return std::pow(base, power); }
-    
+
     /// Min/Max over initializer_list
     template<typename T>
     static T Min(std::initializer_list<T> list)
@@ -214,7 +214,7 @@ namespace xMath
         for (++it; it != list.end(); ++it) minVal = (*it < minVal) ? *it : minVal;
         return minVal;
     }
-    
+
     template<typename T>
     static T Max(std::initializer_list<T> list)
     {
@@ -223,14 +223,14 @@ namespace xMath
         for (++it; it != list.end(); ++it) maxVal = (*it > maxVal) ? *it : maxVal;
         return maxVal;
     }
-    
+
     /// Binary Min/Max
     template<typename T>
     static T Min(T a, T b) { return a < b ? a : b; }
-    
+
     template<typename T>
     static T Max(T a, T b) { return a > b ? a : b; }
-    
+
     /// Clamping
     template<typename T>
     static T Clamp(T value, T min, T max)
@@ -238,10 +238,10 @@ namespace xMath
         if (min > max) std::swap(min, max);
         return Min(Max(value, min), max);
     }
-    
+
     template<typename T>
     static T Clamp01(T value) { return Clamp<T>(value, 0, 1); }
-    
+
     /// Rounding
     XMATH_API float   Round(float v);
     XMATH_API double  Round(double v);
@@ -249,11 +249,11 @@ namespace xMath
     XMATH_API int64_t RoundToInt64(float v);
     XMATH_API int32_t RoundToInt(double v);
     XMATH_API int64_t RoundToInt64(double v);
-    
+
     /// Interpolation
     XMATH_API float Lerp(float from, float to, float t);
     XMATH_API float LerpUnclamped(float from, float to, float t);
-    
+
     /// Float16 -> Float conversion
     XMATH_API float ToFloat32(uint16_t float16);
 
