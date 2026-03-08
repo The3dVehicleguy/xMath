@@ -26,7 +26,7 @@
 */
 #pragma once
 #include <cmath>
-#include <type_traits>
+#include <limits>
 
 /// -----------------------------------------------------
 
@@ -42,35 +42,15 @@ namespace xMath
 			struct { T x, y; }; // Cartesian
 			struct { T r, g; }; // Color
 			struct { T s, t; }; // Texture
+			struct { T u, v; }; // UV (alternative texture coordinate naming)
 		};
 
-        //TVector2() { x = 0; y = 0; }
-		//constexpr TVector2() noexcept : x(0), y(0) {}
+		constexpr TVector2() noexcept = default;
+	    constexpr explicit TVector2(T s) noexcept : x(s), y(s) {}
+		constexpr TVector2(T _x, T _y) noexcept : x(_x), y(_y) {}
 
-		// Fill-constructor for same-type scalar
-		//constexpr explicit TVector2(T s) noexcept : x(s), y(s) {}
-
-		// Cross-type fill-constructor for any arithmetic scalar (excluding identical T to avoid ambiguity)
-		/*
-	    template<typename U, typename = std::enable_if_t<std::is_arithmetic_v<U> && !std::is_same_v<U, T>>>
-		constexpr explicit TVector2(U s) noexcept : x(static_cast<T>(s)), y(static_cast<T>(s)) {}
-		*/
-
-	    // Two-component constructor (same type)
-		//constexpr TVector2(T _x, T _y) noexcept : x(_x), y(_y) {}
-
-		// Cross-type two-component constructor for arithmetic inputs
-		/*
-		template<typename U, typename V, typename = std::enable_if_t<std::is_arithmetic_v<U> && std::is_arithmetic_v<V>>>
-		constexpr TVector2(U _x, V _y) noexcept : x(static_cast<T>(_x)), y(static_cast<T>(_y)) {}
-		*/
-
-        TVector2(const TVector2 &vector) = default;
-        TVector2(float x) { this->x = x; this->y = x;}
-        TVector2(float x, float y) { this->x = x; this->y = y; }
-        TVector2(int x, int y) { this->x = static_cast<float>(x); this->y = static_cast<float>(y); }
-        TVector2(uint32_t x, uint32_t y) { this->x = static_cast<float>(x); this->y = static_cast<float>(y); }
-        ~TVector2() = default;
+		TVector2(const TVector2 &vector) = default;
+		~TVector2() = default;
 
 		// Basic arithmetic (all pure, mark [[nodiscard]])
 		[[nodiscard]] constexpr TVector2 operator+(const TVector2& r) const noexcept { return {x + r.x, y + r.y}; }
@@ -99,6 +79,22 @@ namespace xMath
 		constexpr TVector2& operator*=(T s) noexcept { x *= s; y *= s; return *this; }
 		constexpr TVector2& operator/=(T s) noexcept { x /= s; y /= s; return *this; }
 
+		// Named constant vectors
+		static const TVector2 Zero;
+		static const TVector2 One;
+		static const TVector2 Left;
+		static const TVector2 Right;
+		static const TVector2 Up;
+		static const TVector2 Down;
+		static const TVector2 Forward;
+		static const TVector2 Backward;
+		static const TVector2 Infinity;
+		static const TVector2 InfinityNeg;
+
+		//Non-Number Check
+		[[nodiscard]] constexpr bool IsNaN() const noexcept { return x != x || y != y; }
+		[[nodiscard]] TVector2 Abs() const { return TVector2(abs(x), abs(y)); }
+
         // Min/Max
         static TVector2 Min(const TVector2 &a, const TVector2 &b) { return TVector2(a.x < b.x ? a.x : b.x, a.y < b.y ? a.y : b.y); }
         static TVector2 Max(const TVector2 &a, const TVector2 &b) { return TVector2(a.x > b.x ? a.x : b.x, a.y > b.y ? a.y : b.y); }
@@ -114,8 +110,19 @@ namespace xMath
 
 	    static float Distance(const TVector2& a, const TVector2& b) { return (b - a).Length(); }
         static float DistanceSquared(const TVector2& a, const TVector2& b) { return (b - a).Length2(); }
-
 	};
+
+	// Named constant vector definitions (out-of-class so TVector2<T> is a complete type)
+	template<typename T> inline constexpr TVector2<T> TVector2<T>::Zero{T(0), T(0)};
+	template<typename T> inline constexpr TVector2<T> TVector2<T>::One{T(1), T(1)};
+	template<typename T> inline constexpr TVector2<T> TVector2<T>::Left{T(-1), T(0)};
+	template<typename T> inline constexpr TVector2<T> TVector2<T>::Right{T(1), T(0)};
+	template<typename T> inline constexpr TVector2<T> TVector2<T>::Up{T(0), T(1)};
+	template<typename T> inline constexpr TVector2<T> TVector2<T>::Down{T(0), T(-1)};
+	template<typename T> inline constexpr TVector2<T> TVector2<T>::Forward{T(0), T(0)};
+	template<typename T> inline constexpr TVector2<T> TVector2<T>::Backward{T(0), T(0)};
+	template<typename T> inline constexpr TVector2<T> TVector2<T>::Infinity{std::numeric_limits<T>::infinity(), std::numeric_limits<T>::infinity()};
+	template<typename T> inline constexpr TVector2<T> TVector2<T>::InfinityNeg{-std::numeric_limits<T>::infinity(), -std::numeric_limits<T>::infinity()};
 
 }
 

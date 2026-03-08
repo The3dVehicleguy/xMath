@@ -34,6 +34,7 @@ namespace xMath
 
     // Forward declaration to allow declaring converting constructor without including vec4.h here.
 	template<typename T> struct TVector4;
+	template<typename T> struct TVector2;
 
 	template<typename T>
 	struct TVector3
