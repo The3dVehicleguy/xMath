@@ -24,11 +24,85 @@
 * Provides consolidated inclusion of all public math types and utilities.
 * -------------------------------------------------------
 */
+// ReSharper disable IdentifierTypo
 #pragma once
 #include <xMath/config/math_config.h>
-// Provide engine alias types (Vec2/Vec3/etc.) expected by legacy tests.
+#include <xMath/includes/platform.h>
 
-// Public module includes
+///////////////////////////////////////////////////////////
+///				ACTIVE STATE DEFINITION 				///
+///////////////////////////////////////////////////////////
+
+#define XMATH_DISABLED 0
+#define XMATH_ENABLED  1
+
+#ifndef SEDX_MATH_HAS_VECTOR_ALIASES
+#define SEDX_MATH_HAS_VECTOR_ALIASES 1
+#endif
+
+#ifdef XMATH_USE_XYZW
+#define XMATH_XYZW_CONFIG 1
+#else
+#define XMATH_XYZW_CONFIG 0
+#endif
+
+// Coordinate system configuration
+// Users may define exactly one of the following macros before including xmath.hpp:
+//   XMATH_COORD_LEFT_HAND_CONFIG
+//   XMATH_COORD_RIGHT_HAND_CONFIG
+// If none are defined, default to right-handed coordinates.
+#if defined(XMATH_COORD_LEFT_HAND_CONFIG) && defined(XMATH_COORD_RIGHT_HAND_CONFIG)
+#error "Both XMATH_COORD_LEFT_HAND_CONFIG and XMATH_COORD_RIGHT_HAND_CONFIG are defined. Define only one."
+#endif
+
+#if !defined(XMATH_COORD_LEFT_HAND_CONFIG) && !defined(XMATH_COORD_RIGHT_HAND_CONFIG)
+#define XMATH_COORD_RIGHT_HAND_CONFIG 1
+#endif
+
+// Normalize the defined coordinate macro to value 1 for simple checks
+#ifdef XMATH_COORD_LEFT_HAND_CONFIG
+#undef XMATH_COORD_LEFT_HAND_CONFIG
+#define XMATH_COORD_LEFT_HAND_CONFIG 1
+#endif
+
+#ifdef XMATH_COORD_RIGHT_HAND_CONFIG
+#undef XMATH_COORD_RIGHT_HAND_CONFIG
+#define XMATH_COORD_RIGHT_HAND_CONFIG 1
+#endif
+
+// Indicate a coordinate configuration is present
+#ifndef XMATH_COORD_DEFINED
+#define XMATH_COORD_DEFINED 1
+#endif
+
+// Matrix storage order configuration
+// Provide numeric constants for conditional compilation. Users may set
+// XMATH_MATRIX_ORDER to either MATRIX_ROW_MAJOR or MATRIX_COLUMN_MAJOR before
+// including this header. Default is row-major.
+#ifndef MATRIX_ROW_MAJOR
+#define MATRIX_ROW_MAJOR 0
+#endif
+
+#ifndef MATRIX_COLUMN_MAJOR
+#define MATRIX_COLUMN_MAJOR 1
+#endif
+
+#ifndef XMATH_MATRIX_ORDER
+#define XMATH_MATRIX_ORDER MATRIX_ROW_MAJOR
+#endif
+
+#if XMATH_MATRIX_ORDER == MATRIX_ROW_MAJOR
+#define XMATH_MATRIX_IS_ROW_MAJOR 1
+#define XMATH_MATRIX_IS_COLUMN_MAJOR 0
+#else
+#define XMATH_MATRIX_IS_ROW_MAJOR 0
+#define XMATH_MATRIX_IS_COLUMN_MAJOR 1
+#endif
+
+///////////////////////////////////////////////////////////
+///					INCLUDE UMBRELLA 					///
+///////////////////////////////////////////////////////////
+
 // Order matters: vector types must be available before dot/epsilon overloads.
 #include <xMath/includes/bounding_box.h>
 #include <xMath/includes/constants.h>
@@ -60,6 +134,6 @@ namespace xMath::Utils
 	using ::xMath::Cross;
 	using ::xMath::ToRadians;
 	using ::xMath::ToDegrees;
-	using ::xMath::epsilon;      // templates
-	using ::xMath::epsilonEqual; // templates
+	using ::xMath::Epsilon;      // templates
+	using ::xMath::EpsilonEqual; // templates
 }

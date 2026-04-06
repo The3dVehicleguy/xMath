@@ -1,4 +1,4 @@
-﻿/**
+/**
 * -------------------------------------------------------
 * Copyright (c) 2025 Thomas Ray
 *
@@ -19,46 +19,39 @@
 * IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 * CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 * -------------------------------------------------------
-* epsilon.h
+* platform.h - Platform-specific definitions
 * -------------------------------------------------------
-* Created: 12/8/2025
+* Created: 04/05/2026
 * -------------------------------------------------------
 */
+// ReSharper disable IdentifierTypo
 #pragma once
-#include <cmath>
-#include <limits>
 
-// -----------------------------------------------------
+#define XMATH_PLATFORM_UNKNOWN		0x00000000
+#define XMATH_PLATFORM_WINDOWS		0x00010000
+#define XMATH_PLATFORM_LINUX		0x00020000
+#define XMATH_PLATFORM_APPLE		0x00040000
+#define XMATH_PLATFORM_UNIX			0x00400000
 
-namespace xMath
-{
-	/**
-	 * @brief Returns the machine epsilon for the specified type.
-	 * @tparam T The type for which to obtain the epsilon.
-	 * @return The machine epsilon for the specified type.
-	 */
-	template <typename T>
-	constexpr T Epsilon() noexcept
-	{
-		return std::numeric_limits<T>::epsilon();
-	}
+#ifdef XMATH_FORCE_PLATFORM_UNKNOWN
+#define XMATH_PLATFORM XMATH_PLATFORM_UNKNOWN
+#elif defined(__APPLE__)
+#define XMATH_PLATFORM XMATH_PLATFORM_APPLE
+#elif defined(WINCE)
+#define XMATH_PLATFORM XMATH_PLATFORM_WINCE
+#elif defined(_WIN32)
+#define XMATH_PLATFORM XMATH_PLATFORM_WINDOWS
+#elif defined(__native_client__)
+#define XMATH_PLATFORM XMATH_PLATFORM_CHROME_NACL
+#elif defined(__ANDROID__)
+#define XMATH_PLATFORM XMATH_PLATFORM_ANDROID
+#elif defined(__linux)
+#define XMATH_PLATFORM XMATH_PLATFORM_LINUX
+#elif defined(__unix)
+#define XMATH_PLATFORM XMATH_PLATFORM_UNIX
+#else
+#define XMATH_PLATFORM_UNKNOWN XMATH_PLATFORM_UNKNOWN
+#endif
 
-	/**
-	 * @brief Compares two values for approximate equality within a specified epsilon tolerance.
-	 * @tparam T The type of the values to compare.
-	 * @param a The first value.
-	 * @param b The second value.
-	 * @param eps The epsilon tolerance.
-	 * @return True if the values are approximately equal, false otherwise.
-	 */
-	template <typename T>
-	inline bool EpsilonEqual(T a, T b, T eps = Epsilon<T>()) noexcept
-	{
-		using std::fabs; // ADL
-		return fabs(static_cast<double>(a - b)) <= static_cast<double>(eps);
-	}
-
-}
-
-// -----------------------------------------------------
-
+#define XMATH_PLATFORM_32BIT				0x00000010
+#define XMATH_PLATFORM_64BIT				0x00000020

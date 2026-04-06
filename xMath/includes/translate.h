@@ -30,88 +30,88 @@
 #include <xMath/includes/mat4.h>
 #include <xMath/includes/vector.h>
 
-/// -------------------------------------------------------
+// -------------------------------------------------------
 
 namespace xMath
 {
-    ///////////////////////////////////////////////////////////
+	///////////////////////////////////////////////////////////
 	//					3D translation (Mat4)				 //
-    ///////////////////////////////////////////////////////////
+	///////////////////////////////////////////////////////////
 
-    /**
-     * @brief Creates a translation matrix that translates by the given vector.
-     *
-     * This function generates a 4x4 translation matrix that can be used to translate
-     * 3D points in space. The translation is applied in the order of the matrix multiplication,
-     * meaning it will translate points by the vector t when multiplied with the matrix.
-     *
-     * @param t translation matrix vector
-     * @return Mat4 A 4x4 translation matrix that translates points by the vector t.
-     *
-     * @code
-     * Mat4 translationMatrix = Translate(Vec3(1.0f, 2.0f, 3.0f));
-     * Mat4 combinedMatrix = Translate(translationMatrix, Vec3(4.0f, 5.0f, 6.0f));
-     * @endcode
-     */
-    XMATH_API Mat4 Translate(const Vec3 &t);
+	/**
+	 * @brief Creates a translation matrix that translates by the given vector.
+	 *
+	 * This function generates a 4x4 translation matrix that can be used to translate
+	 * 3D points in space. The translation is applied in the order of the matrix multiplication,
+	 * meaning it will translate points by the vector t when multiplied with the matrix.
+	 *
+	 * @param t translation matrix vector
+	 * @return Mat4 A 4x4 translation matrix that translates points by the vector t.
+	 *
+	 * @code
+	 * Mat4 translationMatrix = Translate(Vec3(1.0f, 2.0f, 3.0f));
+	 * Mat4 combinedMatrix = Translate(translationMatrix, Vec3(4.0f, 5.0f, 6.0f));
+	 * @endcode
+	 */
+	XMATH_API Mat4 Translate(const Vec3 &t);
 
-    /**
-     * @brief Creates a translation matrix that translates by the given vector.
-     *
-     * This function generates a 4x4 translation matrix that can be used to translate
-     * 3D points in space. The translation is applied in the order of the matrix multiplication,
-     * meaning it will translate points by the vector t when multiplied with the matrix.
-     *
-     * @param m
-     * @param t transform matrix vector
-     * @return
-     *
-     * @code
-     * Mat4 translationMatrix = Translate(Vec3(1.0f, 2.0f, 3.0f));
-     * Mat4 combinedMatrix = Translate(translationMatrix, Vec3(4.0f, 5.0f, 6.0f));
-     * @endcode
-     */
-    XMATH_API Mat4 Translate(const Mat4 &m, const Vec3 &t);
+	/**
+	 * @brief Creates a translation matrix that translates by the given vector.
+	 *
+	 * This function generates a 4x4 translation matrix that can be used to translate
+	 * 3D points in space. The translation is applied in the order of the matrix multiplication,
+	 * meaning it will translate points by the vector t when multiplied with the matrix.
+	 *
+	 * @param m
+	 * @param t transform matrix vector
+	 * @return
+	 *
+	 * @code
+	 * Mat4 translationMatrix = Translate(Vec3(1.0f, 2.0f, 3.0f));
+	 * Mat4 combinedMatrix = Translate(translationMatrix, Vec3(4.0f, 5.0f, 6.0f));
+	 * @endcode
+	 */
+	XMATH_API Mat4 Translate(const Mat4 &m, const Vec3 &t);
 
-    ///////////////////////////////////////////////////////////
+	///////////////////////////////////////////////////////////
 	//			2D translation (homogeneous Mat3)			 //
-    ///////////////////////////////////////////////////////////
+	///////////////////////////////////////////////////////////
 
-    /**
-     * @brief Creates a translation matrix that translates by the given 2D vector.
-     *
-     * This function generates a 3x3 translation matrix that can be used to translate
-     * 2D points in space. The translation is applied in the order of the matrix multiplication,
-     * meaning it will translate points by the vector t when multiplied with the matrix.
-     *
-     * @param t translation matrix vector
-     * @return Mat3 A 3x3 translation matrix that translates points by the vector t.
-     *
-     * @code
-     * Mat3 translationMatrix = Translate2D(TVector2<float>(1.0f, 2.0f));
-     * Mat3 combinedMatrix = Translate2D(translationMatrix, TVector2<float>(3.0f, 4.0f));
-     * @endcode
-     */
-    XMATH_API Mat3 Translate2D(const TVector2<float> &t);
+	/**
+	 * @brief Creates a translation matrix that translates by the given 2D vector.
+	 *
+	 * This function generates a 3x3 translation matrix that can be used to translate
+	 * 2D points in space. The translation is applied in the order of the matrix multiplication,
+	 * meaning it will translate points by the vector t when multiplied with the matrix.
+	 *
+	 * @param t translation matrix vector
+	 * @return Mat3 A 3x3 translation matrix that translates points by the vector t.
+	 *
+	 * @code
+	 * Mat3 translationMatrix = Translate2D(TVector2<float>(1.0f, 2.0f));
+	 * Mat3 combinedMatrix = Translate2D(translationMatrix, TVector2<float>(3.0f, 4.0f));
+	 * @endcode
+	 */
+	XMATH_API Mat3 Translate2D(const TVector2<float> &t);
 
-    /**
-     * @brief Creates a translation matrix that translates by the given 2D vector.
-     *
-     * This function generates a 3x3 translation matrix that can be used to translate
-     * 2D points in space. The translation is applied in the order of the matrix multiplication,
-     * meaning it will translate points by the vector t when multiplied with the matrix.
-     *
-     * @param m matrix to translate
-     * @param t transform matrix vector
-     * @return Mat3 A 3x3 translation matrix that translates points by the vector t.
-     *
-     * @code
-     * Mat3 translationMatrix = Translate2D(TVector2<float>(1.0f, 2.0f));
-     * Mat3 combinedMatrix = Translate2D(translationMatrix, TVector2<float>(3.0f, 4.0f));
-     * @endcode
-     */
-    XMATH_API Mat3 Translate2D(const Mat3 &m, const TVector2<float> &t);
+	/**
+	 * @brief Creates a translation matrix that translates by the given 2D vector.
+	 *
+	 * This function generates a 3x3 translation matrix that can be used to translate
+	 * 2D points in space. The translation is applied in the order of the matrix multiplication,
+	 * meaning it will translate points by the vector t when multiplied with the matrix.
+	 *
+	 * @param m matrix to translate
+	 * @param t transform matrix vector
+	 * @return Mat3 A 3x3 translation matrix that translates points by the vector t.
+	 *
+	 * @code
+	 * Mat3 translationMatrix = Translate2D(TVector2<float>(1.0f, 2.0f));
+	 * Mat3 combinedMatrix = Translate2D(translationMatrix, TVector2<float>(3.0f, 4.0f));
+	 * @endcode
+	 */
+	XMATH_API Mat3 Translate2D(const Mat3 &m, const TVector2<float> &t);
 
 }
 
-/// -------------------------------------------------------
+// -------------------------------------------------------

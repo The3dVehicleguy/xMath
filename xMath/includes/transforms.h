@@ -30,17 +30,21 @@
 #include <xMath/includes/quat.h>
 #include <xMath/includes/vector.h>
 
-/// -------------------------------------------------------------
+// -------------------------------------------------------------
 
 namespace xMath
 {
 
+	/**
+	 * @class Transforms
+	 * @brief Provides utility functions for transforming objects in 3D space.
+	 */
 	class XMATH_API Transforms
-    {
-    public:
+	{
+	public:
 
-        Transforms() = delete;
-        ~Transforms() = delete;
+		Transforms() = delete;
+		~Transforms() = delete;
 
 		/**
 		 * @enum CoordSpace
@@ -63,12 +67,10 @@ namespace xMath
 		enum class CoordSpace : uint8_t
 		{
 			WorldSpace,   ///< Global world coordinate space
-		    LocalSpace,   ///< Parent-relative coordinate space
-		    ObjectSpace,  ///< Object-local coordinate space (model space)
+			LocalSpace,   ///< Parent-relative coordinate space
+			ObjectSpace,  ///< Object-local coordinate space (model space)
 			CameraSpace   ///< Camera-relative coordinate space (view space)
 		};
-
-		/// -------------------------------------------------------------
 
 		/**
 		 * @brief Decomposes a transformation matrix into translation, rotation, and scale components.
@@ -83,7 +85,7 @@ namespace xMath
 		 * @param scale Out: non-uniform scale per axis.
 		 * @return true if decomposition succeeded; false for invalid/singular inputs.
 		 */
-        static bool Decompose(const Mat4 &transform, Vec3 &translation, Quat &rotation, Vec3 &scale);
+		static bool Decompose(const Mat4 &transform, Vec3 &translation, Quat &rotation, Vec3 &scale);
 
 		/**
 		 * @brief Composes a transformation matrix from translation, rotation, and scale components.
@@ -122,11 +124,10 @@ namespace xMath
 		 * // Use objectTransform to position and orient an object in the scene
 		 * @endcode
 		 */
-        static Mat4 Compose(const Vec3 &translation, const Quat &rotation, const Vec3 &scale);
+		static Mat4 Compose(const Vec3 &translation, const Quat &rotation, const Vec3 &scale);
 
-    };
-
+	};
 
 }
 
-/// -------------------------------------------------------------
+// -------------------------------------------------------------

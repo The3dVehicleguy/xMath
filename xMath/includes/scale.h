@@ -30,12 +30,12 @@
 #include <xMath/includes/mat4.h>
 #include <xMath/includes/vector.h>
 
-/// -------------------------------------------------------
+// -------------------------------------------------------
 
 namespace xMath
 {
 
-    ///////////////////////////////////////////////////////////
+	///////////////////////////////////////////////////////////
 	//					 3D scale (Mat4)					 //
 	///////////////////////////////////////////////////////////
 	
@@ -59,9 +59,9 @@ namespace xMath
 	 * Mat4 scalingMatrix = Scale(scaleFactors); // Create a scaling matrix
 	 * @endcode
 	 */
-    XMATH_API Mat4 Scale(const Vec3 &s);
+	XMATH_API Mat4 Scale(const Vec3 &s);
 
-    /**
+	/**
 	 * @brief Scales a 3D vector to a desired length.
 	 *
 	 * This function takes a vector and scales it to the specified length while
@@ -76,9 +76,9 @@ namespace xMath
 	 *
 	 * @note - This function uses GLM's epsilon comparison to safely check for zero-length vectors.
 	 */
-    XMATH_API Vec3 Scale(const Vec3 &vector, float desiredLength);
+	XMATH_API Vec3 Scale(const Vec3 &vector, float desiredLength);
 
-    /**
+	/**
 	 * @brief Create a 3D scaling matrix and apply it to an existing matrix.
 	 *
 	 * This function constructs a 3D scaling matrix and multiplies it with an existing matrix.
@@ -97,9 +97,9 @@ namespace xMath
 	 * Mat4 scalingMatrix = Scale(existingMatrix, Vec3(2.0f, 3.0f, 4.0f)); // Create a scaling matrix and apply it
 	 * @endcode
 	 */
-    XMATH_API Mat4 Scale(const Vec2 &s);
+	XMATH_API Mat4 Scale(const Vec2 &s);
 
-    /**
+	/**
 	 * @brief Create a 3D scaling matrix and apply it to an existing matrix.
 	 *
 	 * This function constructs a 3D scaling matrix and multiplies it with an existing matrix.
@@ -119,9 +119,9 @@ namespace xMath
 	 * Mat4 scalingMatrix = Scale(existingMatrix, Vec3(2.0f, 3.0f, 4.0f)); // Create a scaling matrix and apply it
 	 * @endcode
 	 */
-    XMATH_API Mat4 Scale(const Mat4 &m, const Vec3 &s);
+	XMATH_API Mat4 Scale(const Mat4 &m, const Vec3 &s);
 
-    /**
+	/**
 	 * @brief Create a 2D scaling matrix and apply it to an existing matrix.
 	 *
 	 * This function constructs a 2D scaling matrix and multiplies it with an existing matrix.
@@ -140,9 +140,9 @@ namespace xMath
 	 * Mat3 scalingMatrix = Scale2D(existingMatrix, Vec2(2.0f, 3.0f)); // Create a scaling matrix and apply it
 	 * @endcode
 	 */
-    XMATH_API Mat4 Scale(const Mat4 &m, const Vec2 &s);
+	XMATH_API Mat4 Scale(const Mat4 &m, const Vec2 &s);
 
-    ///////////////////////////////////////////////////////////
+	///////////////////////////////////////////////////////////
 	//			   2D scale (homogeneous Mat3)				 //
 	///////////////////////////////////////////////////////////
 	
@@ -166,9 +166,9 @@ namespace xMath
 	 * @endcode
 	 *
 	 */
-    XMATH_API Mat3 Scale2D(const Vec2 &s);
+	XMATH_API Mat3 Scale2D(const Vec2 &s);
 
-    /**
+	/**
 	 * @brief Create a 2D scaling matrix and apply it to an existing matrix.
 	 *
 	 * This function constructs a 2D scaling matrix and multiplies it with an existing matrix.
@@ -187,8 +187,8 @@ namespace xMath
 	 * Mat3 scalingMatrix = Scale2D(existingMatrix, Vec2(2.0f, 3.0f)); // Create a scaling matrix and apply it
 	 * @endcode
 	 */
-    XMATH_API Mat3 Scale2D(const Mat3 &m, const Vec2 &s);
+	XMATH_API Mat3 Scale2D(const Mat3 &m, const Vec2 &s);
 
 }
 
-/// -------------------------------------------------------
+// -------------------------------------------------------

@@ -29,6 +29,7 @@
 #include <xMath/includes/constants.h>
 #include <xMath/includes/math_utils.h>
 #include <xMath/includes/quat.h>
+
 // Optional Tracy profiling: only enabled if both XMATH_ALLOW_TRACY and TRACY_ENABLE are defined by build system
 #if defined(XMATH_ALLOW_TRACY) && defined(TRACY_ENABLE)
 	#include <tracy/Tracy.hpp>
@@ -45,7 +46,7 @@ namespace xMath
 
 	Quat Quat::Identity()
 	{
-	    return {};
+		return {};
 	}
 
 	/**
@@ -106,16 +107,16 @@ namespace xMath
 	 */
 	Quat::Quat(const Vec4& vec4) : x(vec4.x), y(vec4.y), z(vec4.z), w(vec4.w) {}
 
-    /**
-     * @note Storage Layout vs Parameter Order
-     * Internally the quaternion stores components as (x,y,z,w) in memory so the
-     * vector part is tightly packed at the beginning for cache/SIMD friendliness
-     * with other math structures (Vec3/Vec4). The public constructor however
-     * takes parameters in the common (w,x,y,z) order for readability. Always use
-     * the named members (x,y,z,w) when accessing components. Do not assume
-     * constructor parameter ordering matches memory layout for binary dumps or
-     * serialization – consult the math library documentation first.
-     */
+	/**
+	 * @note Storage Layout vs Parameter Order
+	 * Internally the quaternion stores components as (x,y,z,w) in memory so the
+	 * vector part is tightly packed at the beginning for cache/SIMD friendliness
+	 * with other math structures (Vec3/Vec4). The public constructor however
+	 * takes parameters in the common (w,x,y,z) order for readability. Always use
+	 * the named members (x,y,z,w) when accessing components. Do not assume
+	 * constructor parameter ordering matches memory layout for binary dumps or
+	 * serialization – consult the math library documentation first.
+	 */
 
 	/**
 	 * @brief Copy constructor.
@@ -298,7 +299,7 @@ namespace xMath
 	 */
 	Quat Quat::operator*(const float rhs) const
 	{
-	    return {w * rhs, x * rhs, y * rhs, z * rhs};
+		return {w * rhs, x * rhs, y * rhs, z * rhs};
 	}
 
 	/**
@@ -322,7 +323,7 @@ namespace xMath
 	 */
 	Quat Quat::operator+(const Quat& rhs) const
 	{
-	    return {w + rhs.w, x + rhs.x, y + rhs.y, z + rhs.z};
+		return {w + rhs.w, x + rhs.x, y + rhs.y, z + rhs.z};
 	}
 
 	/**
@@ -346,7 +347,7 @@ namespace xMath
 	 */
 	Quat Quat::operator-(const Quat& rhs) const
 	{
-	    return {w - rhs.w, x - rhs.x, y - rhs.y, z - rhs.z};
+		return {w - rhs.w, x - rhs.x, y - rhs.y, z - rhs.z};
 	}
 
 	/// Unary negation: negate all components (q and -q represent the same rotation)
@@ -431,33 +432,33 @@ namespace xMath
 	 * Quat normalized = q.GetNormalized(); // Unit quaternion with same rotation
 	 * @endcode
 	 */
-    Quat Quat::GetNormalized() const
-    {
-        const float mag2 = w * w + x * x + y * y + z * z;
-        if (mag2 <= 0.0f)
-            return Quat(); // identity fallback for degenerate quaternion
-        const float mag = sqrtf(mag2);
-        if (mag <= 0.0f)
-            return Quat();
-        return {w / mag, x / mag, y / mag, z / mag};
-    }
+	Quat Quat::GetNormalized() const
+	{
+		const float mag2 = w * w + x * x + y * y + z * z;
+		if (mag2 <= 0.0f)
+			return Quat(); // identity fallback for degenerate quaternion
+		const float mag = sqrtf(mag2);
+		if (mag <= 0.0f)
+			return Quat();
+		return {w / mag, x / mag, y / mag, z / mag};
+	}
 
-    /**
-     * @brief GLM-style alias for GetNormalized().
-     *
-     * Returns a normalized copy of this quaternion.
-     *
-     * @return A new normalized quaternion representing the same rotation
-     *
-     * @note - This is an alias for GetNormalized() and does not modify the original quaternion.
-     * @note - If the quaternion has zero magnitude, the result is undefined.
-     *
-     * @code
-     * Quat q(2, 4, 6, 8); // Non-unit quaternion
-     * Quat normalized = q.normalize(); // Unit quaternion with same rotation
-     * @endcode
-     */
-    Quat Quat::normalize() const
+	/**
+	 * @brief GLM-style alias for GetNormalized().
+	 *
+	 * Returns a normalized copy of this quaternion.
+	 *
+	 * @return A new normalized quaternion representing the same rotation
+	 *
+	 * @note - This is an alias for GetNormalized() and does not modify the original quaternion.
+	 * @note - If the quaternion has zero magnitude, the result is undefined.
+	 *
+	 * @code
+	 * Quat q(2, 4, 6, 8); // Non-unit quaternion
+	 * Quat normalized = q.normalize(); // Unit quaternion with same rotation
+	 * @endcode
+	 */
+	Quat Quat::normalize() const
 	{
 		return GetNormalized();
 	}
@@ -506,12 +507,12 @@ namespace xMath
 	 */
 	Quat Quat::Conjugate() { return {w, -x, -y, -z}; }
 
-    float Quat::Length() const
+	float Quat::Length() const
 	{
-	    return std::sqrt(GetSqrMagnitude());
+		return std::sqrt(GetSqrMagnitude());
 	}
 
-    /**
+	/**
 	 * @brief Sets this quaternion from Euler angles in degrees.
 	 *
 	 * Constructs a rotation quaternion from Euler angles using XYZ rotation order.
@@ -578,25 +579,25 @@ namespace xMath
 	float Quat::Dot(const Quat& b) const { return (w * b.w + x * b.x + y * b.y + z * b.z); }
 
 
-    /**
-     * @brief Converts this quaternion to a rotation matrix.
-     *
-     * Converts the quaternion to a 4x4 rotation matrix that can be used
-     * for transforming vectors in 3D space. The resulting matrix represents
-     * the same rotation as the quaternion.
-     *
-     * @return A Mat4 representing the same rotation as this quaternion
-     *
-     * @note - The quaternion should be normalized for accurate conversion.
-     * @note - The resulting matrix has translation components set to zero.
-     * @note - This is equivalent to calling ToMatrix() on the quaternion instance.
-     *
-     * @code
-     * Quat rotation = Quat::EulerDegrees(45, 0, 0);
-     * Mat4 rotMatrix = rotation.ToMatrix();
-     * @endcode
-     */
-    Mat4 Quat::ToMatrix() const { return ToMatrix(*this); }
+	/**
+	 * @brief Converts this quaternion to a rotation matrix.
+	 *
+	 * Converts the quaternion to a 4x4 rotation matrix that can be used
+	 * for transforming vectors in 3D space. The resulting matrix represents
+	 * the same rotation as the quaternion.
+	 *
+	 * @return A Mat4 representing the same rotation as this quaternion
+	 *
+	 * @note - The quaternion should be normalized for accurate conversion.
+	 * @note - The resulting matrix has translation components set to zero.
+	 * @note - This is equivalent to calling ToMatrix() on the quaternion instance.
+	 *
+	 * @code
+	 * Quat rotation = Quat::EulerDegrees(45, 0, 0);
+	 * Mat4 rotMatrix = rotation.ToMatrix();
+	 * @endcode
+	 */
+	Mat4 Quat::ToMatrix() const { return ToMatrix(*this); }
 
 	/**
 	 * @brief Creates a quaternion representing rotation from one vector to another.
@@ -647,65 +648,65 @@ namespace xMath
 		const float s_from = xMath::Dot(unitFrom, unitFrom);
 		const float s_to = xMath::Dot(unitTo, unitTo);
 		const float s = sqrtf(s_from * s_to) + xMath::Dot(unitFrom, unitTo);
-        Vec3 v = Cross(unitFrom, unitTo);
-        // @note: Previous implementation negated x & y only (v.x*= -1, v.y*=-1) which
-        // introduced an implicit handedness flip for some rotations. That was unintentional
-        // and produced asymmetric results. We now keep the raw cross product.
-        return Quat(Vec4(v, s)).GetNormalized();
-    }
+		Vec3 v = Cross(unitFrom, unitTo);
+		// @note: Previous implementation negated x & y only (v.x*= -1, v.y*=-1) which
+		// introduced an implicit handedness flip for some rotations. That was unintentional
+		// and produced asymmetric results. We now keep the raw cross product.
+		return Quat(Vec4(v, s)).GetNormalized();
+	}
 
-    /**
-     * @brief Creates a quaternion that looks in the specified direction.
-     *
-     * Generates a rotation quaternion that orients an object to look in the
-     * given direction. Assumes the object's forward direction is
-     * initially along the positive Z-axis (0, 0, 1).
-     *
-     * @param lookAt The direction to look towards (will be normalized)
-     * @return A quaternion representing the look rotation
-     *
-     * @note - This is equivalent to FromToRotation(Vec3(0,0,1), lookAt)
-     * @note - The lookAt vector is normalized internally to ensure correct behavior.
-     * @note - This function does not handle up direction constraints.
-     *
-     * @code
-     * Vec3 target(1, 0, 0); // Look towards positive X
-     * Quat lookRotation = Quat::LookRotation(target);
-     * @endcode
-     */
-    Quat Quat::LookRotation(const Vec3& lookAt)
+	/**
+	 * @brief Creates a quaternion that looks in the specified direction.
+	 *
+	 * Generates a rotation quaternion that orients an object to look in the
+	 * given direction. Assumes the object's forward direction is
+	 * initially along the positive Z-axis (0, 0, 1).
+	 *
+	 * @param lookAt The direction to look towards (will be normalized)
+	 * @return A quaternion representing the look rotation
+	 *
+	 * @note - This is equivalent to FromToRotation(Vec3(0,0,1), lookAt)
+	 * @note - The lookAt vector is normalized internally to ensure correct behavior.
+	 * @note - This function does not handle up direction constraints.
+	 *
+	 * @code
+	 * Vec3 target(1, 0, 0); // Look towards positive X
+	 * Quat lookRotation = Quat::LookRotation(target);
+	 * @endcode
+	 */
+	Quat Quat::LookRotation(const Vec3& lookAt)
 	{
-	    return FromToRotation(Vec3(0, 0, 1), lookAt);
+		return FromToRotation(Vec3(0, 0, 1), lookAt);
 	}
 
 	///< TODO: Modify LookRotation entries after modifying the original function
 
-    /**
-     * @brief Creates a quaternion that looks in the specified direction with an up constraint.
-     *
-     * Generates a rotation quaternion that orients an object to look in the
-     * specified direction while attempting to keep the specified up direction
-     * aligned with the object's up vector.
-     *
-     * This is useful for camera orientations where you want to maintain a
-     * consistent up direction while looking at a target.
-     *
-     * @param lookAt The direction to look towards (will be normalized)
-     * @param upDirection The desired up direction (will be normalized)
-     * @return A quaternion representing the constrained look rotation
-     *
-     * @note - This function may have issues with certain edge cases
-     * (e.g., collinear lookAt and upDirection vectors).
-     * @note - If the lookAt and upDirection vectors are collinear, the function
-     * @note - This function is deprecated and may not handle all edge cases correctly.
-     *
-     * @code
-     * Vec3 target(1, 0, 0); // Look towards positive X
-     * Vec3 up(0, 1, 0); // Keep +Y as up
-     * Quat lookRotation = Quat::LookRotation(target, up);
-     * @endcode
-     */
-    [[deprecated]] Quat Quat::LookRotation(const Vec3& lookAt, const Vec3& upDirection)
+	/**
+	 * @brief Creates a quaternion that looks in the specified direction with an up constraint.
+	 *
+	 * Generates a rotation quaternion that orients an object to look in the
+	 * specified direction while attempting to keep the specified up direction
+	 * aligned with the object's up vector.
+	 *
+	 * This is useful for camera orientations where you want to maintain a
+	 * consistent up direction while looking at a target.
+	 *
+	 * @param lookAt The direction to look towards (will be normalized)
+	 * @param upDirection The desired up direction (will be normalized)
+	 * @return A quaternion representing the constrained look rotation
+	 *
+	 * @note - This function may have issues with certain edge cases
+	 * (e.g., collinear lookAt and upDirection vectors).
+	 * @note - If the lookAt and upDirection vectors are collinear, the function
+	 * @note - This function is deprecated and may not handle all edge cases correctly.
+	 *
+	 * @code
+	 * Vec3 target(1, 0, 0); // Look towards positive X
+	 * Vec3 up(0, 1, 0); // Keep +Y as up
+	 * Quat lookRotation = Quat::LookRotation(target, up);
+	 * @endcode
+	 */
+	[[deprecated]] Quat Quat::LookRotation(const Vec3& lookAt, const Vec3& upDirection)
 	{
 		///< Calculate the unit quaternion that rotates Vector3::FORWARD to face in the specified forward direction.
 		const Quat q1 = LookRotation(lookAt);
@@ -713,11 +714,11 @@ namespace xMath
 
 		/// We can't preserve the upwards direction if the forward and upwards
 		/// vectors are linearly dependent (collinear).
-	    if (xMath::Dot(Cross(lookAt, upDirection), Cross(lookAt, upDirection)) == 0.0f)
-            return q1;
+		if (xMath::Dot(Cross(lookAt, upDirection), Cross(lookAt, upDirection)) == 0.0f)
+			return q1;
 
-        /// Determine the upwards direction obtained after applying q1.
-	    const Vec3 newUp = q1 * Vec3(0, 1, 0);
+		/// Determine the upwards direction obtained after applying q1.
+		const Vec3 newUp = q1 * Vec3(0, 1, 0);
 
 
 		 /// Calculate the unit quaternion rotation that rotates the newUp
@@ -731,29 +732,29 @@ namespace xMath
 		return q2 * q1;
 	}
 
-    /**
-     * @brief Creates a quaternion that looks in the specified direction with an up constraint (improved).
-     *
-     * Generates a rotation quaternion that orients an object with the specified
-     * forward and up directions. This is the recommended method for creating
-     * look-at rotations with proper up vector constraints.
-     *
-     * @param forward The forward direction vector (will be normalized)
-     * @param up The up direction vector (will be normalized)
-     * @return A quaternion representing the orientation
-     *
-     * @note - This is the improved version of LookRotation with better edge case handling
-     * @note - Input vectors should not be parallel for best results
-     *
-     * @code
-     * Vec3 forward(1, 0, 0);  // Look towards +X
-     * Vec3 up(0, 1, 0);       // Keep +Y as up
-     * Quat rotation = Quat::LookRotation2(forward, up);
-     * @endcode
-     */
-    Quat Quat::LookRotation2(const Vec3& forward, const Vec3& up)
+	/**
+	 * @brief Creates a quaternion that looks in the specified direction with an up constraint (improved).
+	 *
+	 * Generates a rotation quaternion that orients an object with the specified
+	 * forward and up directions. This is the recommended method for creating
+	 * look-at rotations with proper up vector constraints.
+	 *
+	 * @param forward The forward direction vector (will be normalized)
+	 * @param up The up direction vector (will be normalized)
+	 * @return A quaternion representing the orientation
+	 *
+	 * @note - This is the improved version of LookRotation with better edge case handling
+	 * @note - Input vectors should not be parallel for best results
+	 *
+	 * @code
+	 * Vec3 forward(1, 0, 0);  // Look towards +X
+	 * Vec3 up(0, 1, 0);       // Keep +Y as up
+	 * Quat rotation = Quat::LookRotation2(forward, up);
+	 * @endcode
+	 */
+	Quat Quat::LookRotation2(const Vec3& forward, const Vec3& up)
 	{
-	    Vec3 right = Cross(up, forward);
+		Vec3 right = Cross(up, forward);
 		Quat result;
 		result.w = sqrtf(1.0f + right.x + up.y + forward.z) * 0.5f;
 		float w4_recip = 1.0f / (4.0f * result.w);
@@ -792,61 +793,61 @@ namespace xMath
 	 * Quat middle = Quat::Slerp(start, end, 0.5f); // 45° rotation
 	 * @endcode
 	 */
-    Quat Quat::Slerp(const Quat &from, const Quat &to, const float t)
-    {
-        // Robust SLERP with small-angle fallback to avoid precision loss.
-        Quat a = from.GetNormalized();
-        Quat b = to.GetNormalized();
-        float dot = a.w * b.w + a.x * b.x + a.y * b.y + a.z * b.z;
-        if (dot < 0.0f)
-        {
-            dot = -dot;
-            b.w = -b.w;
-            b.x = -b.x;
-            b.y = -b.y;
-            b.z = -b.z; // shortest path
-        }
-        dot = std::clamp(dot, -1.0f, 1.0f);
-        // Small angle -> nlerp
-        if (1.0f - dot < 1e-3f)
-        {
-            Quat result(a.w + t * (b.w - a.w), a.x + t * (b.x - a.x), a.y + t * (b.y - a.y), a.z + t * (b.z - a.z));
-            return result.GetNormalized();
-        }
-        float theta0 = acosf(dot);
-        float theta = theta0 * t;
-        float sinTheta0 = sinf(theta0);
-        float sinTheta = sinf(theta);
-        float s0 = cosf(theta) - dot * sinTheta / sinTheta0;
-        float s1 = sinTheta / sinTheta0;
-        return Quat(s0 * a.w + s1 * b.w, s0 * a.x + s1 * b.x, s0 * a.y + s1 * b.y, s0 * a.z + s1 * b.z);
-    }
+	Quat Quat::Slerp(const Quat &from, const Quat &to, const float t)
+	{
+		// Robust SLERP with small-angle fallback to avoid precision loss.
+		Quat a = from.GetNormalized();
+		Quat b = to.GetNormalized();
+		float dot = a.w * b.w + a.x * b.x + a.y * b.y + a.z * b.z;
+		if (dot < 0.0f)
+		{
+			dot = -dot;
+			b.w = -b.w;
+			b.x = -b.x;
+			b.y = -b.y;
+			b.z = -b.z; // shortest path
+		}
+		dot = std::clamp(dot, -1.0f, 1.0f);
+		// Small angle -> nlerp
+		if (1.0f - dot < 1e-3f)
+		{
+			Quat result(a.w + t * (b.w - a.w), a.x + t * (b.x - a.x), a.y + t * (b.y - a.y), a.z + t * (b.z - a.z));
+			return result.GetNormalized();
+		}
+		float theta0 = acosf(dot);
+		float theta = theta0 * t;
+		float sinTheta0 = sinf(theta0);
+		float sinTheta = sinf(theta);
+		float s0 = cosf(theta) - dot * sinTheta / sinTheta0;
+		float s1 = sinTheta / sinTheta0;
+		return Quat(s0 * a.w + s1 * b.w, s0 * a.x + s1 * b.x, s0 * a.y + s1 * b.y, s0 * a.z + s1 * b.z);
+	}
 
 
-    /**
-     * @brief Linearly interpolates between two quaternions.
-     *
-     * Performs linear interpolation (LERP) between two quaternions.
-     * This method is less smooth than SLERP and can result in non-uniform
-     * angular velocity, but is simpler and faster.
-     *
-     * @param from The starting quaternion
-     * @param to The ending quaternion
-     * @param t Interpolation parameter (0.0 = from, 1.0 = to)
-     * @return A quaternion interpolated between from and to
-     *
-     * @note - LERP is not suitable for animations requiring constant angular velocity
-     * @note - t values outside [0,1] will extrapolate beyond the endpoints
-     * @note - This method does not handle quaternion double-cover, so it may not
-     *        produce the shortest path between rotations
-     *
-     * @code
-     * Quat start = Quat::EulerDegrees(0, 0, 0);
-     * Quat end = Quat::EulerDegrees(90, 0, 0);
-     * Quat middle = Quat::Lerp(start, end, 0.5f); // 45° rotation
-     * @endcode
-     */
-    Quat Quat::Lerp(const Quat& from, const Quat& to, const float t)
+	/**
+	 * @brief Linearly interpolates between two quaternions.
+	 *
+	 * Performs linear interpolation (LERP) between two quaternions.
+	 * This method is less smooth than SLERP and can result in non-uniform
+	 * angular velocity, but is simpler and faster.
+	 *
+	 * @param from The starting quaternion
+	 * @param to The ending quaternion
+	 * @param t Interpolation parameter (0.0 = from, 1.0 = to)
+	 * @return A quaternion interpolated between from and to
+	 *
+	 * @note - LERP is not suitable for animations requiring constant angular velocity
+	 * @note - t values outside [0,1] will extrapolate beyond the endpoints
+	 * @note - This method does not handle quaternion double-cover, so it may not
+	 *        produce the shortest path between rotations
+	 *
+	 * @code
+	 * Quat start = Quat::EulerDegrees(0, 0, 0);
+	 * Quat end = Quat::EulerDegrees(90, 0, 0);
+	 * Quat middle = Quat::Lerp(start, end, 0.5f); // 45° rotation
+	 * @endcode
+	 */
+	Quat Quat::Lerp(const Quat& from, const Quat& to, const float t)
 	{
 		const Quat src = from * (1.0f - t);
 		const Quat dst = to * t;
@@ -855,28 +856,28 @@ namespace xMath
 		return q.GetNormalized();
 	}
 
-    /**
-     * @brief Calculates the angle between two quaternions.
-     *
-     * Computes the angle in degrees between two quaternions
-     * using the dot product.
-     *
-     * @param a The first quaternion
-     * @param b The second quaternion
-     * @return The angle in degrees between the two quaternions
-     *
-     * @note - The angle is always in the range [0, 180]
-     * @note - This function uses the dot product to determine the angle
-     * @note - If the quaternions are identical, the angle is 0
-     * @note - If the quaternions are opposite, the angle is 180
-     *
-     * @code
-     * Quat q1 = Quat::EulerDegrees(0, 0, 0);
-     * Quat q2 = Quat::EulerDegrees(90, 0, 0);
-     * float angle = Quat::Angle(q1, q2); // 90 degrees
-     * @endcode
-     */
-    float Quat::Angle(const Quat& a, const Quat& b)
+	/**
+	 * @brief Calculates the angle between two quaternions.
+	 *
+	 * Computes the angle in degrees between two quaternions
+	 * using the dot product.
+	 *
+	 * @param a The first quaternion
+	 * @param b The second quaternion
+	 * @return The angle in degrees between the two quaternions
+	 *
+	 * @note - The angle is always in the range [0, 180]
+	 * @note - This function uses the dot product to determine the angle
+	 * @note - If the quaternions are identical, the angle is 0
+	 * @note - If the quaternions are opposite, the angle is 180
+	 *
+	 * @code
+	 * Quat q1 = Quat::EulerDegrees(0, 0, 0);
+	 * Quat q2 = Quat::EulerDegrees(90, 0, 0);
+	 * float angle = Quat::Angle(q1, q2); // 90 degrees
+	 * @endcode
+	 */
+	float Quat::Angle(const Quat& a, const Quat& b)
 	{
 		const float degrees = acosf((b * a.GetInverse()).w) * 2.0f * 57.2957795f;
 		if (degrees > 180.0f)
@@ -884,49 +885,49 @@ namespace xMath
 		return degrees;
 	}
 
-    /**
-     * @brief Calculates the dot product of two quaternions.
-     *
-     * Computes the dot product between two quaternions.
-     * The dot product is a measure of similarity between two rotations.
-     *
-     * @param a The first quaternion
-     * @param b The second quaternion
-     * @return The dot product value (1.0 = identical, -1.0 = opposite)
-     *
-     * @note - The dot product is always in the range [-1.0, 1.0]
-     * @note - If the quaternions are identical, the dot product is 1.0
-     * @note - If the quaternions are opposite, the dot product is -1.0
-     * @note - This function is used in SLERP and angle calculation functions
-     *
-     * @code
-     * Quat q1 = Quat::EulerDegrees(0, 0, 0);
-     * Quat q2 = Quat::EulerDegrees(90, 0, 0);
-     * float dot = Quat::Dot(q1, q2);
-     * @endcode
-     */
-    float Quat::Dot(const Quat& a, const Quat& b) { return a.Dot(b); }
+	/**
+	 * @brief Calculates the dot product of two quaternions.
+	 *
+	 * Computes the dot product between two quaternions.
+	 * The dot product is a measure of similarity between two rotations.
+	 *
+	 * @param a The first quaternion
+	 * @param b The second quaternion
+	 * @return The dot product value (1.0 = identical, -1.0 = opposite)
+	 *
+	 * @note - The dot product is always in the range [-1.0, 1.0]
+	 * @note - If the quaternions are identical, the dot product is 1.0
+	 * @note - If the quaternions are opposite, the dot product is -1.0
+	 * @note - This function is used in SLERP and angle calculation functions
+	 *
+	 * @code
+	 * Quat q1 = Quat::EulerDegrees(0, 0, 0);
+	 * Quat q2 = Quat::EulerDegrees(90, 0, 0);
+	 * float dot = Quat::Dot(q1, q2);
+	 * @endcode
+	 */
+	float Quat::Dot(const Quat& a, const Quat& b) { return a.Dot(b); }
 
-    /**
-     * @brief Creates a quaternion from an angle and axis.
-     *
-     * Creates a quaternion representing a rotation around a specified axis
-     * by a given angle in degrees. The axis is expected to be a normalized vector.
-     *
-     * @param angle The rotation angle in degrees
-     * @param axis The axis of rotation (should be normalized)
-     * @return A quaternion representing the rotation
-     *
-     * @note - The axis vector is normalized internally to ensure correct behavior
-     * @note - The angle is converted from degrees to radians internally
-     * @note - This function uses the angle-axis representation of quaternions
-     * @note - The resulting quaternion is normalized to ensure unit length
-     *
-     * @code
-     * Quat rotation = Quat::AngleAxis(90, Vec4(0, 1, 0, 0)); // 90° rotation around Y-axis
-     * @endcode
-     */
-    Quat Quat::AngleAxis(float angle, const Vec4& axis)
+	/**
+	 * @brief Creates a quaternion from an angle and axis.
+	 *
+	 * Creates a quaternion representing a rotation around a specified axis
+	 * by a given angle in degrees. The axis is expected to be a normalized vector.
+	 *
+	 * @param angle The rotation angle in degrees
+	 * @param axis The axis of rotation (should be normalized)
+	 * @return A quaternion representing the rotation
+	 *
+	 * @note - The axis vector is normalized internally to ensure correct behavior
+	 * @note - The angle is converted from degrees to radians internally
+	 * @note - This function uses the angle-axis representation of quaternions
+	 * @note - The resulting quaternion is normalized to ensure unit length
+	 *
+	 * @code
+	 * Quat rotation = Quat::AngleAxis(90, Vec4(0, 1, 0, 0)); // 90° rotation around Y-axis
+	 * @endcode
+	 */
+	Quat Quat::AngleAxis(float angle, const Vec4& axis)
 	{
 		/// Normalize axis (x, y, z only)
 		const float len = sqrtf(axis.x * axis.x + axis.y * axis.y + axis.z * axis.z);
@@ -944,26 +945,26 @@ namespace xMath
 		return {cosf(angle), vn.x * sinAngle, vn.y * sinAngle, vn.z * sinAngle};
 	}
 
-    /**
-     * @brief Creates a quaternion from an angle and axis in radians.
-     *
-     * @details Creates a quaternion representing a rotation around a specified axis
-     * by a given angle in radians. The axis is expected to be a normalized vector.
-     *
-     * @param angleRadians The rotation angle in radians
-     * @param axis The axis of rotation (should be normalized)
-     * @return A quaternion representing the rotation
-     *
-     * @note - The axis vector is normalized internally to ensure correct behavior
-     * @note - The angle is expected to be in radians
-     * @note - This function uses the angle-axis representation of quaternions
-     * @note - The resulting quaternion is normalized to ensure unit length
-     *
-     * @code
-     * Quat rotation = Quat::AngleAxisRadians(1.5708f, Vec3(0, 1, 0)); // 90° rotation around Y-axis
-     * @endcode
-     */
-    Quat Quat::AngleAxisRadians(float angleRadians, const Vec3& axis)
+	/**
+	 * @brief Creates a quaternion from an angle and axis in radians.
+	 *
+	 * @details Creates a quaternion representing a rotation around a specified axis
+	 * by a given angle in radians. The axis is expected to be a normalized vector.
+	 *
+	 * @param angleRadians The rotation angle in radians
+	 * @param axis The axis of rotation (should be normalized)
+	 * @return A quaternion representing the rotation
+	 *
+	 * @note - The axis vector is normalized internally to ensure correct behavior
+	 * @note - The angle is expected to be in radians
+	 * @note - This function uses the angle-axis representation of quaternions
+	 * @note - The resulting quaternion is normalized to ensure unit length
+	 *
+	 * @code
+	 * Quat rotation = Quat::AngleAxisRadians(1.5708f, Vec3(0, 1, 0)); // 90° rotation around Y-axis
+	 * @endcode
+	 */
+	Quat Quat::AngleAxisRadians(float angleRadians, const Vec3& axis)
 	{
 		/// Normalize axis
 		float len2 = axis.x * axis.x + axis.y * axis.y + axis.z * axis.z;
@@ -978,27 +979,27 @@ namespace xMath
 		return {cosf(half), n.x * s, n.y * s, n.z * s};
 	}
 
-    /**
-     * @brief Calculates the inverse of this quaternion.
-     *
-     * Computes the inverse of the quaternion, which is used to reverse the rotation
-     * represented by the quaternion. The inverse is defined as:
-     * - For a quaternion (w, x, y, z), the inverse is (w, -x, -y, -z) / |q|^2
-     * This function assumes the quaternion is normalized (unit length).
-     *
-     * @return A new quaternion that is the inverse of this quaternion
-     *
-     * @note - The inverse is used in SLERP and angle calculations to reverse rotations
-     * @note - If the quaternion is not normalized, the result will not be a unit quaternion
-     * @note - The inverse of a quaternion is also known as the conjugate for unit quaternions
-     * @note - The inverse of the quaternion is used to reverse the rotation it represents
-     *
-     * @code
-     * Quat rotation = Quat::EulerDegrees(45, 0, 0);
-     * Quat inverse = rotation.GetInverse(); // Inverse rotation of 45° around X-axis
-     * @endcode
-     */
-    Quat Quat::GetInverse() const
+	/**
+	 * @brief Calculates the inverse of this quaternion.
+	 *
+	 * Computes the inverse of the quaternion, which is used to reverse the rotation
+	 * represented by the quaternion. The inverse is defined as:
+	 * - For a quaternion (w, x, y, z), the inverse is (w, -x, -y, -z) / |q|^2
+	 * This function assumes the quaternion is normalized (unit length).
+	 *
+	 * @return A new quaternion that is the inverse of this quaternion
+	 *
+	 * @note - The inverse is used in SLERP and angle calculations to reverse rotations
+	 * @note - If the quaternion is not normalized, the result will not be a unit quaternion
+	 * @note - The inverse of a quaternion is also known as the conjugate for unit quaternions
+	 * @note - The inverse of the quaternion is used to reverse the rotation it represents
+	 *
+	 * @code
+	 * Quat rotation = Quat::EulerDegrees(45, 0, 0);
+	 * Quat inverse = rotation.GetInverse(); // Inverse rotation of 45° around X-axis
+	 * @endcode
+	 */
+	Quat Quat::GetInverse() const
 	{
 		const float sqr = GetSqrMagnitude();
 		const float invSqr = 1.0f / sqr;
@@ -1006,51 +1007,51 @@ namespace xMath
 		return {w * invSqr, -x * invSqr, -y * invSqr, -z * invSqr};
 	}
 
-    /**
-     * @brief Returns the inverse of this quaternion.
-     *
-     * Calculates the inverse of the quaternion, which is used to reverse the rotation
-     * represented by the quaternion. The inverse is defined as:
-     * - For a quaternion (w, x, y, z), the inverse is (w, -x, -y, -z) / |q|^2
-     * This function assumes the quaternion is normalized (unit length).
-     *
-     * @return A new quaternion that is the inverse of this quaternion
-     *
-     * @note - The inverse is used in SLERP and angle calculations to reverse rotations
-     * @note - If the quaternion is not normalized, the result will not be a unit quaternion
-     * @note - The inverse of a quaternion is also known as the conjugate for unit quaternions
-     * @note - The inverse of the quaternion is used to reverse the rotation it represents
-     *
-     * @code
-     * Quat rotation = Quat::EulerDegrees(45, 0, 0);
-     * Quat inverse = rotation.inverse(); // Inverse rotation of 45° around X-axis
-     * @endcode
-     */
-    Quat Quat::inverse() const
+	/**
+	 * @brief Returns the inverse of this quaternion.
+	 *
+	 * Calculates the inverse of the quaternion, which is used to reverse the rotation
+	 * represented by the quaternion. The inverse is defined as:
+	 * - For a quaternion (w, x, y, z), the inverse is (w, -x, -y, -z) / |q|^2
+	 * This function assumes the quaternion is normalized (unit length).
+	 *
+	 * @return A new quaternion that is the inverse of this quaternion
+	 *
+	 * @note - The inverse is used in SLERP and angle calculations to reverse rotations
+	 * @note - If the quaternion is not normalized, the result will not be a unit quaternion
+	 * @note - The inverse of a quaternion is also known as the conjugate for unit quaternions
+	 * @note - The inverse of the quaternion is used to reverse the rotation it represents
+	 *
+	 * @code
+	 * Quat rotation = Quat::EulerDegrees(45, 0, 0);
+	 * Quat inverse = rotation.inverse(); // Inverse rotation of 45° around X-axis
+	 * @endcode
+	 */
+	Quat Quat::inverse() const
 	{
 		return GetInverse();
 	}
 
-    /**
-     * @brief Creates a quaternion from Euler angles in degrees.
-     *
-     * Converts Euler angles (pitch, yaw, roll) in degrees to a quaternion.
-     *
-     * @param X Rotation around X-axis in degrees (pitch)
-     * @param Y Rotation around Y-axis in degrees (yaw)
-     * @param Z Rotation around Z-axis in degrees (roll)
-     * @return A quaternion representing the rotation
-     *
-     * @note - The angles are converted from degrees to radians internally
-     * @note - The rotation order is XYZ (Tait-Bryan angles)
-     * @note - Euler angles can suffer from gimbal lock at certain orientations
-     * @note - This function is equivalent to calling EulerRadians() with angles in radians
-     *
-     * @code
-     * Quat rotation = Quat::EulerDegrees(90, 0, 0); // 90° rotation around X-axis
-     * @endcode
-     */
-    Quat Quat::EulerDegrees(float X, float Y, float Z)
+	/**
+	 * @brief Creates a quaternion from Euler angles in degrees.
+	 *
+	 * Converts Euler angles (pitch, yaw, roll) in degrees to a quaternion.
+	 *
+	 * @param X Rotation around X-axis in degrees (pitch)
+	 * @param Y Rotation around Y-axis in degrees (yaw)
+	 * @param Z Rotation around Z-axis in degrees (roll)
+	 * @return A quaternion representing the rotation
+	 *
+	 * @note - The angles are converted from degrees to radians internally
+	 * @note - The rotation order is XYZ (Tait-Bryan angles)
+	 * @note - Euler angles can suffer from gimbal lock at certain orientations
+	 * @note - This function is equivalent to calling EulerRadians() with angles in radians
+	 *
+	 * @code
+	 * Quat rotation = Quat::EulerDegrees(90, 0, 0); // 90° rotation around X-axis
+	 * @endcode
+	 */
+	Quat Quat::EulerDegrees(float X, float Y, float Z)
 	{
 		X *= 0.0174532925f; ///< To radians!
 		Y *= 0.0174532925f; ///< To radians!
@@ -1059,26 +1060,26 @@ namespace xMath
 		return EulerRadians(X, Y, Z);
 	}
 
-    /**
-     * @brief Creates a quaternion from Euler angles in radians.
-     *
-     * Converts Euler angles (pitch, yaw, roll) in radians to a quaternion.
-     *
-     * @param X Rotation around X-axis in radians (pitch)
-     * @param Y Rotation around Y-axis in radians (yaw)
-     * @param Z Rotation around Z-axis in radians (roll)
-     * @return A quaternion representing the rotation
-     *
-     * @note - The rotation order is XYZ (Tait-Bryan angles)
-     * @note - Euler angles can suffer from gimbal lock at certain orientations
-     * @note - This function uses trigonometric functions to compute the quaternion components
-     * @note - The angles are expected to be in radians
-     *
-     * @code
-     * Quat rotation = Quat::EulerRadians(1.5708f, 0, 0); // 90° rotation around X-axis
-     * @endcode
-     */
-    Quat Quat::EulerRadians(float X, float Y, float Z)
+	/**
+	 * @brief Creates a quaternion from Euler angles in radians.
+	 *
+	 * Converts Euler angles (pitch, yaw, roll) in radians to a quaternion.
+	 *
+	 * @param X Rotation around X-axis in radians (pitch)
+	 * @param Y Rotation around Y-axis in radians (yaw)
+	 * @param Z Rotation around Z-axis in radians (roll)
+	 * @return A quaternion representing the rotation
+	 *
+	 * @note - The rotation order is XYZ (Tait-Bryan angles)
+	 * @note - Euler angles can suffer from gimbal lock at certain orientations
+	 * @note - This function uses trigonometric functions to compute the quaternion components
+	 * @note - The angles are expected to be in radians
+	 *
+	 * @code
+	 * Quat rotation = Quat::EulerRadians(1.5708f, 0, 0); // 90° rotation around X-axis
+	 * @endcode
+	 */
+	Quat Quat::EulerRadians(float X, float Y, float Z)
 	{
 		///< NEW
 		const float cy = cos(Z * 0.5);
@@ -1153,7 +1154,7 @@ namespace xMath
 
 		Mat4 matrix = Mat4::Identity();
 
-		float* mat = &matrix.rows[0][0];
+		float* mat = matrix.Data();
 
 		mat[0] = (sqx - sqy - sqz + sqw) * invs;
 		mat[5] = (-sqx + sqy - sqz + sqw) * invs;
@@ -1177,109 +1178,109 @@ namespace xMath
 		return matrix;
 	}
 
-    Quat Quat::Normalize(const Quat &q)
+	Quat Quat::Normalize(const Quat &q)
 	{
-	    return q.GetNormalized();
+		return q.GetNormalized();
 	}
 
-    Quat Quat::Inverse(const Quat &q)
+	Quat Quat::Inverse(const Quat &q)
 	{
-	    return q.GetInverse();
+		return q.GetInverse();
 	}
 
-    /**
-     * @brief Calculates the angle in radians between a quaternion and the identity quaternion.
-     *
-     * Calculates the angle in radians between the given quaternion and the identity quaternion.
-     *
-     * @param x The quaternion to calculate the angle for
-     * @return The angle in radians between the quaternion and the identity quaternion
-     *
-     * @note - The angle is always in the range [0, π]
-     * @note - This function uses the arccosine of the w component to determine the angle
-     *
-     * @code
-     * Quat rotation = Quat::EulerDegrees(90, 0, 0);
-     * float angle = Quat::AngleRadians(rotation);
-     * @endcode
-     */
-    float Quat::AngleRadians(const Quat &x)
-    {
-        /// Clamp to avoid NaNs from slight numerical errors. The acosf domain is
-        /// [-1,1], but accumulated FP drift (or a slightly non‑normalized
-        /// quaternion) can push w marginally outside. We clamp then scale.
-        float cw = std::max(-1.0f, std::min(1.0f, x.w));
-        return 2.0f * acosf(cw);
-    }
+	/**
+	 * @brief Calculates the angle in radians between a quaternion and the identity quaternion.
+	 *
+	 * Calculates the angle in radians between the given quaternion and the identity quaternion.
+	 *
+	 * @param x The quaternion to calculate the angle for
+	 * @return The angle in radians between the quaternion and the identity quaternion
+	 *
+	 * @note - The angle is always in the range [0, π]
+	 * @note - This function uses the arccosine of the w component to determine the angle
+	 *
+	 * @code
+	 * Quat rotation = Quat::EulerDegrees(90, 0, 0);
+	 * float angle = Quat::AngleRadians(rotation);
+	 * @endcode
+	 */
+	float Quat::AngleRadians(const Quat &x)
+	{
+		/// Clamp to avoid NaNs from slight numerical errors. The acosf domain is
+		/// [-1,1], but accumulated FP drift (or a slightly non‑normalized
+		/// quaternion) can push w marginally outside. We clamp then scale.
+		float cw = std::max(-1.0f, std::min(1.0f, x.w));
+		return 2.0f * acosf(cw);
+	}
 
-    /**
-     * @brief Calculates the axis of rotation for a quaternion.
-     *
-     * Calculates the axis of rotation represented by the quaternion.
-     *
-     * @param x The quaternion to calculate the axis for
-     * @return The axis of rotation as a Vec3
-     *
-     * @note - The axis is normalized to unit length
-     * @note - If the quaternion represents no rotation, returns (0, 0, 1)
-     * @note - The axis is derived from the x, y, z components of the quaternion
-     *
-     * @code
-     * Quat rotation = Quat::EulerDegrees(90, 0, 0);
-     * Vec3 axis = Quat::Axis(rotation); // Axis of rotation
-     * @endcode
-     */
-    Vec3 Quat::Axis(const Quat &x)
-    {
-        // tmp1 = sin^2(theta/2); if very small the axis direction is numerically unstable.
-        float tmp1 = 1.0f - x.w * x.w;
-        if (tmp1 <= 1e-12f)
-            return {0.0f, 0.0f, 1.0f}; // default axis when angle ~0
+	/**
+	 * @brief Calculates the axis of rotation for a quaternion.
+	 *
+	 * Calculates the axis of rotation represented by the quaternion.
+	 *
+	 * @param x The quaternion to calculate the axis for
+	 * @return The axis of rotation as a Vec3
+	 *
+	 * @note - The axis is normalized to unit length
+	 * @note - If the quaternion represents no rotation, returns (0, 0, 1)
+	 * @note - The axis is derived from the x, y, z components of the quaternion
+	 *
+	 * @code
+	 * Quat rotation = Quat::EulerDegrees(90, 0, 0);
+	 * Vec3 axis = Quat::Axis(rotation); // Axis of rotation
+	 * @endcode
+	 */
+	Vec3 Quat::Axis(const Quat &x)
+	{
+		// tmp1 = sin^2(theta/2); if very small the axis direction is numerically unstable.
+		float tmp1 = 1.0f - x.w * x.w;
+		if (tmp1 <= 1e-12f)
+			return {0.0f, 0.0f, 1.0f}; // default axis when angle ~0
 
-        float inv = 1.0f / sqrtf(tmp1);
-        return {x.x * inv, x.y * inv, x.z * inv};
-    }
+		float inv = 1.0f / sqrtf(tmp1);
+		return {x.x * inv, x.y * inv, x.z * inv};
+	}
 
-    /**
-     * @brief Rotates a quaternion by a given angle around a specified axis.
-     *
-     * Rotates the quaternion by a specified angle in radians around a given axis.
-     *
-     * @param q The quaternion to rotate
-     * @param angleRadians The rotation angle in radians
-     * @param axis The axis of rotation (should be normalized)
-     * @return A new quaternion representing the rotated quaternion
-     *
-     * @note - The axis vector is expected to be normalized
-     * @note - The angle is expected to be in radians
-     * @note - This function uses the angle-axis representation of quaternions
-     *
-     * @code
-     * Quat rotation = Quat::EulerDegrees(0, 0, 0);
-     * Quat rotated = Quat::Rotate(rotation, 1.5708f, Vec3(0, 1, 0)); // Rotate 90° around Y-axis
-     * @endcode
-     */
-    Quat Quat::Rotate(const Quat& q, float angleRadians, const Vec3& axis)
+	/**
+	 * @brief Rotates a quaternion by a given angle around a specified axis.
+	 *
+	 * Rotates the quaternion by a specified angle in radians around a given axis.
+	 *
+	 * @param q The quaternion to rotate
+	 * @param angleRadians The rotation angle in radians
+	 * @param axis The axis of rotation (should be normalized)
+	 * @return A new quaternion representing the rotated quaternion
+	 *
+	 * @note - The axis vector is expected to be normalized
+	 * @note - The angle is expected to be in radians
+	 * @note - This function uses the angle-axis representation of quaternions
+	 *
+	 * @code
+	 * Quat rotation = Quat::EulerDegrees(0, 0, 0);
+	 * Quat rotated = Quat::Rotate(rotation, 1.5708f, Vec3(0, 1, 0)); // Rotate 90° around Y-axis
+	 * @endcode
+	 */
+	Quat Quat::Rotate(const Quat& q, float angleRadians, const Vec3& axis)
 	{
 		return q * AngleAxisRadians(angleRadians, axis);
 	}
 
-    /**
-     * @brief Converts this quaternion to Euler angles in radians.
-     *
-     * Converts the quaternion to Euler angles (pitch, yaw, roll) in radians.
-     *
-     * @return A Vec3 representing the Euler angles in radians
-     *
-     * @note - The angles are in the order (pitch, yaw, roll)
-     * @note - The conversion handles gimbal lock and singularities
-     *
-     * @code
-     * Quat rotation = Quat::EulerDegrees(90, 0, 0);
-     * Vec3 euler = rotation.ToEulerRadians(); // Convert to Euler angles in radians
-     * @endcode
-     */
-    Vec3 Quat::ToEulerRadians() const
+	/**
+	 * @brief Converts this quaternion to Euler angles in radians.
+	 *
+	 * Converts the quaternion to Euler angles (pitch, yaw, roll) in radians.
+	 *
+	 * @return A Vec3 representing the Euler angles in radians
+	 *
+	 * @note - The angles are in the order (pitch, yaw, roll)
+	 * @note - The conversion handles gimbal lock and singularities
+	 *
+	 * @code
+	 * Quat rotation = Quat::EulerDegrees(90, 0, 0);
+	 * Vec3 euler = rotation.ToEulerRadians(); // Convert to Euler angles in radians
+	 * @endcode
+	 */
+	Vec3 Quat::ToEulerRadians() const
 	{
 		//const Quat& q = *this;
 
@@ -1314,130 +1315,130 @@ namespace xMath
 
 	/// -----------------------------------------------------
 
-    /**
-     * @brief Converts this quaternion to Euler angles in degrees.
-     *
-     * Converts the quaternion to Euler angles (pitch, yaw, roll) in degrees.
-     *
-     * @return A Vec3 representing the Euler angles in degrees
-     *
-     * @note - The angles are in the order (pitch, yaw, roll)
-     * @note - The conversion handles gimbal lock and singularities
-     * @note - The angles are converted from radians to degrees internally
-     *
-     * @code
-     * Quat rotation = Quat::EulerDegrees(90, 0, 0);
-     * Vec3 euler = rotation.ToEulerDegrees(); // Convert to Euler angles in degrees
-     * @endcode
-     */
+	/**
+	 * @brief Converts this quaternion to Euler angles in degrees.
+	 *
+	 * Converts the quaternion to Euler angles (pitch, yaw, roll) in degrees.
+	 *
+	 * @return A Vec3 representing the Euler angles in degrees
+	 *
+	 * @note - The angles are in the order (pitch, yaw, roll)
+	 * @note - The conversion handles gimbal lock and singularities
+	 * @note - The angles are converted from radians to degrees internally
+	 *
+	 * @code
+	 * Quat rotation = Quat::EulerDegrees(90, 0, 0);
+	 * Vec3 euler = rotation.ToEulerDegrees(); // Convert to Euler angles in degrees
+	 * @endcode
+	 */
 	Vec3 Quat::ToEulerDegrees() const
 	{
-	    return ToEulerRadians() * RAD_TO_DEG;
+		return ToEulerRadians() * RAD_TO_DEG;
 	}
 
-    float Quat::GetSqrMagnitude() const
+	float Quat::GetSqrMagnitude() const
 	{
-	    return x * x + y * y + z * z + w * w;
+		return x * x + y * y + z * z + w * w;
 	}
 
-    Quat Quat::EulerDegrees(Vec3 euler)
+	Quat Quat::EulerDegrees(Vec3 euler)
 	{
-	    return EulerDegrees(euler.x, euler.y, euler.z);
+		return EulerDegrees(euler.x, euler.y, euler.z);
 	}
 
-    Quat Quat::EulerRadians(Vec3 euler)
+	Quat Quat::EulerRadians(Vec3 euler)
 	{
-	    return EulerRadians(euler.x, euler.y, euler.z);
+		return EulerRadians(euler.x, euler.y, euler.z);
 	}
 
-    Mat4 ToMat(const Quat &q)
+	Mat4 ToMat(const Quat &q)
 	{
-	    return q.ToMatrix();
+		return q.ToMatrix();
 	}
 
-    Mat4 operator*(const Mat4 &lhs, const Quat &rhs)
+	Mat4 operator*(const Mat4 &lhs, const Quat &rhs)
 	{
-	    return lhs * rhs.ToMatrix();
+		return lhs * rhs.ToMatrix();
 	}
 
-    Mat4 operator*(const Quat &lhs, const Mat4 &rhs)
+	Mat4 operator*(const Quat &lhs, const Mat4 &rhs)
 	{
-	    return lhs.ToMatrix() * rhs;
+		return lhs.ToMatrix() * rhs;
 	}
 
-    /**
-     * @brief Multiplies a vector by a quaternion.
-     *
-     * Multiplies a vector by a quaternion, effectively applying the rotation
-     * represented by the quaternion to the vector.
-     *
-     * @param v The vector to rotate
-     * @param m The quaternion representing the rotation
-     * @return A Vec4 representing the rotated vector
-     *
-     * @note - The vector is treated as a Vec4 with w = 1.0 for rotation
-     * @note - The quaternion is converted to a rotation matrix internally
-     * @note - This function is used to apply rotations to vectors in 3D space
-     *
-     * @code
-     * Vec4 vec(1, 0, 0, 1);
-     * Quat rotation = Quat::EulerDegrees(90, 0, 0);
-     * Vec4 rotatedVec = vec * rotation; // Rotate the vector by 90° around X-axis
-     * @endcode
-     */
-    Vec4 operator*(const Vec4& v, const Quat& m)
+	/**
+	 * @brief Multiplies a vector by a quaternion.
+	 *
+	 * Multiplies a vector by a quaternion, effectively applying the rotation
+	 * represented by the quaternion to the vector.
+	 *
+	 * @param v The vector to rotate
+	 * @param m The quaternion representing the rotation
+	 * @return A Vec4 representing the rotated vector
+	 *
+	 * @note - The vector is treated as a Vec4 with w = 1.0 for rotation
+	 * @note - The quaternion is converted to a rotation matrix internally
+	 * @note - This function is used to apply rotations to vectors in 3D space
+	 *
+	 * @code
+	 * Vec4 vec(1, 0, 0, 1);
+	 * Quat rotation = Quat::EulerDegrees(90, 0, 0);
+	 * Vec4 rotatedVec = vec * rotation; // Rotate the vector by 90° around X-axis
+	 * @endcode
+	 */
+	Vec4 operator*(const Vec4& v, const Quat& m)
 	{
-	    return Quat::ToMatrix(m) * v;
+		return Quat::ToMatrix(m) * v;
 	}
 
-    /**
-     * @brief Multiplies a vector by a quaternion.
-     *
-     * Multiplies a vector by a quaternion, effectively applying the rotation
-     * represented by the quaternion to the vector.
-     *
-     * @param v The vector to rotate
-     * @param m The quaternion representing the rotation
-     * @return A Vec3 representing the rotated vector
-     *
-     * @note - The vector is treated as a Vec4 with w = 1.0 for rotation
-     * @note - The quaternion is converted to a rotation matrix internally
-     * @note - This function is used to apply rotations to vectors in 3D space
-     *
-     * @code
-     * Vec3 vec(1, 0, 0);
-     * Quat rotation = Quat::EulerDegrees(90, 0, 0);
-     * Vec3 rotatedVec = vec * rotation; // Rotate the vector by 90° around X-axis
-     * @endcode
-     */
-    Vec3 operator*(const Vec3& v, const Quat& m)
+	/**
+	 * @brief Multiplies a vector by a quaternion.
+	 *
+	 * Multiplies a vector by a quaternion, effectively applying the rotation
+	 * represented by the quaternion to the vector.
+	 *
+	 * @param v The vector to rotate
+	 * @param m The quaternion representing the rotation
+	 * @return A Vec3 representing the rotated vector
+	 *
+	 * @note - The vector is treated as a Vec4 with w = 1.0 for rotation
+	 * @note - The quaternion is converted to a rotation matrix internally
+	 * @note - This function is used to apply rotations to vectors in 3D space
+	 *
+	 * @code
+	 * Vec3 vec(1, 0, 0);
+	 * Quat rotation = Quat::EulerDegrees(90, 0, 0);
+	 * Vec3 rotatedVec = vec * rotation; // Rotate the vector by 90° around X-axis
+	 * @endcode
+	 */
+	Vec3 operator*(const Vec3& v, const Quat& m)
 	{
-	    return Quat::ToMatrix(m) * Vec4(v, 1.0f);
+		return Quat::ToMatrix(m) * Vec4(v, 1.0f);
 	}
 
-    /**
-     * @brief Multiplies a quaternion by a scalar.
-     *
-     * Multiplies a quaternion by a scalar value, effectively scaling
-     * the quaternion's components. This is useful for scaling rotations
-     * without changing the direction of the rotation.
-     *
-     * @param f The scalar value to multiply by
-     * @param m The quaternion to scale
-     * @return A new quaternion with scaled components
-     *
-     * @note - The resulting quaternion is not normalized after scaling
-     * @note - This function is useful for adjusting rotation speeds or magnitudes
-     * @note - The scalar multiplication does not change the direction of the rotation
-     *
-     * @code
-     * Quat rotation = Quat::EulerDegrees(90, 0, 0);
-     * Quat scaledRotation = 0.5f * rotation; // Scale the rotation by 0.5
-     * @endcode
-     */
-    Quat operator*(const float f, const Quat& m)
+	/**
+	 * @brief Multiplies a quaternion by a scalar.
+	 *
+	 * Multiplies a quaternion by a scalar value, effectively scaling
+	 * the quaternion's components. This is useful for scaling rotations
+	 * without changing the direction of the rotation.
+	 *
+	 * @param f The scalar value to multiply by
+	 * @param m The quaternion to scale
+	 * @return A new quaternion with scaled components
+	 *
+	 * @note - The resulting quaternion is not normalized after scaling
+	 * @note - This function is useful for adjusting rotation speeds or magnitudes
+	 * @note - The scalar multiplication does not change the direction of the rotation
+	 *
+	 * @code
+	 * Quat rotation = Quat::EulerDegrees(90, 0, 0);
+	 * Quat scaledRotation = 0.5f * rotation; // Scale the rotation by 0.5
+	 * @endcode
+	 */
+	Quat operator*(const float f, const Quat& m)
 	{
-	    return {m.w * f, m.x * f, m.y * f, m.z * f};
+		return {m.w * f, m.x * f, m.y * f, m.z * f};
 	}
 
 	/// -----------------------------------------------------

@@ -25,14 +25,14 @@
 * -------------------------------------------------------
 */
 #include <algorithm>
-
 #include <xMath/includes/rectangle.h>
-/// -------------------------------------------------------
+
+// -------------------------------------------------------
 
 namespace xMath
 {
 
-    const Rectangle Rectangle::Zero(0.0f, 0.0f, 0.0f, 0.0f);
+    const Rectangle Rectangle::ZERO(0.0f, 0.0f, 0.0f, 0.0f);
 
 
     Rectangle::Rectangle(const float x, const float y, const float width, const float height)

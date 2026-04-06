@@ -31,7 +31,7 @@
 #include <xMath/config/math_config.h>
 #include <xMath/includes/colors.h>
 
-/// -----------------------------------------------------
+// -----------------------------------------------------
 
 namespace xMath
 {
@@ -61,18 +61,18 @@ namespace xMath
 	 *       though the class will handle unordered keys correctly
 	 */
 	class XMATH_API Gradient
-    {
-    public:
-    	/**
-    	 * @brief A single color key within the gradient
-    	 *
-    	 * Represents a color value at a specific position along the gradient.
-    	 * Multiple keys are interpolated to create smooth color transitions.
-    	 */
-        struct Key
-        {
+	{
+	public:
+		/**
+		 * @brief A single color key within the gradient
+		 *
+		 * Represents a color value at a specific position along the gradient.
+		 * Multiple keys are interpolated to create smooth color transitions.
+		 */
+		struct Key
+		{
 			Color value{};   ///< Color value at this key position
-            float position{}; ///< Position along gradient [0.0, 1.0] (values outside range are valid)
+			float position{}; ///< Position along gradient [0.0, 1.0] (values outside range are valid)
 
 			/**
 			 * @brief Calculates hash value for this gradient key
@@ -83,15 +83,15 @@ namespace xMath
 			 * @return Hash value representing this key's state
 			 */
 
-            /*
-            [[nodiscard]] size_t GetHash() const
+			/*
+			[[nodiscard]] size_t GetHash() const
 			{
 				size_t hash = value.GetHash();
-                hash ^= std::hash<float>{}(position) + 0x9e3779b9 + (hash << 6) + (hash >> 2);
+				hash ^= std::hash<float>{}(position) + 0x9e3779b9 + (hash << 6) + (hash >> 2);
 				return hash;
 			}
 			*/
-        };
+		};
 
 		/**
 		 * @brief Default constructor creating an empty gradient
@@ -99,18 +99,18 @@ namespace xMath
 		 * Creates a gradient with no color keys and 0-degree  rotation.
 		 * An empty gradient will return a default color when evaluated.
 		 */
-        Gradient();
+		Gradient();
 
-        /**
-         * @brief Constructs a gradient from an initializer list of keys
-         *
-         * @param list Initializer list of gradient keys
-         * @param degrees Rotation angle for angular gradients [0.0, 360.0) (default: 0)
-         *
-         * @example
-         * Gradient redToBlue = {{Color::Red(), 0.0f}, {Color::Blue(), 1.0f}};
-         * Gradient diagonal = {{Color::Red(), 0.0f}, {Color::Blue(), 1.0f}}, 45.0f};
-         */
+		/**
+		 * @brief Constructs a gradient from an initializer list of keys
+		 *
+		 * @param list Initializer list of gradient keys
+		 * @param degrees Rotation angle for angular gradients [0.0, 360.0) (default: 0)
+		 *
+		 * @example
+		 * Gradient redToBlue = {{Color::Red(), 0.0f}, {Color::Blue(), 1.0f}};
+		 * Gradient diagonal = {{Color::Red(), 0.0f}, {Color::Blue(), 1.0f}}, 45.0f};
+		 */
 		Gradient(std::initializer_list<Key> list, float degrees = 0);
 
 		/**
@@ -119,7 +119,7 @@ namespace xMath
 		 * @param list Vector of gradient keys
 		 * @param degrees Rotation angle for angular gradients [0.0, 360.0) (default: 0)
 		 */
-        explicit Gradient(const std::vector<Key>& list, float degrees = 0);
+		explicit Gradient(const std::vector<Key>& list, float degrees = 0);
 
 		/**
 		 * @brief Gets the current rotation angle of the gradient
@@ -128,7 +128,7 @@ namespace xMath
 		 */
 		[[nodiscard]] float GetDegrees() const;
 
-        /**
+		/**
 		 * @brief Sets the rotation angle for angular gradients
 		 *
 		 * @param d New rotation angle in degrees [0.0, 360.0)
@@ -137,21 +137,21 @@ namespace xMath
 		 */
 		void SetDegrees(float d);
 
-        /**
+		/**
 		 * @brief Gets the number of color keys in the gradient
 		 *
 		 * @return Number of gradient keys
 		 */
 		[[nodiscard]] uint32_t GetNumKeys() const;
 
-        /**
+		/**
 		 * @brief Gets read-only access to all gradient keys
 		 *
 		 * @return Const reference to the vector of gradient keys
 		 */
 		[[nodiscard]] const std::vector<Key>& GetKeys() const;
 
-        /**
+		/**
 		 * @brief Gets read-only access to a specific gradient key
 		 *
 		 * @param index Index of the key to retrieve
@@ -159,19 +159,19 @@ namespace xMath
 		 *
 		 * @warning No bounds checking is performed. Index must be valid.
 		 */
-        [[nodiscard]] const Key& GetKeyAt(uint32_t index) const;
+		[[nodiscard]] const Key& GetKeyAt(uint32_t index) const;
 
-        /**
-         * @brief Gets mutable access to a specific gradient key
-         *
-         * @param index Index of the key to retrieve
-         * @return Mutable reference to the gradient key at the specified index
-         *
-         * @warning No bounds checking is performed. Index must be valid.
-         */
+		/**
+		 * @brief Gets mutable access to a specific gradient key
+		 *
+		 * @param index Index of the key to retrieve
+		 * @return Mutable reference to the gradient key at the specified index
+		 *
+		 * @warning No bounds checking is performed. Index must be valid.
+		 */
 		Key& GetKeyAt(uint32_t index);
 
-        /**
+		/**
 		 * @brief Evaluates the gradient color at a specific position
 		 *
 		 * Performs linear interpolation between adjacent gradient keys to determine
@@ -185,7 +185,7 @@ namespace xMath
 		 * @note - If no keys exist, returns a default-constructed Color
 		 * @note - If only one key exists, returns that key's color regardless of position
 		 */
-        [[nodiscard]] Color Evaluate(float position) const;
+		[[nodiscard]] Color Evaluate(float position) const;
 
 		/**
 		 * @brief Removes all color keys from the gradient
@@ -231,16 +231,16 @@ namespace xMath
 		 * @param d Custom rotation angle for hash calculation
 		 * @return Hash value representing the gradient state with specified rotation
 		 */
-        [[nodiscard]] size_t GetHash(float d) const;
+		[[nodiscard]] size_t GetHash(float d) const;
 
-        /**
-         * @brief Calculates hash value for the current gradient state
-         *
-         * @return Hash value representing the gradient's current state
-         *
-         * @note - Hash includes all keys and the current rotation angle
-         */
-        [[nodiscard]] size_t GetHash() const;
+		/**
+		 * @brief Calculates hash value for the current gradient state
+		 *
+		 * @return Hash value representing the gradient's current state
+		 *
+		 * @note - Hash includes all keys and the current rotation angle
+		 */
+		[[nodiscard]] size_t GetHash() const;
 
 		/**
 		 * @brief Equality comparison operator
@@ -253,7 +253,7 @@ namespace xMath
 		 */
 		bool operator==(const Gradient& rhs) const;
 
-        /**
+		/**
 		 * @brief Inequality comparison operator
 		 *
 		 * @param rhs Gradient to compare against
@@ -261,10 +261,10 @@ namespace xMath
 		 */
 		bool operator!=(const Gradient& rhs) const;
 
-    private:
-        std::vector<Key> keys{}; ///< Collection of gradient color keys
-		float degrees = 0.0f;    ///< Rotation angle for angular gradients in degrees
-    };
+	private:
+		std::vector<Key> keys{}; // Collection of gradient color keys
+		float degrees = 0.0f;    // Rotation angle for angular gradients in degrees
+	};
 
 }
 

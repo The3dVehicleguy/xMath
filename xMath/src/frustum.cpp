@@ -38,46 +38,46 @@ namespace xMath
 	    const Matrix view_projection = view * projection;
 
 	    // Near Plane
-	    m_planes[0].normal.x = view_projection.m03 + view_projection.m02;
-	    m_planes[0].normal.y = view_projection.m13 + view_projection.m12;
-	    m_planes[0].normal.z = view_projection.m23 + view_projection.m22;
-	    m_planes[0].d = view_projection.m33 + view_projection.m32;
-	    m_planes[0].Normalize();
+	    m_Planes[0].normal.x = view_projection.m03 + view_projection.m02;
+	    m_Planes[0].normal.y = view_projection.m13 + view_projection.m12;
+	    m_Planes[0].normal.z = view_projection.m23 + view_projection.m22;
+	    m_Planes[0].d = view_projection.m33 + view_projection.m32;
+	    m_Planes[0].Normalize();
 
 	    // Far Plane
-	    m_planes[1].normal.x = view_projection.m03 - view_projection.m02;
-	    m_planes[1].normal.y = view_projection.m13 - view_projection.m12;
-	    m_planes[1].normal.z = view_projection.m23 - view_projection.m22;
-	    m_planes[1].d = view_projection.m33 - view_projection.m32;
-	    m_planes[1].Normalize();
+	    m_Planes[1].normal.x = view_projection.m03 - view_projection.m02;
+	    m_Planes[1].normal.y = view_projection.m13 - view_projection.m12;
+	    m_Planes[1].normal.z = view_projection.m23 - view_projection.m22;
+	    m_Planes[1].d = view_projection.m33 - view_projection.m32;
+	    m_Planes[1].Normalize();
 
 	    // Left Plane
-	    m_planes[2].normal.x = view_projection.m03 + view_projection.m00;
-	    m_planes[2].normal.y = view_projection.m13 + view_projection.m10;
-	    m_planes[2].normal.z = view_projection.m23 + view_projection.m20;
-	    m_planes[2].d = view_projection.m33 + view_projection.m30;
-	    m_planes[2].Normalize();
+	    m_Planes[2].normal.x = view_projection.m03 + view_projection.m00;
+	    m_Planes[2].normal.y = view_projection.m13 + view_projection.m10;
+	    m_Planes[2].normal.z = view_projection.m23 + view_projection.m20;
+	    m_Planes[2].d = view_projection.m33 + view_projection.m30;
+	    m_Planes[2].Normalize();
 
 	    // Right Plane
-	    m_planes[3].normal.x = view_projection.m03 - view_projection.m00;
-	    m_planes[3].normal.y = view_projection.m13 - view_projection.m10;
-	    m_planes[3].normal.z = view_projection.m23 - view_projection.m20;
-	    m_planes[3].d = view_projection.m33 - view_projection.m30;
-	    m_planes[3].Normalize();
+	    m_Planes[3].normal.x = view_projection.m03 - view_projection.m00;
+	    m_Planes[3].normal.y = view_projection.m13 - view_projection.m10;
+	    m_Planes[3].normal.z = view_projection.m23 - view_projection.m20;
+	    m_Planes[3].d = view_projection.m33 - view_projection.m30;
+	    m_Planes[3].Normalize();
 
 	    // Top Plane
-	    m_planes[4].normal.x = view_projection.m03 - view_projection.m01;
-	    m_planes[4].normal.y = view_projection.m13 - view_projection.m11;
-	    m_planes[4].normal.z = view_projection.m23 - view_projection.m21;
-	    m_planes[4].d = view_projection.m33 - view_projection.m31;
-	    m_planes[4].Normalize();
+	    m_Planes[4].normal.x = view_projection.m03 - view_projection.m01;
+	    m_Planes[4].normal.y = view_projection.m13 - view_projection.m11;
+	    m_Planes[4].normal.z = view_projection.m23 - view_projection.m21;
+	    m_Planes[4].d = view_projection.m33 - view_projection.m31;
+	    m_Planes[4].Normalize();
 
 	    // Bottom Plane
-	    m_planes[5].normal.x = view_projection.m03 + view_projection.m01;
-	    m_planes[5].normal.y = view_projection.m13 + view_projection.m11;
-	    m_planes[5].normal.z = view_projection.m23 + view_projection.m21;
-	    m_planes[5].d = view_projection.m33 + view_projection.m31;
-	    m_planes[5].Normalize();
+	    m_Planes[5].normal.x = view_projection.m03 + view_projection.m01;
+	    m_Planes[5].normal.y = view_projection.m13 + view_projection.m11;
+	    m_Planes[5].normal.z = view_projection.m23 + view_projection.m21;
+	    m_Planes[5].d = view_projection.m33 + view_projection.m31;
+	    m_Planes[5].Normalize();
 	}
 
 	bool Frustum::IsVisible(const Vec3 &center, const Vec3 &extent, bool ignore_depth /*= false*/) const
@@ -96,7 +96,7 @@ namespace xMath
 	        if (ignore_depth && (i == 0 || i == 1))
 	            continue;
 
-	        const Plane &plane = m_planes[i];
+	        const Plane &plane = m_Planes[i];
 	        const Vec3 normal_abs = plane.normal.Abs();
 
 	        float d = Dot(plane.normal, center) + plane.d;
@@ -123,7 +123,7 @@ namespace xMath
 	        if (ignore_depth && (i == 0 || i == 1))
 	            continue;
 
-	        const auto &plane = m_planes[i];
+	        const auto &plane = m_Planes[i];
 
 	        // find the distance to this plane
 	        float distance = xMath::Dot(plane.normal, center) + plane.d;

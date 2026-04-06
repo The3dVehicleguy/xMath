@@ -28,7 +28,7 @@
 #include <xMath/config/math_config.h>
 #include <xMath/includes/math_utils.h>
 
-/// -----------------------------------------------------
+// -----------------------------------------------------
 
 namespace xMath
 {
@@ -50,15 +50,15 @@ namespace xMath
 	 *          may produce unexpected results when converted to integer formats
 	 */
 	class XMATH_API Color
-    {
-    public:
-    	/**
-    	 * @brief Default constructor creating a transparent black color
-    	 *
-    	 * Creates a color with all components set to 0, representing
-    	 * transparent black (0, 0, 0, 0).
-    	 */
-        Color();
+	{
+	public:
+		/**
+		 * @brief Default constructor creating a transparent black color
+		 *
+		 * Creates a color with all components set to 0, representing
+		 * transparent black (0, 0, 0, 0).
+		 */
+		Color();
 
 		/**
 		 * @brief Constructs a color from RGBA components with alpha
@@ -85,72 +85,72 @@ namespace xMath
 		 * Color negativeBlue(-0.5f, 0.0f, 1.0f, 1.0f); // HDR color with negative blue
 		 * @endcode
 		 */
-        Color(float r, float g, float b, float a);
+		Color(float r, float g, float b, float a);
 
-        /**
-         * @brief Constructs an opaque color from RGB components
-         *
-         * Creates a color with the specified RGB values and alpha set to 1.0 (fully opaque).
-         *
-         * @param r Red component [0.0, 1.0] (values outside range are valid for HDR)
-         * @param g Green component [0.0, 1.0] (values outside range are valid for HDR)
-         * @param b Blue component [0.0, 1.0] (values outside range are valid for HDR)
-         *
-         * @note - This constructor allows for HDR colors with values outside [0.0, 1.0]
-         *
-         * @warning - Negative values or values > 1.0 may produce unexpected results
-         *
-         * @code
-         * Color brightRed(2.0f, 0.0f, 0.0f); // HDR red with value > 1.0
-         * Color green(0.0f, 1.0f, 0.0f); // Fully opaque green
-         * Color blue(0.0f, 0.0f, 1.0f); // Fully opaque blue
-         * Color negativeGreen(-0.5f, 1.0f, 0.0f); // HDR green with negative value
-         * Color hdrBlue(0.0f, 0.0f, 1.5f); // HDR blue with value > 1.0
-         * Color transparentBlack(0.0f, 0.0f, 0.0f); // Transparent black (alpha=1.0)
-         * @endcode
-         */
-        Color(float r, float g, float b);
+		/**
+		 * @brief Constructs an opaque color from RGB components
+		 *
+		 * Creates a color with the specified RGB values and alpha set to 1.0 (fully opaque).
+		 *
+		 * @param r Red component [0.0, 1.0] (values outside range are valid for HDR)
+		 * @param g Green component [0.0, 1.0] (values outside range are valid for HDR)
+		 * @param b Blue component [0.0, 1.0] (values outside range are valid for HDR)
+		 *
+		 * @note - This constructor allows for HDR colors with values outside [0.0, 1.0]
+		 *
+		 * @warning - Negative values or values > 1.0 may produce unexpected results
+		 *
+		 * @code
+		 * Color brightRed(2.0f, 0.0f, 0.0f); // HDR red with value > 1.0
+		 * Color green(0.0f, 1.0f, 0.0f); // Fully opaque green
+		 * Color blue(0.0f, 0.0f, 1.0f); // Fully opaque blue
+		 * Color negativeGreen(-0.5f, 1.0f, 0.0f); // HDR green with negative value
+		 * Color hdrBlue(0.0f, 0.0f, 1.5f); // HDR blue with value > 1.0
+		 * Color transparentBlack(0.0f, 0.0f, 0.0f); // Transparent black (alpha=1.0)
+		 * @endcode
+		 */
+		Color(float r, float g, float b);
 
-        /**
-         * @brief Constructs a color from a 4D vector (Vec4)
-         *
-         * Constructs a color with specified RGBA values from a Vec4.
-         *
-         * @param v Vec4 where x=red, y=green, z=blue, w=alpha
-         *
-         * @note - This constructor allows for HDR colors with values outside [0.0, 1.0]
-         * @warning - Negative values or values > 1.0 may produce unexpected results
-         *
-         * @code
-         * Color semiTransparentBlue(Vec4(0.0f, 0.0f, 1.0f, 0.5f)); // Blue with 50% opacity
-         * Color brightYellow(Vec4(2.0f, 2.0f, 0.0f, 1.0f)); // HDR yellow with red and green > 1.0
-         * Color opaqueRed(Vec4(1.0f, 0.0f, 0.0f, 1.0f)); // Fully opaque red
-         * Color negativeRed(Vec4(-1.0f, 0.0f, 0.0f, 1.0f)); // HDR red with negative value
-         * Color hdrGreen(Vec4(0.0f, 1.5f, 0.0f, 1.0f)); // HDR green with value > 1.0
-         * Color transparentBlack(Vec4(0.0f, 0.0f, 0.0f, 0.0f)); // Transparent black
-         * @endcode
-         */
-        explicit Color(Vec4 v);
+		/**
+		 * @brief Constructs a color from a 4D vector (Vec4)
+		 *
+		 * Constructs a color with specified RGBA values from a Vec4.
+		 *
+		 * @param v Vec4 where x=red, y=green, z=blue, w=alpha
+		 *
+		 * @note - This constructor allows for HDR colors with values outside [0.0, 1.0]
+		 * @warning - Negative values or values > 1.0 may produce unexpected results
+		 *
+		 * @code
+		 * Color semiTransparentBlue(Vec4(0.0f, 0.0f, 1.0f, 0.5f)); // Blue with 50% opacity
+		 * Color brightYellow(Vec4(2.0f, 2.0f, 0.0f, 1.0f)); // HDR yellow with red and green > 1.0
+		 * Color opaqueRed(Vec4(1.0f, 0.0f, 0.0f, 1.0f)); // Fully opaque red
+		 * Color negativeRed(Vec4(-1.0f, 0.0f, 0.0f, 1.0f)); // HDR red with negative value
+		 * Color hdrGreen(Vec4(0.0f, 1.5f, 0.0f, 1.0f)); // HDR green with value > 1.0
+		 * Color transparentBlack(Vec4(0.0f, 0.0f, 0.0f, 0.0f)); // Transparent black
+		 * @endcode
+		 */
+		explicit Color(Vec4 v);
 
-        /**
-         * @brief Constructs an opaque color from a 3D vector (Vec3)
-         *
-         * Constructs a color with specified RGB values and alpha set to 1.0 (fully opaque).
-         *
-         * @param v Vec3 where x=red, y=green, z=blue (alpha is set to 1.0)
-         * @note - This constructor allows for HDR colors with values outside [0.0, 1.0]
-         * @warning - Negative values or values > 1.0 may produce unexpected results
-         *
-         * @code
-         * Color brightCyan(Vec3(0.0f, 1.0f, 1.0f)); // Fully opaque cyan
-         * Color hdrPurple(Vec3(1.5f, 0.0f, 1.5f)); // HDR purple with red and blue > 1.0
-         * Color opaqueYellow(Vec3(1.0f, 1.0f, 0.0f)); // Fully opaque yellow
-         * Color negativeBlue(Vec3(0.0f, 0.0f, -1.0f)); // HDR blue with negative value
-         * Color hdrRed(Vec3(2.0f, 0.0f, 0.0f)); // HDR red with value > 1.0
-         * Color transparentBlack(Vec3(0.0f, 0.0f, 0.0f)); // Transparent black (alpha=1.0)
-         * @endcode
-         */
-        explicit Color(Vec3 v);
+		/**
+		 * @brief Constructs an opaque color from a 3D vector (Vec3)
+		 *
+		 * Constructs a color with specified RGB values and alpha set to 1.0 (fully opaque).
+		 *
+		 * @param v Vec3 where x=red, y=green, z=blue (alpha is set to 1.0)
+		 * @note - This constructor allows for HDR colors with values outside [0.0, 1.0]
+		 * @warning - Negative values or values > 1.0 may produce unexpected results
+		 *
+		 * @code
+		 * Color brightCyan(Vec3(0.0f, 1.0f, 1.0f)); // Fully opaque cyan
+		 * Color hdrPurple(Vec3(1.5f, 0.0f, 1.5f)); // HDR purple with red and blue > 1.0
+		 * Color opaqueYellow(Vec3(1.0f, 1.0f, 0.0f)); // Fully opaque yellow
+		 * Color negativeBlue(Vec3(0.0f, 0.0f, -1.0f)); // HDR blue with negative value
+		 * Color hdrRed(Vec3(2.0f, 0.0f, 0.0f)); // HDR red with value > 1.0
+		 * Color transparentBlack(Vec3(0.0f, 0.0f, 0.0f)); // Transparent black (alpha=1.0)
+		 * @endcode
+		 */
+		explicit Color(Vec3 v);
 
 		/**
 		 * @brief Creates a color from 8-bit RGBA values
@@ -173,7 +173,7 @@ namespace xMath
 		 * Color hdrColor = Color::RGBA8(300, -50, 100, 255); // HDR color with out-of-range values
 		 * @endcode
 		 */
-        static Color RGBA8(uint8_t r, uint8_t g, uint8_t b, uint8_t a = 255);
+		static Color RGBA8(uint8_t r, uint8_t g, uint8_t b, uint8_t a = 255);
 
 		/**
 		 * @brief Creates a color from a 24-bit RGB hexadecimal value
@@ -192,25 +192,25 @@ namespace xMath
 		 * Color cyan = Color::RGBHex(0x00FFFF);    // Pure cyan
 		 * @endcode
 		 */
-        static Color RGBHex(uint32_t hex);
+		static Color RGBHex(uint32_t hex);
 
-        // ReSharper disable once CommentTypo
-        /**
-         * @brief Creates a color from a 32-bit RGBA hexadecimal value
-         *
-         * Converts a packed RGBA hexadecimal value to a Color object.
-         *
-         * @param hex RGBA value in format 0xRRGGBBAA
-         * @return Color with all components extracted from hex value
-         *
-         * @code
-         * Color semiRed = Color::RGBAHex(0xFF000080);  // Red with 50% alpha
-         * Color opaqueGreen = Color::RGBAHex(0x00FF00FF); // Fully opaque green
-         * Color blue = Color::RGBAHex(0x0000FFFF); // Fully opaque blue
-         * Color transparentBlack = Color::RGBAHex(0x00000000); // Transparent black
-         * @endcode
-         */
-        static Color RGBAHex(uint32_t hex);
+		// ReSharper disable once CommentTypo
+		/**
+		 * @brief Creates a color from a 32-bit RGBA hexadecimal value
+		 *
+		 * Converts a packed RGBA hexadecimal value to a Color object.
+		 *
+		 * @param hex RGBA value in format 0xRRGGBBAA
+		 * @return Color with all components extracted from hex value
+		 *
+		 * @code
+		 * Color semiRed = Color::RGBAHex(0xFF000080);  // Red with 50% alpha
+		 * Color opaqueGreen = Color::RGBAHex(0x00FF00FF); // Fully opaque green
+		 * Color blue = Color::RGBAHex(0x0000FFFF); // Fully opaque blue
+		 * Color transparentBlack = Color::RGBAHex(0x00000000); // Transparent black
+		 * @endcode
+		 */
+		static Color RGBAHex(uint32_t hex);
 
 		/**
 		 * @brief Creates a color from HSV (Hue, Saturation, Value) color space
@@ -232,29 +232,29 @@ namespace xMath
 		 * Color yellow = Color::HSV(60.0f, 1.0f, 1.0f); // Pure yellow
 		 * @endcode
 		 */
-        static Color HSV(float h, float s, float v);
+		static Color HSV(float h, float s, float v);
 
-        /**
-         * @brief Convenience alias for RGBA8() function
-         *
-         * @param r Red component [0, 255]
-         * @param g Green component [0, 255]
-         * @param b Blue component [0, 255]
-         * @param a Alpha component [0, 255] (default: 255 = fully opaque)
-         * @return Color with components normalized to [0.0, 1.0] range
-         *
-         * @note - This is a convenience alias for RGBA8() to match common usage patterns
-         *
-         * @code
-         * Color red = Color::RGBA(255, 0, 0);          // Fully opaque red
-         * Color green = Color::RGBA(0, 255, 0);        // Fully opaque green
-         * Color blue = Color::RGBA(0, 0, 255);         // Fully opaque blue
-         * Color semiTransparentYellow = Color::RGBA(255, 255, 0, 128); // Yellow with 50% opacity
-         * @endcode
-         */
-        static Color RGBA(uint8_t r, uint8_t g, uint8_t b, uint8_t a = 255);
+		/**
+		 * @brief Convenience alias for RGBA8() function
+		 *
+		 * @param r Red component [0, 255]
+		 * @param g Green component [0, 255]
+		 * @param b Blue component [0, 255]
+		 * @param a Alpha component [0, 255] (default: 255 = fully opaque)
+		 * @return Color with components normalized to [0.0, 1.0] range
+		 *
+		 * @note - This is a convenience alias for RGBA8() to match common usage patterns
+		 *
+		 * @code
+		 * Color red = Color::RGBA(255, 0, 0);          // Fully opaque red
+		 * Color green = Color::RGBA(0, 255, 0);        // Fully opaque green
+		 * Color blue = Color::RGBA(0, 0, 255);         // Fully opaque blue
+		 * Color semiTransparentYellow = Color::RGBA(255, 255, 0, 128); // Yellow with 50% opacity
+		 * @endcode
+		 */
+		static Color RGBA(uint8_t r, uint8_t g, uint8_t b, uint8_t a = 255);
 
-        /**
+		/**
 		 * @brief Equality comparison operator
 		 *
 		 * @param rhs Color to compare against
@@ -275,32 +275,32 @@ namespace xMath
 		 * }
 		 * @endcode
 		 */
-        bool operator==(const Color& rhs) const;
+		bool operator==(const Color& rhs) const;
 
-        /**
-         * @brief Inequality comparison operator
-         *
-         * @param rhs Color to compare against
-         * @return true if any component differs, false if all components are equal
-         *
-         * @note - This operator is intentionally implemented to return the same result as operator==.
-         *      This is a common practice to avoid confusion, but it may not be intuitive.
-         *
-         * @code
-         * Color c1(1.0f, 0.0f, 0.0f, 1.0f); // Red
-         * Color c2(1.0f, 0.0f, 0.0f, 1.0f); // Another red
-         * Color c3(0.5f, 0.5f, 0.5f, 1.0f); // Gray
-         * if (c1 != c2) {
-         *   // c1 and c2 are not equal (this will not happen)
-         * }
-         * if (c1 != c3) {
-         *  // c1 and c3 are not equal
-         * }
-         * @endcode
-         */
-        bool operator!=(const Color& rhs) const;
+		/**
+		 * @brief Inequality comparison operator
+		 *
+		 * @param rhs Color to compare against
+		 * @return true if any component differs, false if all components are equal
+		 *
+		 * @note - This operator is intentionally implemented to return the same result as operator==.
+		 *      This is a common practice to avoid confusion, but it may not be intuitive.
+		 *
+		 * @code
+		 * Color c1(1.0f, 0.0f, 0.0f, 1.0f); // Red
+		 * Color c2(1.0f, 0.0f, 0.0f, 1.0f); // Another red
+		 * Color c3(0.5f, 0.5f, 0.5f, 1.0f); // Gray
+		 * if (c1 != c2) {
+		 *   // c1 and c2 are not equal (this will not happen)
+		 * }
+		 * if (c1 != c3) {
+		 *  // c1 and c3 are not equal
+		 * }
+		 * @endcode
+		 */
+		bool operator!=(const Color& rhs) const;
 
-        /**
+		/**
 		 * @brief Scalar multiplication with signed integer
 		 *
 		 * @param value Scalar multiplier
@@ -320,53 +320,53 @@ namespace xMath
 		 * Color hdrColor = Color::Red() * 1.5f; // HDR red with components (1.5, 0.0, 0.0, 1.0)
 		 * @endcode
 		 */
-        Color operator*(int32_t value) const;
+		Color operator*(int32_t value) const;
 
-        /**
-         * @brief Scalar multiplication with unsigned integer
-         *
-         * @param value Scalar multiplier
-         * @return New color with all components multiplied by value
-         *
-         * @note - This operation does not clamp values to [0.0, 1.0] range,
-         * allowing for HDR colors.
-         *
-         * @warning - Negative values or values > 1.0 may produce unexpected results
-         *         when converted to integer formats (e.g., RGBA8)
-         *
-         * @code
-         * Color red(1.0f, 0.0f, 0.0f, 1.0f); // Red color
-         * Color brightRed = red * 2u; // Bright red with components (2.0, 0.0, 0.0, 1.0)
-         * Color darkGreen = Color::Green() * 0u; // Dark green with components (0.0, 0.0, 0.0, 1.0)
-         * Color semiTransparentBlue = Color::Blue() * 0.5f; // Blue with components (0.0, 0.0, 0.5, 1.0)
-         * Color hdrColor = Color::Red() * 1.5f; // HDR red with components (1.5, 0.0, 0.0, 1.0)
-         * @endcode
-         */
-        Color operator*(uint32_t value) const;
+		/**
+		 * @brief Scalar multiplication with unsigned integer
+		 *
+		 * @param value Scalar multiplier
+		 * @return New color with all components multiplied by value
+		 *
+		 * @note - This operation does not clamp values to [0.0, 1.0] range,
+		 * allowing for HDR colors.
+		 *
+		 * @warning - Negative values or values > 1.0 may produce unexpected results
+		 *         when converted to integer formats (e.g., RGBA8)
+		 *
+		 * @code
+		 * Color red(1.0f, 0.0f, 0.0f, 1.0f); // Red color
+		 * Color brightRed = red * 2u; // Bright red with components (2.0, 0.0, 0.0, 1.0)
+		 * Color darkGreen = Color::Green() * 0u; // Dark green with components (0.0, 0.0, 0.0, 1.0)
+		 * Color semiTransparentBlue = Color::Blue() * 0.5f; // Blue with components (0.0, 0.0, 0.5, 1.0)
+		 * Color hdrColor = Color::Red() * 1.5f; // HDR red with components (1.5, 0.0, 0.0, 1.0)
+		 * @endcode
+		 */
+		Color operator*(uint32_t value) const;
 
-        /**
-         * @brief Scalar multiplication with floating-point value
-         *
-         * @param value Scalar multiplier
-         * @return New color with all components multiplied by value
-         *
-         * @note - This operation does not clamp values to [0.0, 1.0] range,
-         * allowing for HDR colors.
-         *
-         * @warning - Negative values or values > 1.0 may produce unexpected results
-         *        when converted to integer formats (e.g., RGBA8)
-         *
-         * @code
-         * Color red(1.0f, 0.0f, 0.0f, 1.0f); // Red color
-         * Color brightRed = red * 2.0f; // Bright red with components (2.0, 0.0, 0.0, 1.0)
-         * Color darkGreen = Color::Green() * -0.5f; // Dark green with components (0.0, -0.5, 0.0, 1.0)
-         * Color semiTransparentBlue = Color::Blue() * 0.5f; // Blue with components (0.0, 0.0, 0.5, 1.0)
-         * Color hdrColor = Color::Red() * 1.5f; // HDR red with components (1.5, 0.0, 0.0, 1.0)
-         * @endcode
-         */
-        Color operator*(float value) const;
+		/**
+		 * @brief Scalar multiplication with floating-point value
+		 *
+		 * @param value Scalar multiplier
+		 * @return New color with all components multiplied by value
+		 *
+		 * @note - This operation does not clamp values to [0.0, 1.0] range,
+		 * allowing for HDR colors.
+		 *
+		 * @warning - Negative values or values > 1.0 may produce unexpected results
+		 *        when converted to integer formats (e.g., RGBA8)
+		 *
+		 * @code
+		 * Color red(1.0f, 0.0f, 0.0f, 1.0f); // Red color
+		 * Color brightRed = red * 2.0f; // Bright red with components (2.0, 0.0, 0.0, 1.0)
+		 * Color darkGreen = Color::Green() * -0.5f; // Dark green with components (0.0, -0.5, 0.0, 1.0)
+		 * Color semiTransparentBlue = Color::Blue() * 0.5f; // Blue with components (0.0, 0.0, 0.5, 1.0)
+		 * Color hdrColor = Color::Red() * 1.5f; // HDR red with components (1.5, 0.0, 0.0, 1.0)
+		 * @endcode
+		 */
+		Color operator*(float value) const;
 
-        /**
+		/**
 		 * @brief In-place scalar multiplication with signed integer
 		 *
 		 * @param value Scalar multiplier
@@ -387,9 +387,9 @@ namespace xMath
 		 * hdrColor *= 1.5f; // HDR red with components (1.5, 0.0, 0.0, 1.0)
 		 * @endcode
 		 */
-        Color operator*=(int32_t value);
+		Color operator*=(int32_t value);
 
-        /**
+		/**
 		 * @brief In-place scalar multiplication with unsigned integer
 		 *
 		 * @param value Scalar multiplier
@@ -412,9 +412,9 @@ namespace xMath
 		 * hdrColor *= 1.5f; // HDR red with components (1.5, 0.0, 0.0, 1.0)
 		 * @endcode
 		 */
-        Color operator*=(uint32_t value);
+		Color operator*=(uint32_t value);
 
-        /**
+		/**
 		 * @brief In-place scalar multiplication with floating-point value
 		 *
 		 * @param value Scalar multiplier
@@ -437,9 +437,9 @@ namespace xMath
 		 * hdrColor *= 1.5f; // HDR red with components (1.5, 0.0, 0.0, 1.0)
 		 * @endcode
 		 */
-        Color operator*=(float value);
+		Color operator*=(float value);
 
-        /**
+		/**
 		 * @brief Scalar division with floating-point value
 		 *
 		 * @param value Divisor (should not be zero)
@@ -460,9 +460,9 @@ namespace xMath
 		 * Color hdrColor = Color::Red() / 1.5f; // HDR red with components (0.6667, 0.0, 0.0, 1.0)
 		 * @endcode
 		 */
-        Color operator/(float value) const;
+		Color operator/(float value) const;
 
-        /**
+		/**
 		 * @brief In-place scalar division with floating-point value
 		 *
 		 * @param value Divisor (should not be zero)
@@ -487,9 +487,9 @@ namespace xMath
 		 * hdrColor /= 1.5f; // HDR red with components (0.6667, 0.0, 0.0, 1.0)
 		 * @endcode
 		 */
-        Color operator/=(float value);
+		Color operator/=(float value);
 
-        /**
+		/**
 		 * @brief Component access operator with bounds checking
 		 *
 		 * Provides array-style access to color components by index.
@@ -509,20 +509,16 @@ namespace xMath
 		 * float invalid = color[4]; // Access out-of-bounds index (returns 0.0)
 		 * @endcode
 		 */
-        float operator[](uint32_t index) const;
+		float operator[](uint32_t index) const;
 
-        /**
-         * Preset Colors
-         * Static factory methods for commonly used colors
-         */
-        static Color Red();     //Pure red (1,0,0,1)
-        static Color Green();   // Pure green (0,1,0,1)
-        static Color Blue();    // Pure blue (0,0,1,1)
-        static Color Black();	// Opaque black (0,0,0,1)
-        static Color White();	// Opaque white (1,1,1,1)
-        static Color Yellow();	// Pure yellow (1,1,0,1)
-        static Color Clear();	// Transparent black (0,0,0,0)
-        static Color Cyan();	// Pure cyan (0,1,1,1)
+		static Color Red();     //Pure red (1,0,0,1)
+		static Color Green();   // Pure green (0,1,0,1)
+		static Color Blue();    // Pure blue (0,0,1,1)
+		static Color Black();	// Opaque black (0,0,0,1)
+		static Color White();	// Opaque white (1,1,1,1)
+		static Color Yellow();	// Pure yellow (1,1,0,1)
+		static Color Clear();	// Transparent black (0,0,0,0)
+		static Color Cyan();	// Pure cyan (0,1,1,1)
 
 		/**
 		 * @brief Converts color to 32-bit unsigned integer representation
@@ -544,35 +540,35 @@ namespace xMath
 		 * uint32_t packedTransparentBlack = transparentBlack.ToU32(); // Converts to 0x00000000
 		 * @endcode
 		 */
-        [[nodiscard]] uint32_t ToU32() const;
+		[[nodiscard]] uint32_t ToU32() const;
 
-        /**
-         * @brief Converts color to Vec4 representation
-         *
-         * Converts the color to a 4D vector (Vec4) with components:
-         * - r: red component
-         * - g: green component
-         * - b: blue component
-         * - a: alpha component
-         *
-         * @return Vec4 with r=red, g=green, b=blue, a=alpha
-         *
-         * @note - This conversion does not clamp values to [0.0, 1.0] range,
-         * allowing for HDR colors.
-         * @note - Negative values or values > 1.0 may produce unexpected results
-         *
-         */
-        [[nodiscard]] Vec4 ToVec4() const;
+		/**
+		 * @brief Converts color to Vec4 representation
+		 *
+		 * Converts the color to a 4D vector (Vec4) with components:
+		 * - r: red component
+		 * - g: green component
+		 * - b: blue component
+		 * - a: alpha component
+		 *
+		 * @return Vec4 with r=red, g=green, b=blue, a=alpha
+		 *
+		 * @note - This conversion does not clamp values to [0.0, 1.0] range,
+		 * allowing for HDR colors.
+		 * @note - Negative values or values > 1.0 may produce unexpected results
+		 *
+		 */
+		[[nodiscard]] Vec4 ToVec4() const;
 
-        /**
-         * @brief Converts RGB color to HSV color space
-         *
-         * Converts the current RGB color to HSV (Hue, Saturation, Value) representation.
-         * Alpha channel is ignored in this conversion.
-         *
-         * @return Vec3 with x=hue[0,360), y=saturation[0,1], z=value[0,1]
-         */
-        [[nodiscard]] Vec3 ToHSV() const;
+		/**
+		 * @brief Converts RGB color to HSV color space
+		 *
+		 * Converts the current RGB color to HSV (Hue, Saturation, Value) representation.
+		 * Alpha channel is ignored in this conversion.
+		 *
+		 * @return Vec3 with x=hue[0,360), y=saturation[0,1], z=value[0,1]
+		 */
+		[[nodiscard]] Vec3 ToHSV() const;
 
 		/**
 		 * @brief Linear interpolation between two colors
@@ -597,17 +593,17 @@ namespace xMath
 		 * Color fullyExtrapolated = Color::Lerp(start, end, 2.0f); // Extrapolated color (0.0, 0.0, 2.0, 1.0)
 		 * @endcode
 		 */
-        static Color Lerp(const Color &from, const Color &to, float t);
+		static Color Lerp(const Color &from, const Color &to, float t);
 
-        /*
-        [[nodiscard]] size_t GetHash() const
-        {
-            size_t hash = GetHash(r);
-            CombineHash(hash, g);
-            CombineHash(hash, b);
-            CombineHash(hash, a);
-            return hash;
-        }*/
+		/*
+		[[nodiscard]] size_t GetHash() const
+		{
+			size_t hash = GetHash(r);
+			CombineHash(hash, g);
+			CombineHash(hash, b);
+			CombineHash(hash, a);
+			return hash;
+		}*/
 
 		/**
 		 * @brief Creates a new color with modified alpha value
@@ -630,9 +626,9 @@ namespace xMath
 		 * Color negativeAlpha = original.WithAlpha(-0.5f); // New color with negative alpha
 		 * @endcode
 		 */
-        [[nodiscard]] Color WithAlpha(float alpha) const;
+		[[nodiscard]] Color WithAlpha(float alpha) const;
 
-        /**
+		/**
 		 * @brief Color component storage union
 		 *
 		 * Provides multiple ways to access color components:
@@ -659,12 +655,12 @@ namespace xMath
 		 *       For example, setting alpha to 0.0 will make the color fully transparent, while setting
 		 *       it to a value > 1.0 will create an HDR color.
 		 */
-        union
-	    {
-            struct { float a, b, g, r; };	// Individual component access (reverse order)
-            float rgba[4] = { 0, 0, 0, 0 }; // Array-style component access
-        };
-    };
+		union
+		{
+			struct { float a, b, g, r; };	// Individual component access (reverse order)
+			float rgba[4] = { 0, 0, 0, 0 }; // Array-style component access
+		};
+	};
 
 }
 

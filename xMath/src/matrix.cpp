@@ -39,48 +39,48 @@
 	#endif
 #endif
 
-/// -------------------------------------------------------
+// -------------------------------------------------------
 
 namespace xMath
 {
 
-    // Definition of static identity matrix
-    const Matrix Matrix::Identity = Matrix();
+	// Definition of static identity matrix
+	const Matrix Matrix::IDENTITY = Matrix();
 
-    /**
-     * @brief Creates a perspective projection matrix for 3D rendering.
-     *
-     * This function generates a perspective projection matrix that transforms 3D coordinates
-     * from view space (camera space) to clip space. The matrix implements a standard
-     * perspective projection with a symmetric frustum defined by field of view and aspect ratio.
-     *
-     * @param aspect The aspect ratio of the viewport (width / height). Must be positive.
-     * @param fieldOfView The vertical field of view angle in degrees. Typical values range from 45-90 degrees.
-     * @param n The distance to the near clipping plane. Must be positive and less than far plane.
-     * @param f The distance to the far clipping plane. Must be positive and greater than near plane.
-     *
-     * @return Matrix4x4 A 4x4 perspective projection matrix suitable for use in graphics pipelines.
-     *
-     * @note - The Y-axis is inverted (negative scale) to match common graphics coordinate systems.
-     * @note - Objects closer than the near plane or farther than the far plane will be clipped.
-     * @warning Ensure near and far planes are positive and near < far to avoid degenerate matrices.
-     *
-     * @code
-     * float aspectRatio = screenWidth / screenHeight;
-     * Matrix4x4 projection = Matrix4x4::PerspectiveProjection(aspectRatio, 60.0f, 0.1f, 1000.0f);
-     * @endcode
-     */
+	/**
+	 * @brief Creates a perspective projection matrix for 3D rendering.
+	 *
+	 * This function generates a perspective projection matrix that transforms 3D coordinates
+	 * from view space (camera space) to clip space. The matrix implements a standard
+	 * perspective projection with a symmetric frustum defined by field of view and aspect ratio.
+	 *
+	 * @param aspect The aspect ratio of the viewport (width / height). Must be positive.
+	 * @param fieldOfView The vertical field of view angle in degrees. Typical values range from 45-90 degrees.
+	 * @param n The distance to the near clipping plane. Must be positive and less than far plane.
+	 * @param f The distance to the far clipping plane. Must be positive and greater than near plane.
+	 *
+	 * @return Matrix4x4 A 4x4 perspective projection matrix suitable for use in graphics pipelines.
+	 *
+	 * @note - The Y-axis is inverted (negative scale) to match common graphics coordinate systems.
+	 * @note - Objects closer than the near plane or farther than the far plane will be clipped.
+	 * @warning Ensure near and far planes are positive and near < far to avoid degenerate matrices.
+	 *
+	 * @code
+	 * float aspectRatio = screenWidth / screenHeight;
+	 * Matrix4x4 projection = Matrix4x4::PerspectiveProjection(aspectRatio, 60.0f, 0.1f, 1000.0f);
+	 * @endcode
+	 */
 	Mat4 Mat4::PerspectiveProjection(const float aspect, const float fieldOfView, const float n, const float f) noexcept
-    {
+	{
 		const float tanHalfFOV = std::tan(ToRadians(fieldOfView / 2.0f));
 
-        return Mat4({
+		return Mat4({
 			{ 1 / (aspect * tanHalfFOV), 0, 0, 0 },
 			{ 0, -1 / tanHalfFOV, 0, 0 },
 			{ 0, 0, f / (f - n), -f * n / (f - n) },
 			{ 0, 0, 1, 0 }
 		});
-    }
+	}
 
 	/**
 	 * @brief Creates an orthographic projection matrix for 2D rendering or technical drawing.
@@ -118,17 +118,17 @@ namespace xMath
 		});
 	}
 
-    /**
-     * @brief Creates a look-at matrix for camera transformations.
-     *
-     * This function generates a view matrix that transforms world coordinates
-     * into camera space, effectively positioning and orienting the camera in 3D space.
-     *
-     * @param eye The position of the camera (eye point).
-     * @param center The point in space the camera is looking at (target point).
-     * @param up The up direction vector for the camera, defining its orientation.
-     * @return Matrix4x4 A 4x4 look-at matrix that can be used to transform world coordinates to camera space.
-     */
+	/**
+	 * @brief Creates a look-at matrix for camera transformations.
+	 *
+	 * This function generates a view matrix that transforms world coordinates
+	 * into camera space, effectively positioning and orienting the camera in 3D space.
+	 *
+	 * @param eye The position of the camera (eye point).
+	 * @param center The point in space the camera is looking at (target point).
+	 * @param up The up direction vector for the camera, defining its orientation.
+	 * @return Matrix4x4 A 4x4 look-at matrix that can be used to transform world coordinates to camera space.
+	 */
 	Mat4 Mat4::LookAt(const Vec3& eye, const Vec3& center, const Vec3& up) noexcept
 	{
 		/// Right-handed look-at using row-major layout and column-vector math basis
@@ -137,9 +137,9 @@ namespace xMath
 		const Vec3 u = Cross(s, f);								/// true up
 
 		/// Translate components
-        const float tx = -Dot(s, eye); /// Negative dot product for translation
-        const float ty = -Dot(u, eye); /// Negative dot product for translation
-        const float tz = Dot(f, eye);  /// Positive dot product for translation
+		const float tx = -Dot(s, eye); /// Negative dot product for translation
+		const float ty = -Dot(u, eye); /// Negative dot product for translation
+		const float tz = Dot(f, eye);  /// Positive dot product for translation
 
 		return Mat4({
 			{ s.x,  u.x, -f.x, tx },		/// Right vector
@@ -168,9 +168,9 @@ namespace xMath
 	 * @endcode
 	 */
 	Mat4 Mat4::Angle(const float degrees) noexcept
-    {
-        return Quat::EulerDegrees(0, 0, degrees).ToMatrix();
-    }
+	{
+		return Quat::EulerDegrees(0, 0, degrees).ToMatrix();
+	}
 
 	/**
 	 * @brief Creates a 3D rotation matrix from Euler angles in degrees.
@@ -195,9 +195,9 @@ namespace xMath
 	 * @endcode
 	 */
 	Mat4 Mat4::RotationDegrees(const Vec3& eulerDegrees) noexcept
-    {
-        return Quat::EulerDegrees(eulerDegrees).ToMatrix();
-    }
+	{
+		return Quat::EulerDegrees(eulerDegrees).ToMatrix();
+	}
 
 	/**
 	 * @brief Creates a 3D rotation matrix from Euler angles in radians.
@@ -221,9 +221,9 @@ namespace xMath
 	 * @endcode
 	 */
 	Mat4 Mat4::RotationRadians(const Vec3 &eulerRadians) noexcept
-    {
-        return Quat::EulerRadians(eulerRadians).ToMatrix();
-    }
+	{
+		return Quat::EulerRadians(eulerRadians).ToMatrix();
+	}
 
 	/**
 	 * @brief Matrix addition operator.
@@ -248,9 +248,9 @@ namespace xMath
 		Mat4 result{};
 
 		for (int i = 0; i < 4; i++)
-            result.rows[i] = rows[i] + rhs.rows[i];
+			result[i] = (*this)[i] + rhs[i];
 
-        return result;
+		return result;
 	}
 
 	/**
@@ -276,9 +276,9 @@ namespace xMath
 		Mat4 result{};
 
 		for (int i = 0; i < 4; i++)
-            result.rows[i] = rows[i] - rhs.rows[i];
+			result[i] = (*this)[i] - rhs[i];
 
-        return result;
+		return result;
 	}
 
 	/**
@@ -304,9 +304,9 @@ namespace xMath
 		Mat4 result{};
 
 		for (int i = 0; i < 4; ++i)
-            result.rows[i] = rows[i] * rhs;
+			result[i] = (*this)[i] * rhs;
 
-        return result;
+		return result;
 	}
 
 	/**
@@ -333,9 +333,9 @@ namespace xMath
 		Mat4 result{};
 
 		for (int i = 0; i < 4; ++i)
-            result.rows[i] = rows[i] / rhs;
+			result[i] = (*this)[i] / rhs;
 
-        return result;
+		return result;
 	}
 
 	/**
@@ -371,11 +371,11 @@ namespace xMath
 		{
 			for (int j = 0; j < 4; j++)
 			{
-				result.rows[i][j] = 0;
+				result[i][j] = 0;
 
 				for (int k = 0; k < 4; k++)
 				{
-					result.rows[i][j] += lhs.rows[i][k] * rhs.rows[k][j];
+					result[i][j] += lhs[i][k] * rhs[k][j];
 				}
 			}
 		}
@@ -408,23 +408,23 @@ namespace xMath
 	 * @endcode
 	 */
 	Vec4 Mat4::Multiply(const Mat4& lhs, const Vec4& rhs) noexcept
-    {
+	{
 		ZoneScoped;
-        Vec4 result{};
+		Vec4 result{};
 
-        for (int i = 0; i < 4; i++)
-        {
-            float value = 0;
-            for (int j = 0; j < 4; j++)
-            {
-                value += lhs.rows[i][j] * rhs[j];
-            }
+		for (int i = 0; i < 4; i++)
+		{
+			float value = 0;
+			for (int j = 0; j < 4; j++)
+			{
+				value += lhs[i][j] * rhs[j];
+			}
 
-            result[i] = value;
-        }
+			result[i] = value;
+		}
 
-        return result;
-    }
+		return result;
+	}
 
 	/**
 	 * @brief Computes the transpose of a 4x4 matrix.
@@ -458,7 +458,7 @@ namespace xMath
 		{
 			for (int j = 0; j < 4; j++)
 			{
-				result.rows[i][j] = mat.rows[j][i];
+				result[i][j] = mat[j][i];
 			}
 		}
 
@@ -574,7 +574,7 @@ namespace xMath
 		/// temp is used to store cofactors of mat[][]
 		Mat4 temp{};
 
-        for (int i = 0; i < 4; i++)
+		for (int i = 0; i < 4; i++)
 		{
 			for (int j = 0; j < 4; j++)
 			{
@@ -621,13 +621,13 @@ namespace xMath
 	 */
 	Mat4 Mat4::GetInverse(const Mat4& matrix) noexcept
 	{
-        ZoneScoped; /// Enable Tracy profiling for this function
+		ZoneScoped; /// Enable Tracy profiling for this function
 
 		/// Rows - Extract the elements of the matrix for easier access
 		const float n11 = matrix[0][0], n12 = matrix[1][0], n13 = matrix[2][0], n14 = matrix[3][0]; /// First row
-        const float n21 = matrix[0][1], n22 = matrix[1][1], n23 = matrix[2][1], n24 = matrix[3][1]; /// Second row
-        const float n31 = matrix[0][2], n32 = matrix[1][2], n33 = matrix[2][2], n34 = matrix[3][2]; /// Third row
-        const float n41 = matrix[0][3], n42 = matrix[1][3], n43 = matrix[2][3], n44 = matrix[3][3]; /// Fourth row
+		const float n21 = matrix[0][1], n22 = matrix[1][1], n23 = matrix[2][1], n24 = matrix[3][1]; /// Second row
+		const float n31 = matrix[0][2], n32 = matrix[1][2], n33 = matrix[2][2], n34 = matrix[3][2]; /// Third row
+		const float n41 = matrix[0][3], n42 = matrix[1][3], n43 = matrix[2][3], n44 = matrix[3][3]; /// Fourth row
 
 		/// Columns - Calculate the determinant using the first row and cofactors
 		const float t11 = n23 * n34 * n42 - n24 * n33 * n42 + n24 * n32 * n43 - n22 * n34 * n43 - n23 * n32 * n44 + n22 * n33 * n44; /// First column
@@ -637,7 +637,7 @@ namespace xMath
 
 		/// Calculate the determinant using the first row and cofactors
 		const float det = n11 * t11 + n21 * t12 + n31 * t13 + n41 * t14; /// Determinant calculation
-        const float idet = 1.0f / det;                                   /// Inverse of the determinant
+		const float idet = 1.0f / det;                                   /// Inverse of the determinant
 
 		Mat4 ret; /// Result matrix to store the inverse
 
@@ -648,19 +648,19 @@ namespace xMath
 		ret[0][3] = (n23 * n32 * n41 - n22 * n33 * n41 - n23 * n31 * n42 + n21 * n33 * n42 + n22 * n31 * n43 - n21 * n32 * n43) * idet; /// First row, fourth column
 
 		/// Calculate the second row
-        ret[1][0] = t12 * idet;																												/// Second row, first column
+		ret[1][0] = t12 * idet;																												/// Second row, first column
 		ret[1][1] = (n13 * n34 * n41 - n14 * n33 * n41 + n14 * n31 * n43 - n11 * n34 * n43 - n13 * n31 * n44 + n11 * n33 * n44) * idet; /// Second row, second column
 		ret[1][2] = (n14 * n32 * n41 - n12 * n34 * n41 - n14 * n31 * n42 + n11 * n34 * n42 + n12 * n31 * n44 - n11 * n32 * n44) * idet; /// Second row, third column
 		ret[1][3] = (n12 * n33 * n41 - n13 * n32 * n41 + n13 * n31 * n42 - n11 * n33 * n42 - n12 * n31 * n43 + n11 * n32 * n43) * idet; /// Second row, fourth column
 
 		/// Calculate the third row
-        ret[2][0] = t13 * idet;																												/// Third row, first column
+		ret[2][0] = t13 * idet;																												/// Third row, first column
 		ret[2][1] = (n14 * n23 * n41 - n13 * n24 * n41 - n14 * n21 * n43 + n11 * n24 * n43 + n13 * n21 * n44 - n11 * n23 * n44) * idet; /// Third row, second column
 		ret[2][2] = (n12 * n24 * n41 - n14 * n22 * n41 + n14 * n21 * n42 - n11 * n24 * n42 - n12 * n21 * n44 + n11 * n22 * n44) * idet; /// Third row, third column
 		ret[2][3] = (n13 * n22 * n41 - n12 * n23 * n41 - n13 * n21 * n42 + n11 * n23 * n42 + n12 * n21 * n43 - n11 * n22 * n43) * idet; /// Third row, fourth column
 
 		/// Calculate the fourth row
-        ret[3][0] = t14 * idet;																												/// Fourth row, first column
+		ret[3][0] = t14 * idet;																												/// Fourth row, first column
 		ret[3][1] = (n13 * n24 * n31 - n14 * n23 * n31 + n14 * n21 * n33 - n11 * n24 * n33 - n13 * n21 * n34 + n11 * n23 * n34) * idet; /// Fourth row, second column
 		ret[3][2] = (n14 * n22 * n31 - n12 * n24 * n31 - n14 * n21 * n32 + n11 * n24 * n32 + n12 * n21 * n34 - n11 * n22 * n34) * idet; /// Fourth row, third column
 		ret[3][3] = (n12 * n23 * n31 - n13 * n22 * n31 + n13 * n21 * n32 - n11 * n23 * n32 - n12 * n21 * n33 + n11 * n22 * n33) * idet; /// Fourth row, fourth column
@@ -668,430 +668,438 @@ namespace xMath
 		return ret; /// Return the calculated inverse matrix
 	}
 
-    Matrix::Matrix()
-    {
-	    m00 = 1; m01 = 0; m02 = 0; m03 = 0;
-	    m10 = 0; m11 = 1; m12 = 0; m13 = 0;
-	    m20 = 0; m21 = 0; m22 = 1; m23 = 0;
-	    m30 = 0; m31 = 0; m32 = 0; m33 = 1;
-    }
-
-    Matrix::Matrix(float m00, float m01, float m02, float m03, float m10, float m11, float m12, float m13, float m20, float m21, float m22, float m23, float m30, float m31, float m32, float m33)
-    {
-        this->m00 = m00; this->m01 = m01; this->m02 = m02; this->m03 = m03;
-        this->m10 = m10; this->m11 = m11; this->m12 = m12; this->m13 = m13;
-        this->m20 = m20; this->m21 = m21; this->m22 = m22; this->m23 = m23;
-        this->m30 = m30; this->m31 = m31; this->m32 = m32; this->m33 = m33;
-    }
-
-    Matrix::Matrix(const Vec3 &translation, const Quat &rotation, const Vec3 &scale)
-    {
-        const Matrix mRotation = CreateRotation(rotation);
-
-        m00 = scale.x * mRotation.m00;  m01 = scale.x * mRotation.m01;  m02 = scale.x * mRotation.m02;  m03 = 0.0f;
-        m10 = scale.y * mRotation.m10;  m11 = scale.y * mRotation.m11;  m12 = scale.y * mRotation.m12;  m13 = 0.0f;
-        m20 = scale.z * mRotation.m20;  m21 = scale.z * mRotation.m21;  m22 = scale.z * mRotation.m22;  m23 = 0.0f;
-        m30 = translation.x;            m31 = translation.y;            m32 = translation.z;            m33 = 1.0f;
-    }
-
-    Matrix::Matrix(const float m[16])
-    {
-        // row-major to column-major
-        m00 = m[0];  m01 = m[1];  m02 = m[2];  m03 = m[3];
-        m10 = m[4];  m11 = m[5];  m12 = m[6];  m13 = m[7];
-        m20 = m[8];  m21 = m[9];  m22 = m[10]; m23 = m[11];
-        m30 = m[12]; m31 = m[13]; m32 = m[14]; m33 = m[15];
-    }
-
-    Matrix::~Matrix() = default;
-
-    Vec3 Matrix::GetTranslation() const
+	Matrix::Matrix()
 	{
-	    return {m30, m31, m32};
+		m00 = 1; m01 = 0; m02 = 0; m03 = 0;
+		m10 = 0; m11 = 1; m12 = 0; m13 = 0;
+		m20 = 0; m21 = 0; m22 = 1; m23 = 0;
+		m30 = 0; m31 = 0; m32 = 0; m33 = 1;
 	}
 
-    Matrix Matrix::CreateTranslation(const Vec3 &translation)
-    {
-        return {1, 0, 0, 0,
-                0, 1, 0, 0,
-                0, 0, 1, 0,
-                translation.x, translation.y, translation.z, 1.0f};
-    }
+	Matrix::Matrix(const Matrix &rhs)
+	{
+		m00 = rhs.m00; m01 = rhs.m01; m02 = rhs.m02; m03 = rhs.m03;
+		m10 = rhs.m10; m11 = rhs.m11; m12 = rhs.m12; m13 = rhs.m13;
+		m20 = rhs.m20; m21 = rhs.m21; m22 = rhs.m22; m23 = rhs.m23;
+		m30 = rhs.m30; m31 = rhs.m31; m32 = rhs.m32; m33 = rhs.m33;
+	}
 
-    Matrix Matrix::CreateRotation(const Quat &rotation)
-    {
-        const float num9 = rotation.x * rotation.x;
-        const float num8 = rotation.y * rotation.y;
-        const float num7 = rotation.z * rotation.z;
-        const float num6 = rotation.x * rotation.y;
-        const float num5 = rotation.z * rotation.w;
-        const float num4 = rotation.z * rotation.x;
-        const float num3 = rotation.y * rotation.w;
-        const float num2 = rotation.y * rotation.z;
-        const float num  = rotation.x * rotation.w;
+	Matrix::Matrix(float m00, float m01, float m02, float m03, float m10, float m11, float m12, float m13, float m20, float m21, float m22, float m23, float m30, float m31, float m32, float m33)
+	{
+		this->m00 = m00; this->m01 = m01; this->m02 = m02; this->m03 = m03;
+		this->m10 = m10; this->m11 = m11; this->m12 = m12; this->m13 = m13;
+		this->m20 = m20; this->m21 = m21; this->m22 = m22; this->m23 = m23;
+		this->m30 = m30; this->m31 = m31; this->m32 = m32; this->m33 = m33;
+	}
 
-        return {1.0f - (2.0f * (num8 + num7)),
-                2.0f * (num6 + num5),
-                2.0f * (num4 - num3),
-                0.0f,
-                2.0f * (num6 - num5),
-                1.0f - (2.0f * (num7 + num9)),
-                2.0f * (num2 + num),
-                0.0f,
-                2.0f * (num4 + num3),
-                2.0f * (num2 - num),
-                1.0f - (2.0f * (num8 + num9)),
-                0.0f,
-                0.0f,
-                0.0f,
-                0.0f,
-                1.0f};
-    }
+	Matrix::Matrix(const Vec3 &translation, const Quat &rotation, const Vec3 &scale)
+	{
+		const Matrix mRotation = CreateRotation(rotation);
 
-    Quat Matrix::GetRotation() const
-    {
-        const Vec3 scale = GetScale();
-        if (scale.x == 0.0f || scale.y == 0.0f || scale.z == 0.0f)
-            return Quat::Identity();
+		m00 = scale.x * mRotation.m00;  m01 = scale.x * mRotation.m01;  m02 = scale.x * mRotation.m02;  m03 = 0.0f;
+		m10 = scale.y * mRotation.m10;  m11 = scale.y * mRotation.m11;  m12 = scale.y * mRotation.m12;  m13 = 0.0f;
+		m20 = scale.z * mRotation.m20;  m21 = scale.z * mRotation.m21;  m22 = scale.z * mRotation.m22;  m23 = 0.0f;
+		m30 = translation.x;            m31 = translation.y;            m32 = translation.z;            m33 = 1.0f;
+	}
 
-        Matrix normalized;
-        normalized.m00 = m00 / scale.x;
-        normalized.m01 = m01 / scale.x;
-        normalized.m02 = m02 / scale.x;
-        normalized.m03 = 0.0f;
-        normalized.m10 = m10 / scale.y;
-        normalized.m11 = m11 / scale.y;
-        normalized.m12 = m12 / scale.y;
-        normalized.m13 = 0.0f;
-        normalized.m20 = m20 / scale.z;
-        normalized.m21 = m21 / scale.z;
-        normalized.m22 = m22 / scale.z;
-        normalized.m23 = 0.0f;
-        normalized.m30 = 0;
-        normalized.m31 = 0;
-        normalized.m32 = 0;
-        normalized.m33 = 1.0f;
+	Matrix::Matrix(const float m[16])
+	{
+		// row-major to column-major
+		m00 = m[0];  m01 = m[1];  m02 = m[2];  m03 = m[3];
+		m10 = m[4];  m11 = m[5];  m12 = m[6];  m13 = m[7];
+		m20 = m[8];  m21 = m[9];  m22 = m[10]; m23 = m[11];
+		m30 = m[12]; m31 = m[13]; m32 = m[14]; m33 = m[15];
+	}
 
-        return RotationMatrixToQuaternion(normalized);
-    }
+	Matrix::~Matrix() = default;
 
-    Quat Matrix::RotationMatrixToQuaternion(const Matrix &mRot)
-    {
-        Quat quaternion;
-        float sqrt_;
-        float half;
-        const float scale = mRot.m00 + mRot.m11 + mRot.m22;
+	Vec3 Matrix::GetTranslation() const
+	{
+		return {m30, m31, m32};
+	}
 
-        if (scale > 0.0f)
-        {
-            sqrt_ = sqrt(scale + 1.0f);
-            quaternion.w = sqrt_ * 0.5f;
-            sqrt_ = 0.5f / sqrt_;
+	Matrix Matrix::CreateTranslation(const Vec3 &translation)
+	{
+		return {1, 0, 0, 0,
+				0, 1, 0, 0,
+				0, 0, 1, 0,
+				translation.x, translation.y, translation.z, 1.0f};
+	}
 
-            quaternion.x = (mRot.m12 - mRot.m21) * sqrt_;
-            quaternion.y = (mRot.m20 - mRot.m02) * sqrt_;
-            quaternion.z = (mRot.m01 - mRot.m10) * sqrt_;
+	Matrix Matrix::CreateRotation(const Quat &rotation)
+	{
+		const float num9 = rotation.x * rotation.x;
+		const float num8 = rotation.y * rotation.y;
+		const float num7 = rotation.z * rotation.z;
+		const float num6 = rotation.x * rotation.y;
+		const float num5 = rotation.z * rotation.w;
+		const float num4 = rotation.z * rotation.x;
+		const float num3 = rotation.y * rotation.w;
+		const float num2 = rotation.y * rotation.z;
+		const float num  = rotation.x * rotation.w;
 
-            return quaternion;
-        }
-        if ((mRot.m00 >= mRot.m11) && (mRot.m00 >= mRot.m22))
-        {
-            sqrt_ = sqrt(1.0f + mRot.m00 - mRot.m11 - mRot.m22);
-            half = 0.5f / sqrt_;
+		return {1.0f - (2.0f * (num8 + num7)),
+				2.0f * (num6 + num5),
+				2.0f * (num4 - num3),
+				0.0f,
+				2.0f * (num6 - num5),
+				1.0f - (2.0f * (num7 + num9)),
+				2.0f * (num2 + num),
+				0.0f,
+				2.0f * (num4 + num3),
+				2.0f * (num2 - num),
+				1.0f - (2.0f * (num8 + num9)),
+				0.0f,
+				0.0f,
+				0.0f,
+				0.0f,
+				1.0f};
+	}
 
-            quaternion.x = 0.5f * sqrt_;
-            quaternion.y = (mRot.m01 + mRot.m10) * half;
-            quaternion.z = (mRot.m02 + mRot.m20) * half;
-            quaternion.w = (mRot.m12 - mRot.m21) * half;
+	Quat Matrix::GetRotation() const
+	{
+		const Vec3 scale = GetScale();
+		if (scale.x == 0.0f || scale.y == 0.0f || scale.z == 0.0f)
+			return Quat::Identity();
 
-            return quaternion;
-        }
-        if (mRot.m11 > mRot.m22)
-        {
-            sqrt_ = sqrt(1.0f + mRot.m11 - mRot.m00 - mRot.m22);
-            half = 0.5f / sqrt_;
+		Matrix normalized;
+		normalized.m00 = m00 / scale.x;
+		normalized.m01 = m01 / scale.x;
+		normalized.m02 = m02 / scale.x;
+		normalized.m03 = 0.0f;
+		normalized.m10 = m10 / scale.y;
+		normalized.m11 = m11 / scale.y;
+		normalized.m12 = m12 / scale.y;
+		normalized.m13 = 0.0f;
+		normalized.m20 = m20 / scale.z;
+		normalized.m21 = m21 / scale.z;
+		normalized.m22 = m22 / scale.z;
+		normalized.m23 = 0.0f;
+		normalized.m30 = 0;
+		normalized.m31 = 0;
+		normalized.m32 = 0;
+		normalized.m33 = 1.0f;
 
-            quaternion.x = (mRot.m10 + mRot.m01) * half;
-            quaternion.y = 0.5f * sqrt_;
-            quaternion.z = (mRot.m21 + mRot.m12) * half;
-            quaternion.w = (mRot.m20 - mRot.m02) * half;
+		return RotationMatrixToQuaternion(normalized);
+	}
 
-            return quaternion;
-        }
-        sqrt_ = sqrt(1.0f + mRot.m22 - mRot.m00 - mRot.m11);
-        half  = 0.5f / sqrt_;
+	Quat Matrix::RotationMatrixToQuaternion(const Matrix &mRot)
+	{
+		Quat quaternion;
+		float sqrt_;
+		float half;
+		const float scale = mRot.m00 + mRot.m11 + mRot.m22;
 
-        quaternion.x = (mRot.m20 + mRot.m02) * half;
-        quaternion.y = (mRot.m21 + mRot.m12) * half;
-        quaternion.z = 0.5f * sqrt_;
-        quaternion.w = (mRot.m01 - mRot.m10) * half;
+		if (scale > 0.0f)
+		{
+			sqrt_ = sqrt(scale + 1.0f);
+			quaternion.w = sqrt_ * 0.5f;
+			sqrt_ = 0.5f / sqrt_;
 
-        return quaternion;
-    }
+			quaternion.x = (mRot.m12 - mRot.m21) * sqrt_;
+			quaternion.y = (mRot.m20 - mRot.m02) * sqrt_;
+			quaternion.z = (mRot.m01 - mRot.m10) * sqrt_;
 
-    Vec3 Matrix::GetScale() const
-    {
-        const int xs = (sign(m00 * m01 * m02 * m03) < 0) ? -1 : 1;
-        const int ys = (sign(m10 * m11 * m12 * m13) < 0) ? -1 : 1;
-        const int zs = (sign(m20 * m21 * m22 * m23) < 0) ? -1 : 1;
-        return {static_cast<float>(xs) * sqrt(m00 * m00 + m01 * m01 + m02 * m02),
-                static_cast<float>(ys) * sqrt(m10 * m10 + m11 * m11 + m12 * m12),
-                static_cast<float>(zs) * sqrt(m20 * m20 + m21 * m21 + m22 * m22)};
-    }
+			return quaternion;
+		}
+		if ((mRot.m00 >= mRot.m11) && (mRot.m00 >= mRot.m22))
+		{
+			sqrt_ = sqrt(1.0f + mRot.m00 - mRot.m11 - mRot.m22);
+			half = 0.5f / sqrt_;
 
-    Matrix Matrix::CreateScale(float scale)
-    {
-        return CreateScale(scale, scale, scale);
-    }
+			quaternion.x = 0.5f * sqrt_;
+			quaternion.y = (mRot.m01 + mRot.m10) * half;
+			quaternion.z = (mRot.m02 + mRot.m20) * half;
+			quaternion.w = (mRot.m12 - mRot.m21) * half;
 
-    Matrix Matrix::CreateScale(const Vec3 &scale)
-    {
-        return CreateScale(scale.x, scale.y, scale.z);
-    }
+			return quaternion;
+		}
+		if (mRot.m11 > mRot.m22)
+		{
+			sqrt_ = sqrt(1.0f + mRot.m11 - mRot.m00 - mRot.m22);
+			half = 0.5f / sqrt_;
 
-    Matrix Matrix::CreateScale(float scaleX, float scaleY, float ScaleZ)
-    {
-        return {scaleX, 0, 0, 0,
-                0, scaleY, 0, 0,
-                0, 0, ScaleZ, 0,
-                0, 0, 0, 1};
-    }
+			quaternion.x = (mRot.m10 + mRot.m01) * half;
+			quaternion.y = 0.5f * sqrt_;
+			quaternion.z = (mRot.m21 + mRot.m12) * half;
+			quaternion.w = (mRot.m20 - mRot.m02) * half;
 
-    Matrix Matrix::CreateLookAtLH(const Vec3 &position, const Vec3 &target, const Vec3 &up)
-    {
-        const Vec3 zAxis = Normalize(target - position);
-        const Vec3 xAxis = Normalize(Cross(up, zAxis));
-        const Vec3 yAxis = Cross(zAxis, xAxis);
+			return quaternion;
+		}
+		sqrt_ = sqrt(1.0f + mRot.m22 - mRot.m00 - mRot.m11);
+		half  = 0.5f / sqrt_;
 
-        return {xAxis.x, yAxis.x, zAxis.x, 0,
-                xAxis.y, yAxis.y, zAxis.y, 0,
-                xAxis.z, yAxis.z, zAxis.z, 0,
-                -Dot(xAxis, position), -Dot(yAxis, position), -Dot(zAxis, position), 1.0f};
-    }
+		quaternion.x = (mRot.m20 + mRot.m02) * half;
+		quaternion.y = (mRot.m21 + mRot.m12) * half;
+		quaternion.z = 0.5f * sqrt_;
+		quaternion.w = (mRot.m01 - mRot.m10) * half;
 
-    Matrix Matrix::CreateOrthographicLH(float width, float height, float zNearPlane, float zFarPlane)
-    {
-        return {2 / width, 0, 0, 0,
-                0, 2 / height, 0, 0,
-                0, 0, 1 / (zFarPlane - zNearPlane), 0,
-                0, 0, zNearPlane / (zNearPlane - zFarPlane), 1};
-    }
+		return quaternion;
+	}
 
-    Matrix Matrix::CreateOrthoOffCenterLH(float left,
-        float right,
-        float bottom,
-        float top,
-        float zNearPlane,
-        float zFarPlane)
-    {
-        return {2 / (right - left), 0, 0, 0,
-                0, 2 / (top - bottom), 0, 0,
-                0, 0, 1 / (zFarPlane - zNearPlane), 0,
-                (left + right) / (left - right), (top + bottom) / (bottom - top), zNearPlane / (zNearPlane - zFarPlane), 1};
-    }
+	Vec3 Matrix::GetScale() const
+	{
+		const int xs = (Sign(m00 * m01 * m02 * m03) < 0) ? -1 : 1;
+		const int ys = (Sign(m10 * m11 * m12 * m13) < 0) ? -1 : 1;
+		const int zs = (Sign(m20 * m21 * m22 * m23) < 0) ? -1 : 1;
+		return {static_cast<float>(xs) * sqrt(m00 * m00 + m01 * m01 + m02 * m02),
+				static_cast<float>(ys) * sqrt(m10 * m10 + m11 * m11 + m12 * m12),
+				static_cast<float>(zs) * sqrt(m20 * m20 + m21 * m21 + m22 * m22)};
+	}
 
-    Matrix Matrix::CreatePerspectiveFieldOfViewLH(float fov_y_radians,
-        float aspect_ratio,
-        float near_plane,
-        float far_plane)
-    {
-        const float tan_half_fovy = tan(fov_y_radians / 2);
-        const float f             = 1.0f / tan_half_fovy;
-        const float range_inv     = 1.0f / (far_plane - near_plane);
+	Matrix Matrix::CreateScale(float scale)
+	{
+		return CreateScale(scale, scale, scale);
+	}
 
-        return {f / aspect_ratio, 0, 0, 0,
-                0, f, 0, 0,
-                0, 0, far_plane * range_inv, 1,
-                0, 0, -near_plane * far_plane * range_inv, 0};
-    }
+	Matrix Matrix::CreateScale(const Vec3 &scale)
+	{
+		return CreateScale(scale.x, scale.y, scale.z);
+	}
 
-    Matrix Matrix::Transposed() const
-    {
-        return Matrix::Transpose(*this);
-    }
+	Matrix Matrix::CreateScale(float scaleX, float scaleY, float scaleZ)
+	{
+		return {scaleX, 0, 0, 0,
+				0, scaleY, 0, 0,
+				0, 0, scaleZ, 0,
+				0, 0, 0, 1};
+	}
 
-    void Matrix::Transpose()
-    {
-        *this = Transpose(*this);
-    }
+	Matrix Matrix::CreateLookAtLH(const Vec3 &position, const Vec3 &target, const Vec3 &up)
+	{
+		const Vec3 zAxis = Normalize(target - position);
+		const Vec3 xAxis = Normalize(Cross(up, zAxis));
+		const Vec3 yAxis = Cross(zAxis, xAxis);
 
-    Matrix Matrix::Transpose(const Matrix &matrix)
-    {
-        return {matrix.m00, matrix.m10, matrix.m20, matrix.m30,
-                matrix.m01, matrix.m11, matrix.m21, matrix.m31,
-                matrix.m02, matrix.m12, matrix.m22, matrix.m32,
-                matrix.m03, matrix.m13, matrix.m23, matrix.m33};
-    }
+		return {xAxis.x, yAxis.x, zAxis.x, 0,
+				xAxis.y, yAxis.y, zAxis.y, 0,
+				xAxis.z, yAxis.z, zAxis.z, 0,
+				-Dot(xAxis, position), -Dot(yAxis, position), -Dot(zAxis, position), 1.0f};
+	}
+
+	Matrix Matrix::CreateOrthographicLH(float width, float height, float zNearPlane, float zFarPlane)
+	{
+		return {2 / width, 0, 0, 0,
+				0, 2 / height, 0, 0,
+				0, 0, 1 / (zFarPlane - zNearPlane), 0,
+				0, 0, zNearPlane / (zNearPlane - zFarPlane), 1};
+	}
+
+	Matrix Matrix::CreateOrthoOffCenterLH(float left,
+		float right,
+		float bottom,
+		float top,
+		float zNearPlane,
+		float zFarPlane)
+	{
+		return {2 / (right - left), 0, 0, 0,
+				0, 2 / (top - bottom), 0, 0,
+				0, 0, 1 / (zFarPlane - zNearPlane), 0,
+				(left + right) / (left - right), (top + bottom) / (bottom - top), zNearPlane / (zNearPlane - zFarPlane), 1};
+	}
+
+	Matrix Matrix::CreatePerspectiveFieldOfViewLH(float fovYRadians,
+		float aspectRatio,
+		float nearPlane,
+		float farPlane)
+	{
+		const float tan_half_fovy = tan(fovYRadians / 2);
+		const float f             = 1.0f / tan_half_fovy;
+		const float range_inv     = 1.0f / (farPlane - nearPlane);
+
+		return {f / aspectRatio, 0, 0, 0,
+				0, f, 0, 0,
+				0, 0, farPlane * range_inv, 1,
+				0, 0, -nearPlane * farPlane * range_inv, 0};
+	}
+
+	Matrix Matrix::Transposed() const
+	{
+		return Matrix::Transpose(*this);
+	}
+
+	void Matrix::Transpose()
+	{
+		*this = Transpose(*this);
+	}
+
+	Matrix Matrix::Transpose(const Matrix &matrix)
+	{
+		return {matrix.m00, matrix.m10, matrix.m20, matrix.m30,
+				matrix.m01, matrix.m11, matrix.m21, matrix.m31,
+				matrix.m02, matrix.m12, matrix.m22, matrix.m32,
+				matrix.m03, matrix.m13, matrix.m23, matrix.m33};
+	}
 
 
-    Matrix Matrix::Invert(const Matrix &matrix)
-    {
-        float v0 = matrix.m20 * matrix.m31 - matrix.m21 * matrix.m30;
-        float v1 = matrix.m20 * matrix.m32 - matrix.m22 * matrix.m30;
-        float v2 = matrix.m20 * matrix.m33 - matrix.m23 * matrix.m30;
-        float v3 = matrix.m21 * matrix.m32 - matrix.m22 * matrix.m31;
-        float v4 = matrix.m21 * matrix.m33 - matrix.m23 * matrix.m31;
-        float v5 = matrix.m22 * matrix.m33 - matrix.m23 * matrix.m32;
+	Matrix Matrix::Invert(const Matrix &matrix)
+	{
+		float v0 = matrix.m20 * matrix.m31 - matrix.m21 * matrix.m30;
+		float v1 = matrix.m20 * matrix.m32 - matrix.m22 * matrix.m30;
+		float v2 = matrix.m20 * matrix.m33 - matrix.m23 * matrix.m30;
+		float v3 = matrix.m21 * matrix.m32 - matrix.m22 * matrix.m31;
+		float v4 = matrix.m21 * matrix.m33 - matrix.m23 * matrix.m31;
+		float v5 = matrix.m22 * matrix.m33 - matrix.m23 * matrix.m32;
 
-        float i00 =  (v5 * matrix.m11 - v4 * matrix.m12 + v3 * matrix.m13);
-        float i10 = -(v5 * matrix.m10 - v2 * matrix.m12 + v1 * matrix.m13);
-        float i20 =  (v4 * matrix.m10 - v2 * matrix.m11 + v0 * matrix.m13);
-        float i30 = -(v3 * matrix.m10 - v1 * matrix.m11 + v0 * matrix.m12);
+		float i00 =  (v5 * matrix.m11 - v4 * matrix.m12 + v3 * matrix.m13);
+		float i10 = -(v5 * matrix.m10 - v2 * matrix.m12 + v1 * matrix.m13);
+		float i20 =  (v4 * matrix.m10 - v2 * matrix.m11 + v0 * matrix.m13);
+		float i30 = -(v3 * matrix.m10 - v1 * matrix.m11 + v0 * matrix.m12);
 
-        float det = i00 * matrix.m00 + i10 * matrix.m01 + i20 * matrix.m02 + i30 * matrix.m03;
-        if (std::isnan(det))
-            return Matrix::Identity;
+		float det = i00 * matrix.m00 + i10 * matrix.m01 + i20 * matrix.m02 + i30 * matrix.m03;
+		if (std::isnan(det))
+			return Matrix::IDENTITY;
 
-        const float inv_det = 1.0f / det;
+		const float inv_det = 1.0f / det;
 
-        i00 *= inv_det;
-        i10 *= inv_det;
-        i20 *= inv_det;
-        i30 *= inv_det;
+		i00 *= inv_det;
+		i10 *= inv_det;
+		i20 *= inv_det;
+		i30 *= inv_det;
 
-        const float i01 = -(v5 * matrix.m01 - v4 * matrix.m02 + v3 * matrix.m03) * inv_det;
-        const float i11 =  (v5 * matrix.m00 - v2 * matrix.m02 + v1 * matrix.m03) * inv_det;
-        const float i21 = -(v4 * matrix.m00 - v2 * matrix.m01 + v0 * matrix.m03) * inv_det;
-        const float i31 =  (v3 * matrix.m00 - v1 * matrix.m01 + v0 * matrix.m02) * inv_det;
+		const float i01 = -(v5 * matrix.m01 - v4 * matrix.m02 + v3 * matrix.m03) * inv_det;
+		const float i11 =  (v5 * matrix.m00 - v2 * matrix.m02 + v1 * matrix.m03) * inv_det;
+		const float i21 = -(v4 * matrix.m00 - v2 * matrix.m01 + v0 * matrix.m03) * inv_det;
+		const float i31 =  (v3 * matrix.m00 - v1 * matrix.m01 + v0 * matrix.m02) * inv_det;
 
-        v0 = matrix.m10 * matrix.m31 - matrix.m11 * matrix.m30;
-        v1 = matrix.m10 * matrix.m32 - matrix.m12 * matrix.m30;
-        v2 = matrix.m10 * matrix.m33 - matrix.m13 * matrix.m30;
-        v3 = matrix.m11 * matrix.m32 - matrix.m12 * matrix.m31;
-        v4 = matrix.m11 * matrix.m33 - matrix.m13 * matrix.m31;
-        v5 = matrix.m12 * matrix.m33 - matrix.m13 * matrix.m32;
+		v0 = matrix.m10 * matrix.m31 - matrix.m11 * matrix.m30;
+		v1 = matrix.m10 * matrix.m32 - matrix.m12 * matrix.m30;
+		v2 = matrix.m10 * matrix.m33 - matrix.m13 * matrix.m30;
+		v3 = matrix.m11 * matrix.m32 - matrix.m12 * matrix.m31;
+		v4 = matrix.m11 * matrix.m33 - matrix.m13 * matrix.m31;
+		v5 = matrix.m12 * matrix.m33 - matrix.m13 * matrix.m32;
 
-        const float i02 =  (v5 * matrix.m01 - v4 * matrix.m02 + v3 * matrix.m03) * inv_det;
-        const float i12 = -(v5 * matrix.m00 - v2 * matrix.m02 + v1 * matrix.m03) * inv_det;
-        const float i22 =  (v4 * matrix.m00 - v2 * matrix.m01 + v0 * matrix.m03) * inv_det;
-        const float i32 = -(v3 * matrix.m00 - v1 * matrix.m01 + v0 * matrix.m02) * inv_det;
+		const float i02 =  (v5 * matrix.m01 - v4 * matrix.m02 + v3 * matrix.m03) * inv_det;
+		const float i12 = -(v5 * matrix.m00 - v2 * matrix.m02 + v1 * matrix.m03) * inv_det;
+		const float i22 =  (v4 * matrix.m00 - v2 * matrix.m01 + v0 * matrix.m03) * inv_det;
+		const float i32 = -(v3 * matrix.m00 - v1 * matrix.m01 + v0 * matrix.m02) * inv_det;
 
-        v0 = matrix.m21 * matrix.m10 - matrix.m20 * matrix.m11;
-        v1 = matrix.m22 * matrix.m10 - matrix.m20 * matrix.m12;
-        v2 = matrix.m23 * matrix.m10 - matrix.m20 * matrix.m13;
-        v3 = matrix.m22 * matrix.m11 - matrix.m21 * matrix.m12;
-        v4 = matrix.m23 * matrix.m11 - matrix.m21 * matrix.m13;
-        v5 = matrix.m23 * matrix.m12 - matrix.m22 * matrix.m13;
+		v0 = matrix.m21 * matrix.m10 - matrix.m20 * matrix.m11;
+		v1 = matrix.m22 * matrix.m10 - matrix.m20 * matrix.m12;
+		v2 = matrix.m23 * matrix.m10 - matrix.m20 * matrix.m13;
+		v3 = matrix.m22 * matrix.m11 - matrix.m21 * matrix.m12;
+		v4 = matrix.m23 * matrix.m11 - matrix.m21 * matrix.m13;
+		v5 = matrix.m23 * matrix.m12 - matrix.m22 * matrix.m13;
 
-        const float i03 = -(v5 * matrix.m01 - v4 * matrix.m02 + v3 * matrix.m03) * inv_det;
-        const float i13 =  (v5 * matrix.m00 - v2 * matrix.m02 + v1 * matrix.m03) * inv_det;
-        const float i23 = -(v4 * matrix.m00 - v2 * matrix.m01 + v0 * matrix.m03) * inv_det;
-        const float i33 =  (v3 * matrix.m00 - v1 * matrix.m01 + v0 * matrix.m02) * inv_det;
+		const float i03 = -(v5 * matrix.m01 - v4 * matrix.m02 + v3 * matrix.m03) * inv_det;
+		const float i13 =  (v5 * matrix.m00 - v2 * matrix.m02 + v1 * matrix.m03) * inv_det;
+		const float i23 = -(v4 * matrix.m00 - v2 * matrix.m01 + v0 * matrix.m03) * inv_det;
+		const float i33 =  (v3 * matrix.m00 - v1 * matrix.m01 + v0 * matrix.m02) * inv_det;
 
-        return {i00, i01, i02, i03,
-                i10, i11, i12, i13,
-                i20, i21, i22, i23,
-                i30, i31, i32, i33};
-    }
+		return {i00, i01, i02, i03,
+				i10, i11, i12, i13,
+				i20, i21, i22, i23,
+				i30, i31, i32, i33};
+	}
 
-    Matrix Matrix::Inverted() const
-    {
-        return Invert(*this);
-    }
+	Matrix Matrix::Inverted() const
+	{
+		return Invert(*this);
+	}
 
-    void Matrix::Decompose(Vec3& scale, Quat& rotation, Vec3& translation) const
-    {
-        translation = GetTranslation();
-        scale       = GetScale();
-        rotation    = GetRotation();
-    }
+	void Matrix::Decompose(Vec3& scale, Quat& rotation, Vec3& translation) const
+	{
+		translation = GetTranslation();
+		scale       = GetScale();
+		rotation    = GetRotation();
+	}
 
-    void Matrix::SetIdentity()
-    {
-        m00 = 1; m01 = 0; m02 = 0; m03 = 0;
-        m10 = 0; m11 = 1; m12 = 0; m13 = 0;
-        m20 = 0; m21 = 0; m22 = 1; m23 = 0;
-        m30 = 0; m31 = 0; m32 = 0; m33 = 1;
-    }
+	void Matrix::SetIdentity()
+	{
+		m00 = 1; m01 = 0; m02 = 0; m03 = 0;
+		m10 = 0; m11 = 1; m12 = 0; m13 = 0;
+		m20 = 0; m21 = 0; m22 = 1; m23 = 0;
+		m30 = 0; m31 = 0; m32 = 0; m33 = 1;
+	}
 
-    Matrix Matrix::operator*(const Matrix &rhs) const
-    {
-        return {m00 * rhs.m00 + m01 * rhs.m10 + m02 * rhs.m20 + m03 * rhs.m30,
-                m00 * rhs.m01 + m01 * rhs.m11 + m02 * rhs.m21 + m03 * rhs.m31,
-                m00 * rhs.m02 + m01 * rhs.m12 + m02 * rhs.m22 + m03 * rhs.m32,
-                m00 * rhs.m03 + m01 * rhs.m13 + m02 * rhs.m23 + m03 * rhs.m33,
-                m10 * rhs.m00 + m11 * rhs.m10 + m12 * rhs.m20 + m13 * rhs.m30,
-                m10 * rhs.m01 + m11 * rhs.m11 + m12 * rhs.m21 + m13 * rhs.m31,
-                m10 * rhs.m02 + m11 * rhs.m12 + m12 * rhs.m22 + m13 * rhs.m32,
-                m10 * rhs.m03 + m11 * rhs.m13 + m12 * rhs.m23 + m13 * rhs.m33,
-                m20 * rhs.m00 + m21 * rhs.m10 + m22 * rhs.m20 + m23 * rhs.m30,
-                m20 * rhs.m01 + m21 * rhs.m11 + m22 * rhs.m21 + m23 * rhs.m31,
-                m20 * rhs.m02 + m21 * rhs.m12 + m22 * rhs.m22 + m23 * rhs.m32,
-                m20 * rhs.m03 + m21 * rhs.m13 + m22 * rhs.m23 + m23 * rhs.m33,
-                m30 * rhs.m00 + m31 * rhs.m10 + m32 * rhs.m20 + m33 * rhs.m30,
-                m30 * rhs.m01 + m31 * rhs.m11 + m32 * rhs.m21 + m33 * rhs.m31,
-                m30 * rhs.m02 + m31 * rhs.m12 + m32 * rhs.m22 + m33 * rhs.m32,
-                m30 * rhs.m03 + m31 * rhs.m13 + m32 * rhs.m23 + m33 * rhs.m33};
-    }
+	Matrix Matrix::operator*(const Matrix &rhs) const
+	{
+		return {m00 * rhs.m00 + m01 * rhs.m10 + m02 * rhs.m20 + m03 * rhs.m30,
+				m00 * rhs.m01 + m01 * rhs.m11 + m02 * rhs.m21 + m03 * rhs.m31,
+				m00 * rhs.m02 + m01 * rhs.m12 + m02 * rhs.m22 + m03 * rhs.m32,
+				m00 * rhs.m03 + m01 * rhs.m13 + m02 * rhs.m23 + m03 * rhs.m33,
+				m10 * rhs.m00 + m11 * rhs.m10 + m12 * rhs.m20 + m13 * rhs.m30,
+				m10 * rhs.m01 + m11 * rhs.m11 + m12 * rhs.m21 + m13 * rhs.m31,
+				m10 * rhs.m02 + m11 * rhs.m12 + m12 * rhs.m22 + m13 * rhs.m32,
+				m10 * rhs.m03 + m11 * rhs.m13 + m12 * rhs.m23 + m13 * rhs.m33,
+				m20 * rhs.m00 + m21 * rhs.m10 + m22 * rhs.m20 + m23 * rhs.m30,
+				m20 * rhs.m01 + m21 * rhs.m11 + m22 * rhs.m21 + m23 * rhs.m31,
+				m20 * rhs.m02 + m21 * rhs.m12 + m22 * rhs.m22 + m23 * rhs.m32,
+				m20 * rhs.m03 + m21 * rhs.m13 + m22 * rhs.m23 + m23 * rhs.m33,
+				m30 * rhs.m00 + m31 * rhs.m10 + m32 * rhs.m20 + m33 * rhs.m30,
+				m30 * rhs.m01 + m31 * rhs.m11 + m32 * rhs.m21 + m33 * rhs.m31,
+				m30 * rhs.m02 + m31 * rhs.m12 + m32 * rhs.m22 + m33 * rhs.m32,
+				m30 * rhs.m03 + m31 * rhs.m13 + m32 * rhs.m23 + m33 * rhs.m33};
+	}
 
-    void Matrix::operator*=(const Matrix &rhs)
-    {
-        (*this) = (*this) * rhs;
-    }
+	void Matrix::operator*=(const Matrix &rhs)
+	{
+		(*this) = (*this) * rhs;
+	}
 
-    Vec3 Matrix::operator*(const Vec3 &rhs) const
-    {
-        float x = (rhs.x * m00) + (rhs.y * m10) + (rhs.z * m20) + m30;
-        float y = (rhs.x * m01) + (rhs.y * m11) + (rhs.z * m21) + m31;
-        float z = (rhs.x * m02) + (rhs.y * m12) + (rhs.z * m22) + m32;
-        float w = (rhs.x * m03) + (rhs.y * m13) + (rhs.z * m23) + m33;
+	Vec3 Matrix::operator*(const Vec3 &rhs) const
+	{
+		float x = (rhs.x * m00) + (rhs.y * m10) + (rhs.z * m20) + m30;
+		float y = (rhs.x * m01) + (rhs.y * m11) + (rhs.z * m21) + m31;
+		float z = (rhs.x * m02) + (rhs.y * m12) + (rhs.z * m22) + m32;
+		float w = (rhs.x * m03) + (rhs.y * m13) + (rhs.z * m23) + m33;
 
-        // to ensure the perspective divide, divide each component by w
-        if (w != 1.0f)
-        {
-            x /= w;
-            y /= w;
-            z /= w;
-        }
+		// to ensure the perspective divide, divide each component by w
+		if (w != 1.0f)
+		{
+			x /= w;
+			y /= w;
+			z /= w;
+		}
 
-        return {x, y, z};
-    }
+		return {x, y, z};
+	}
 
-    Vec4 Matrix::operator*(const Vec4 &rhs) const
-    {
-        return {(rhs.x * m00) + (rhs.y * m10) + (rhs.z * m20) + (rhs.w * m30),
-                (rhs.x * m01) + (rhs.y * m11) + (rhs.z * m21) + (rhs.w * m31),
-                (rhs.x * m02) + (rhs.y * m12) + (rhs.z * m22) + (rhs.w * m32),
-                (rhs.x * m03) + (rhs.y * m13) + (rhs.z * m23) + (rhs.w * m33)};
-    }
+	Vec4 Matrix::operator*(const Vec4 &rhs) const
+	{
+		return {(rhs.x * m00) + (rhs.y * m10) + (rhs.z * m20) + (rhs.w * m30),
+				(rhs.x * m01) + (rhs.y * m11) + (rhs.z * m21) + (rhs.w * m31),
+				(rhs.x * m02) + (rhs.y * m12) + (rhs.z * m22) + (rhs.w * m32),
+				(rhs.x * m03) + (rhs.y * m13) + (rhs.z * m23) + (rhs.w * m33)};
+	}
 
-    bool Matrix::operator==(const Matrix &rhs) const
-    {
-        const float* data_left    = Data();
-        const float* data_right    = rhs.Data();
+	bool Matrix::operator==(const Matrix &rhs) const
+	{
+		const float* data_left    = Data();
+		const float* data_right    = rhs.Data();
 
-        for (unsigned i = 0; i < 16; ++i)
-        {
-            if (data_left[i] != data_right[i])
-                return false;
-        }
+		for (unsigned i = 0; i < 16; ++i)
+		{
+			if (data_left[i] != data_right[i])
+				return false;
+		}
 
-        return true;
-    }
+		return true;
+	}
 
-    bool Matrix::operator!=(const Matrix &rhs) const
-    {
-        return !(*this == rhs);
-    }
+	bool Matrix::operator!=(const Matrix &rhs) const
+	{
+		return !(*this == rhs);
+	}
 
-    bool Matrix::Equals(const Matrix &rhs) const
-    {
-        const float* data_left  = Data();
-        const float* data_right = rhs.Data();
+	bool Matrix::Equals(const Matrix &rhs) const
+	{
+		const float* data_left  = Data();
+		const float* data_right = rhs.Data();
 
-        for (unsigned i = 0; i < 16; ++i)
-        {
-            if (!approximate_equals(data_left[i], data_right[i]))
-                return false;
-        }
+		for (unsigned i = 0; i < 16; ++i)
+		{
+			if (!ApproximateEquals(data_left[i], data_right[i]))
+				return false;
+		}
 
-        return true;
-    }
+		return true;
+	}
 
-    const float * Matrix::Data() const
-    {
-        return &m00;
-    }
+	const float * Matrix::Data() const
+	{
+		return &m00;
+	}
 
 }
 

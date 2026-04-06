@@ -27,7 +27,7 @@
 #include <epsilon.h>
 #include <xMath/includes/mat2.h>
 
-/// -----------------------------------------------------
+// -----------------------------------------------------
 
 namespace xMath
 {
@@ -178,7 +178,7 @@ namespace xMath
         const float det = Determinant();
         if (std::fabs(det) <= eps) return Mat2::Zero();
         const float invDet = 1.0f / det;
-        /// adjudicate: [ m11 -m01; -m10 m00 ]
+        // adjudicate: [ m11 -m01; -m10 m00 ]
         return {
             m11 * invDet, -m01 * invDet,
             -m10 * invDet,  m00 * invDet
@@ -197,8 +197,8 @@ namespace xMath
 
     bool Mat2::ApproxEqual(const Mat2 &a, const Mat2 &b, float eps) noexcept
     {
-        return epsilonEqual(a.m00, b.m00, eps) && epsilonEqual(a.m01, b.m01, eps) &&
-               epsilonEqual(a.m10, b.m10, eps) && epsilonEqual(a.m11, b.m11, eps);
+        return EpsilonEqual(a.m00, b.m00, eps) && EpsilonEqual(a.m01, b.m01, eps) &&
+               EpsilonEqual(a.m10, b.m10, eps) && EpsilonEqual(a.m11, b.m11, eps);
     }
 
     std::ostream & operator<<(std::ostream &os, const Mat2 &m)
@@ -209,4 +209,4 @@ namespace xMath
 
 }
 
-/// -----------------------------------------------------
+// -----------------------------------------------------

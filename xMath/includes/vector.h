@@ -30,17 +30,19 @@
 #include <xMath/includes/vec3.h>
 #include <xMath/includes/vec4.h>
 
-/// -----------------------------------------------------
+// -----------------------------------------------------
 
 namespace xMath
 {
-	using Vec2 = TVector2<float>;
-	using Vec3 = TVector3<float>;
-	using Vec4 = TVector4<float>;
+	/* @brief 2D vector type with single-precision floating-point components (x, y). */
+	typedef TVector2<float> Vec2;
 
-	#ifndef SEDX_MATH_HAS_VECTOR_ALIASES
-	#define SEDX_MATH_HAS_VECTOR_ALIASES 1
-	#endif
+	/* @brief 3D vector type with single-precision floating-point components (x, y, z). */
+	typedef TVector3<float> Vec3;
+
+	/* @brief 4D vector type with single-precision floating-point components (x, y, z, w). */
+	typedef TVector4<float> Vec4;
+
 }
 
-/// -----------------------------------------------------
+// -----------------------------------------------------

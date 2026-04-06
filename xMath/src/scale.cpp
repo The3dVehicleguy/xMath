@@ -27,63 +27,63 @@
 #include <xMath/includes/epsilon.h>
 #include <xMath/includes/scale.h>
 
-/// -----------------------------------------------------
+// -----------------------------------------------------
 
 namespace xMath
 {
 
 	Mat4 Scale(const Vec3 &s)
 	{
-	    return Mat4({
-	        {s.x, 0.0f, 0.0f, 0.0f}, /// Scale X
-	        {0.0f, s.y, 0.0f, 0.0f}, /// Scale Y
-	        {0.0f, 0.0f, s.z, 0.0f}, /// Scale Z
-	        {0.0f, 0.0f, 0.0f, 1.0f} /// Homogeneous coordinate (no translation)
-	    });
+		return Mat4({
+			{s.x, 0.0f, 0.0f, 0.0f}, // Scale X
+			{0.0f, s.y, 0.0f, 0.0f}, // Scale Y
+			{0.0f, 0.0f, s.z, 0.0f}, // Scale Z
+			{0.0f, 0.0f, 0.0f, 1.0f} // Homogeneous coordinate (no translation)
+		});
 	}
 
-    Vec3 Scale(const Vec3 &vector, float desiredLength)
-    {
-        /// Compute magnitude without relying on GLM
-        const float mag = std::sqrt(vector.x * vector.x + vector.y * vector.y + vector.z * vector.z);
-        if (epsilonEqual(mag, 0.0f, ::xMath::epsilon<float>()))
-            return Vec3(0.0f);
-	
-        return vector * desiredLength / mag;
-    }
-
-    Mat4 Scale(const Vec2 &s)
-    {
-        return Mat4({
-            {s.x, 0.0f, 0.0f, 0.0f},  /// Scale X
-            {0.0f, s.y, 0.0f, 0.0f},  /// Scale Y
-            {0.0f, 0.0f, 1.0f, 0.0f}, /// Scale Z (no scaling)
-            {0.0f, 0.0f, 0.0f, 1.0f}  /// Homogeneous coordinate (no translation)
-        });
-    }
-
-    Mat4 Scale(const Mat4 &m, const Vec3 &s)
-    {
-        return m * Scale(s);
-    }
-
-    Mat4 Scale(const Mat4 &m, const Vec2 &s)
-    {
-        return m * Scale(s);
-    }
-
-    Mat3 Scale2D(const Vec2 &s)
-    {
-        return {
-            s.x, 0.0f, 0.0f, /// Scale X
-            0.0f, s.y, 0.0f, /// Scale Y
-            0.0f, 0.0f, 1.0f /// Homogeneous coordinate (no translation)
-        };
-    }
-
-    Mat3 Scale2D(const Mat3 &m, const Vec2 &s)
+	Vec3 Scale(const Vec3 &vector, float desiredLength)
 	{
-	    return m * Scale2D(s);
+		/// Compute magnitude without relying on GLM
+		const float mag = std::sqrt(vector.x * vector.x + vector.y * vector.y + vector.z * vector.z);
+		if (EpsilonEqual(mag, 0.0f, ::xMath::Epsilon<float>()))
+			return Vec3(0.0f);
+	
+		return vector * desiredLength / mag;
+	}
+
+	Mat4 Scale(const Vec2 &s)
+	{
+		return Mat4({
+			{s.x, 0.0f, 0.0f, 0.0f},  /// Scale X
+			{0.0f, s.y, 0.0f, 0.0f},  /// Scale Y
+			{0.0f, 0.0f, 1.0f, 0.0f}, /// Scale Z (no scaling)
+			{0.0f, 0.0f, 0.0f, 1.0f}  /// Homogeneous coordinate (no translation)
+		});
+	}
+
+	Mat4 Scale(const Mat4 &m, const Vec3 &s)
+	{
+		return m * Scale(s);
+	}
+
+	Mat4 Scale(const Mat4 &m, const Vec2 &s)
+	{
+		return m * Scale(s);
+	}
+
+	Mat3 Scale2D(const Vec2 &s)
+	{
+		return {
+			s.x, 0.0f, 0.0f, /// Scale X
+			0.0f, s.y, 0.0f, /// Scale Y
+			0.0f, 0.0f, 1.0f /// Homogeneous coordinate (no translation)
+		};
+	}
+
+	Mat3 Scale2D(const Mat3 &m, const Vec2 &s)
+	{
+		return m * Scale2D(s);
 	}
 
 

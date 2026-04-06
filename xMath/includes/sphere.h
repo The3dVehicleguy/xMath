@@ -27,18 +27,39 @@
 #pragma once
 #include <xMath/includes/vector.h>
 
-/// -------------------------------------------------------
+// -------------------------------------------------------
 
 namespace xMath
 {
+    /**
+     * @class Sphere
+     * @brief Represents a sphere defined by a center and radius for collision detection and visibility testing in 3D graphics.
+     */
     class Sphere
     {
     public:
+        /**
+         * @brief Default constructor for the Sphere class.
+         */
         Sphere();
+
+        /**
+         * @brief Constructs a sphere with the given center and radius.
+         * @param center The center of the sphere.
+         * @param radius The radius of the sphere.
+         */
         Sphere(const Vec3& center, const float radius);
+
         ~Sphere() = default;
 
+        /**
+         * @brief The center of the sphere.
+         */
         Vec3 center;
+
+        /**
+         * @brief The radius of the sphere.
+         */
         float radius;
     };
 }
