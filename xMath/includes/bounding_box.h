@@ -256,7 +256,7 @@ namespace xMath
 
 		static const BoundingBox ZERO;		// Bounding box with zero size at the origin (Min = Max = (0,0,0))
 		static const BoundingBox UNIT;		// Bounding box with size 1 centered at the origin (Min = (-0.5,-0.5,-0.5), Max = (0.5,0.5,0.5))
-		static const BoundingBox INFINITE;	// Bounding box that encompasses all space (Min = (-inf,-inf,-inf), Max = (inf,inf,inf))
+		static const BoundingBox BB_INFINITE;	// Bounding box that encompasses all space (Min = (-inf,-inf,-inf), Max = (inf,inf,inf))
 
 		// TODO: For easy usability for future use add ability to get corners.
 		/*

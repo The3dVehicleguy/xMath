@@ -33,7 +33,7 @@ namespace xMath
 
 	const BoundingBox BoundingBox::ZERO(Vec3(0.0f, 0.0f, 0.0f), Vec3(0.0f, 0.0f, 0.0f));
 	const BoundingBox BoundingBox::UNIT(Vec3(-0.5f, -0.5f, -0.5f), Vec3(0.5f, 0.5f, 0.5f));
-	const BoundingBox BoundingBox::INFINITE(Vec3::INFINITY_NEG<float>, Vec3::VEC3_INFINITY<float>);
+	const BoundingBox BoundingBox::BB_INFINITE(Vec3::INFINITY_NEG<float>, Vec3::VEC3_INFINITY<float>);
 
 	/*
 	BoundingBox::BoundingBox()
